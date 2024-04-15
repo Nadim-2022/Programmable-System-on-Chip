@@ -1,0 +1,934 @@
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccOsMtwx.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"main.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.main,"ax",%progbits
+  20              		.align	2
+  21              		.global	main
+  22              		.thumb
+  23              		.thumb_func
+  24              		.type	main, %function
+  25              	main:
+  26              	.LFB64:
+  27              		.file 1 "main.c"
+   1:main.c        **** /* ========================================
+   2:main.c        ****  *
+   3:main.c        ****  * Copyright Nadim Ahmed, Metropolia University of Applied Science, Finland, 2024
+   4:main.c        ****  * 
+   5:main.c        ****  * April 4, 2024
+   6:main.c        ****  *
+   7:main.c        ****  * PSoC Design Course 2024: Exercise 1, Fundamentals
+   8:main.c        ****  *
+   9:main.c        ****  * Blink LED at btton press and send counter value through UART to terminal
+  10:main.c        ****  *
+  11:main.c        ****  * CC-NA-SA 4.0
+  12:main.c        ****  *
+  13:main.c        ****  * ========================================
+  14:main.c        **** */
+  15:main.c        **** #include "project.h"
+  16:main.c        **** #include <stdio.h>
+  17:main.c        **** 
+  18:main.c        **** int main(void)
+  19:main.c        **** {   
+  28              		.loc 1 19 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 40
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32 0000 30B5     		push	{r4, r5, lr}
+  33              		.cfi_def_cfa_offset 12
+  34              		.cfi_offset 4, -12
+  35              		.cfi_offset 5, -8
+  36              		.cfi_offset 14, -4
+  37 0002 8BB0     		sub	sp, sp, #44
+  38              		.cfi_def_cfa_offset 56
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccOsMtwx.s 			page 2
+
+
+  39              	.LVL0:
+  20:main.c        ****     // Counter variable
+  21:main.c        ****     uint8 blnk = 0;
+  22:main.c        ****     
+  23:main.c        ****     CyGlobalIntEnable; /* Enable global interrupts. */
+  40              		.loc 1 23 0
+  41              		.syntax unified
+  42              	@ 23 "main.c" 1
+  43 0004 62B6     		CPSIE   i
+  44              	@ 0 "" 2
+  24:main.c        ****     
+  25:main.c        ****     
+  26:main.c        ****     /* Place your initialization/startup code here (e.g. MyInst_Start()) */
+  27:main.c        ****     
+  28:main.c        ****     // Start UART
+  29:main.c        ****     UART_Start();
+  45              		.loc 1 29 0
+  46              		.thumb
+  47              		.syntax unified
+  48 0006 FFF7FEFF 		bl	UART_Start
+  49              	.LVL1:
+  30:main.c        ****     
+  31:main.c        ****     // Buffer to  send name
+  32:main.c        ****     char name[20] = {"Nadim Ahmed\r\n"};
+  50              		.loc 1 32 0
+  51 000a 184B     		ldr	r3, .L8
+  52 000c 05AC     		add	r4, sp, #20
+  53 000e 0FCB     		ldmia	r3, {r0, r1, r2, r3}
+  54 0010 07C4     		stmia	r4!, {r0, r1, r2}
+  55 0012 2380     		strh	r3, [r4]	@ movhi
+  56 0014 0024     		movs	r4, #0
+  57 0016 CDF82240 		str	r4, [sp, #34]	@ unaligned
+  58 001a ADF82640 		strh	r4, [sp, #38]	@ movhi
+  33:main.c        ****     
+  34:main.c        ****     // Buffer to send counter value
+  35:main.c        ****     char send[20] = {0};
+  59              		.loc 1 35 0
+  60 001e 0094     		str	r4, [sp]
+  61 0020 0194     		str	r4, [sp, #4]
+  62 0022 0294     		str	r4, [sp, #8]
+  63 0024 0394     		str	r4, [sp, #12]
+  64 0026 0494     		str	r4, [sp, #16]
+  36:main.c        **** 
+  37:main.c        ****     UART_PutString(name);
+  65              		.loc 1 37 0
+  66 0028 05A8     		add	r0, sp, #20
+  67 002a FFF7FEFF 		bl	UART_PutString
+  68              	.LVL2:
+  69              	.L2:
+  38:main.c        ****     for(;;)
+  39:main.c        ****     {
+  40:main.c        ****         /* Place your application code here. */
+  41:main.c        ****         
+  42:main.c        ****         if(!Button_Read()){  // if Button pressed
+  70              		.loc 1 42 0
+  71 002e FFF7FEFF 		bl	Button_Read
+  72              	.LVL3:
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccOsMtwx.s 			page 3
+
+
+  73 0032 68B9     		cbnz	r0, .L3
+  74              	.LBB2:
+  43:main.c        ****             uint8 ledState = ++blnk % 2;
+  75              		.loc 1 43 0
+  76 0034 0134     		adds	r4, r4, #1
+  77              	.LVL4:
+  78 0036 E4B2     		uxtb	r4, r4
+  79              	.LVL5:
+  80 0038 04F00105 		and	r5, r4, #1
+  81              	.LVL6:
+  44:main.c        ****             LED1_Write(ledState); // Increase the counter and turn on and off the led
+  82              		.loc 1 44 0
+  83 003c 2846     		mov	r0, r5
+  84 003e FFF7FEFF 		bl	LED1_Write
+  85              	.LVL7:
+  45:main.c        ****             CyDelay(ledState == 0 ? 200 : 800); // if led on wait 200 ms, else wait 800 ms
+  86              		.loc 1 45 0
+  87 0042 0DB9     		cbnz	r5, .L6
+  88 0044 C820     		movs	r0, #200
+  89 0046 01E0     		b	.L4
+  90              	.L6:
+  91 0048 4FF44870 		mov	r0, #800
+  92              	.L4:
+  93              		.loc 1 45 0 is_stmt 0 discriminator 4
+  94 004c FFF7FEFF 		bl	CyDelay
+  95              	.LVL8:
+  96              	.L3:
+  97              	.LBE2:
+  46:main.c        ****         }
+  47:main.c        ****         // Read input  char from UART and send the blnk counter value
+  48:main.c        ****         if (UART_GetChar()) {
+  98              		.loc 1 48 0 is_stmt 1
+  99 0050 FFF7FEFF 		bl	UART_GetChar
+ 100              	.LVL9:
+ 101 0054 0028     		cmp	r0, #0
+ 102 0056 EAD0     		beq	.L2
+  49:main.c        ****             sprintf(send, "%d\r\n", blnk);
+ 103              		.loc 1 49 0
+ 104 0058 2246     		mov	r2, r4
+ 105 005a 0549     		ldr	r1, .L8+4
+ 106 005c 6846     		mov	r0, sp
+ 107 005e FFF7FEFF 		bl	sprintf
+ 108              	.LVL10:
+  50:main.c        ****             UART_PutString(send);
+ 109              		.loc 1 50 0
+ 110 0062 6846     		mov	r0, sp
+ 111 0064 FFF7FEFF 		bl	UART_PutString
+ 112              	.LVL11:
+ 113 0068 E1E7     		b	.L2
+ 114              	.L9:
+ 115 006a 00BF     		.align	2
+ 116              	.L8:
+ 117 006c 00000000 		.word	.LANCHOR0
+ 118 0070 00000000 		.word	.LC1
+ 119              		.cfi_endproc
+ 120              	.LFE64:
+ 121              		.size	main, .-main
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccOsMtwx.s 			page 4
+
+
+ 122              		.section	.rodata
+ 123              		.align	2
+ 124              		.set	.LANCHOR0,. + 0
+ 125              	.LC0:
+ 126 0000 4E616469 		.ascii	"Nadim Ahmed\015\012\000"
+ 126      6D204168 
+ 126      6D65640D 
+ 126      0A00
+ 127 000e 00000000 		.space	6
+ 127      0000
+ 128              		.section	.rodata.str1.4,"aMS",%progbits,1
+ 129              		.align	2
+ 130              	.LC1:
+ 131 0000 25640D0A 		.ascii	"%d\015\012\000"
+ 131      00
+ 132              		.text
+ 133              	.Letext0:
+ 134              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.
+ 135              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.
+ 136              		.file 4 "Generated_Source\\PSoC5/cytypes.h"
+ 137              		.file 5 "Generated_Source\\PSoC5/LED1.h"
+ 138              		.file 6 "Generated_Source\\PSoC5/CyLib.h"
+ 139              		.file 7 "Generated_Source\\PSoC5/UART.h"
+ 140              		.file 8 "Generated_Source\\PSoC5/Button.h"
+ 141              		.file 9 "c:\\program files (x86)\\cypress\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.
+ 142              		.file 10 "Generated_Source\\PSoC5/core_cm3.h"
+ 143              		.section	.debug_info,"",%progbits
+ 144              	.Ldebug_info0:
+ 145 0000 FC010000 		.4byte	0x1fc
+ 146 0004 0400     		.2byte	0x4
+ 147 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 148 000a 04       		.byte	0x4
+ 149 000b 01       		.uleb128 0x1
+ 150 000c 37000000 		.4byte	.LASF28
+ 151 0010 0C       		.byte	0xc
+ 152 0011 B0010000 		.4byte	.LASF29
+ 153 0015 0E010000 		.4byte	.LASF30
+ 154 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 155 001d 00000000 		.4byte	0
+ 156 0021 00000000 		.4byte	.Ldebug_line0
+ 157 0025 02       		.uleb128 0x2
+ 158 0026 01       		.byte	0x1
+ 159 0027 06       		.byte	0x6
+ 160 0028 EE010000 		.4byte	.LASF0
+ 161 002c 02       		.uleb128 0x2
+ 162 002d 01       		.byte	0x1
+ 163 002e 08       		.byte	0x8
+ 164 002f 29000000 		.4byte	.LASF1
+ 165 0033 02       		.uleb128 0x2
+ 166 0034 02       		.byte	0x2
+ 167 0035 05       		.byte	0x5
+ 168 0036 C9010000 		.4byte	.LASF2
+ 169 003a 02       		.uleb128 0x2
+ 170 003b 02       		.byte	0x2
+ 171 003c 07       		.byte	0x7
+ 172 003d D7000000 		.4byte	.LASF3
+ 173 0041 03       		.uleb128 0x3
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccOsMtwx.s 			page 5
+
+
+ 174 0042 0B000000 		.4byte	.LASF9
+ 175 0046 02       		.byte	0x2
+ 176 0047 3F       		.byte	0x3f
+ 177 0048 4C000000 		.4byte	0x4c
+ 178 004c 02       		.uleb128 0x2
+ 179 004d 04       		.byte	0x4
+ 180 004e 05       		.byte	0x5
+ 181 004f D9010000 		.4byte	.LASF4
+ 182 0053 02       		.uleb128 0x2
+ 183 0054 04       		.byte	0x4
+ 184 0055 07       		.byte	0x7
+ 185 0056 C5000000 		.4byte	.LASF5
+ 186 005a 02       		.uleb128 0x2
+ 187 005b 08       		.byte	0x8
+ 188 005c 05       		.byte	0x5
+ 189 005d A2010000 		.4byte	.LASF6
+ 190 0061 02       		.uleb128 0x2
+ 191 0062 08       		.byte	0x8
+ 192 0063 07       		.byte	0x7
+ 193 0064 6E010000 		.4byte	.LASF7
+ 194 0068 04       		.uleb128 0x4
+ 195 0069 04       		.byte	0x4
+ 196 006a 05       		.byte	0x5
+ 197 006b 696E7400 		.ascii	"int\000"
+ 198 006f 02       		.uleb128 0x2
+ 199 0070 04       		.byte	0x4
+ 200 0071 07       		.byte	0x7
+ 201 0072 57010000 		.4byte	.LASF8
+ 202 0076 03       		.uleb128 0x3
+ 203 0077 85010000 		.4byte	.LASF10
+ 204 007b 03       		.byte	0x3
+ 205 007c 2C       		.byte	0x2c
+ 206 007d 41000000 		.4byte	0x41
+ 207 0081 05       		.uleb128 0x5
+ 208 0082 D3010000 		.4byte	.LASF11
+ 209 0086 04       		.byte	0x4
+ 210 0087 E801     		.2byte	0x1e8
+ 211 0089 2C000000 		.4byte	0x2c
+ 212 008d 02       		.uleb128 0x2
+ 213 008e 04       		.byte	0x4
+ 214 008f 04       		.byte	0x4
+ 215 0090 23000000 		.4byte	.LASF12
+ 216 0094 02       		.uleb128 0x2
+ 217 0095 08       		.byte	0x8
+ 218 0096 04       		.byte	0x4
+ 219 0097 02010000 		.4byte	.LASF13
+ 220 009b 02       		.uleb128 0x2
+ 221 009c 01       		.byte	0x1
+ 222 009d 08       		.byte	0x8
+ 223 009e B7010000 		.4byte	.LASF14
+ 224 00a2 02       		.uleb128 0x2
+ 225 00a3 08       		.byte	0x8
+ 226 00a4 04       		.byte	0x4
+ 227 00a5 E2010000 		.4byte	.LASF15
+ 228 00a9 02       		.uleb128 0x2
+ 229 00aa 04       		.byte	0x4
+ 230 00ab 07       		.byte	0x7
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccOsMtwx.s 			page 6
+
+
+ 231 00ac 8D010000 		.4byte	.LASF16
+ 232 00b0 06       		.uleb128 0x6
+ 233 00b1 09010000 		.4byte	.LASF31
+ 234 00b5 01       		.byte	0x1
+ 235 00b6 12       		.byte	0x12
+ 236 00b7 68000000 		.4byte	0x68
+ 237 00bb 00000000 		.4byte	.LFB64
+ 238 00bf 74000000 		.4byte	.LFE64-.LFB64
+ 239 00c3 01       		.uleb128 0x1
+ 240 00c4 9C       		.byte	0x9c
+ 241 00c5 91010000 		.4byte	0x191
+ 242 00c9 07       		.uleb128 0x7
+ 243 00ca 64010000 		.4byte	.LASF17
+ 244 00ce 01       		.byte	0x1
+ 245 00cf 15       		.byte	0x15
+ 246 00d0 81000000 		.4byte	0x81
+ 247 00d4 00000000 		.4byte	.LLST0
+ 248 00d8 08       		.uleb128 0x8
+ 249 00d9 1E000000 		.4byte	.LASF18
+ 250 00dd 01       		.byte	0x1
+ 251 00de 20       		.byte	0x20
+ 252 00df 91010000 		.4byte	0x191
+ 253 00e3 02       		.uleb128 0x2
+ 254 00e4 91       		.byte	0x91
+ 255 00e5 5C       		.sleb128 -36
+ 256 00e6 08       		.uleb128 0x8
+ 257 00e7 69010000 		.4byte	.LASF19
+ 258 00eb 01       		.byte	0x1
+ 259 00ec 23       		.byte	0x23
+ 260 00ed 91010000 		.4byte	0x191
+ 261 00f1 02       		.uleb128 0x2
+ 262 00f2 91       		.byte	0x91
+ 263 00f3 48       		.sleb128 -56
+ 264 00f4 09       		.uleb128 0x9
+ 265 00f5 34000000 		.4byte	.LBB2
+ 266 00f9 1C000000 		.4byte	.LBE2-.LBB2
+ 267 00fd 2E010000 		.4byte	0x12e
+ 268 0101 07       		.uleb128 0x7
+ 269 0102 15000000 		.4byte	.LASF20
+ 270 0106 01       		.byte	0x1
+ 271 0107 2B       		.byte	0x2b
+ 272 0108 81000000 		.4byte	0x81
+ 273 010c 2A000000 		.4byte	.LLST1
+ 274 0110 0A       		.uleb128 0xa
+ 275 0111 42000000 		.4byte	.LVL7
+ 276 0115 B2010000 		.4byte	0x1b2
+ 277 0119 24010000 		.4byte	0x124
+ 278 011d 0B       		.uleb128 0xb
+ 279 011e 01       		.uleb128 0x1
+ 280 011f 50       		.byte	0x50
+ 281 0120 02       		.uleb128 0x2
+ 282 0121 75       		.byte	0x75
+ 283 0122 00       		.sleb128 0
+ 284 0123 00       		.byte	0
+ 285 0124 0C       		.uleb128 0xc
+ 286 0125 50000000 		.4byte	.LVL8
+ 287 0129 BD010000 		.4byte	0x1bd
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccOsMtwx.s 			page 7
+
+
+ 288 012d 00       		.byte	0
+ 289 012e 0C       		.uleb128 0xc
+ 290 012f 0A000000 		.4byte	.LVL1
+ 291 0133 C8010000 		.4byte	0x1c8
+ 292 0137 0A       		.uleb128 0xa
+ 293 0138 2E000000 		.4byte	.LVL2
+ 294 013c D3010000 		.4byte	0x1d3
+ 295 0140 4B010000 		.4byte	0x14b
+ 296 0144 0B       		.uleb128 0xb
+ 297 0145 01       		.uleb128 0x1
+ 298 0146 50       		.byte	0x50
+ 299 0147 02       		.uleb128 0x2
+ 300 0148 91       		.byte	0x91
+ 301 0149 5C       		.sleb128 -36
+ 302 014a 00       		.byte	0
+ 303 014b 0C       		.uleb128 0xc
+ 304 014c 32000000 		.4byte	.LVL3
+ 305 0150 DE010000 		.4byte	0x1de
+ 306 0154 0C       		.uleb128 0xc
+ 307 0155 54000000 		.4byte	.LVL9
+ 308 0159 E9010000 		.4byte	0x1e9
+ 309 015d 0A       		.uleb128 0xa
+ 310 015e 62000000 		.4byte	.LVL10
+ 311 0162 F4010000 		.4byte	0x1f4
+ 312 0166 80010000 		.4byte	0x180
+ 313 016a 0B       		.uleb128 0xb
+ 314 016b 01       		.uleb128 0x1
+ 315 016c 50       		.byte	0x50
+ 316 016d 02       		.uleb128 0x2
+ 317 016e 7D       		.byte	0x7d
+ 318 016f 00       		.sleb128 0
+ 319 0170 0B       		.uleb128 0xb
+ 320 0171 01       		.uleb128 0x1
+ 321 0172 51       		.byte	0x51
+ 322 0173 05       		.uleb128 0x5
+ 323 0174 03       		.byte	0x3
+ 324 0175 00000000 		.4byte	.LC1
+ 325 0179 0B       		.uleb128 0xb
+ 326 017a 01       		.uleb128 0x1
+ 327 017b 52       		.byte	0x52
+ 328 017c 02       		.uleb128 0x2
+ 329 017d 74       		.byte	0x74
+ 330 017e 00       		.sleb128 0
+ 331 017f 00       		.byte	0
+ 332 0180 0D       		.uleb128 0xd
+ 333 0181 68000000 		.4byte	.LVL11
+ 334 0185 D3010000 		.4byte	0x1d3
+ 335 0189 0B       		.uleb128 0xb
+ 336 018a 01       		.uleb128 0x1
+ 337 018b 50       		.byte	0x50
+ 338 018c 02       		.uleb128 0x2
+ 339 018d 7D       		.byte	0x7d
+ 340 018e 00       		.sleb128 0
+ 341 018f 00       		.byte	0
+ 342 0190 00       		.byte	0
+ 343 0191 0E       		.uleb128 0xe
+ 344 0192 9B000000 		.4byte	0x9b
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccOsMtwx.s 			page 8
+
+
+ 345 0196 A1010000 		.4byte	0x1a1
+ 346 019a 0F       		.uleb128 0xf
+ 347 019b A9000000 		.4byte	0xa9
+ 348 019f 13       		.byte	0x13
+ 349 01a0 00       		.byte	0
+ 350 01a1 10       		.uleb128 0x10
+ 351 01a2 F5000000 		.4byte	.LASF32
+ 352 01a6 0A       		.byte	0xa
+ 353 01a7 1207     		.2byte	0x712
+ 354 01a9 AD010000 		.4byte	0x1ad
+ 355 01ad 11       		.uleb128 0x11
+ 356 01ae 76000000 		.4byte	0x76
+ 357 01b2 12       		.uleb128 0x12
+ 358 01b3 00000000 		.4byte	.LASF21
+ 359 01b7 00000000 		.4byte	.LASF21
+ 360 01bb 05       		.byte	0x5
+ 361 01bc 26       		.byte	0x26
+ 362 01bd 12       		.uleb128 0x12
+ 363 01be 11020000 		.4byte	.LASF22
+ 364 01c2 11020000 		.4byte	.LASF22
+ 365 01c6 06       		.byte	0x6
+ 366 01c7 76       		.byte	0x76
+ 367 01c8 12       		.uleb128 0x12
+ 368 01c9 EA000000 		.4byte	.LASF23
+ 369 01cd EA000000 		.4byte	.LASF23
+ 370 01d1 07       		.byte	0x7
+ 371 01d2 54       		.byte	0x54
+ 372 01d3 12       		.uleb128 0x12
+ 373 01d4 FA010000 		.4byte	.LASF24
+ 374 01d8 FA010000 		.4byte	.LASF24
+ 375 01dc 07       		.byte	0x7
+ 376 01dd 8B       		.byte	0x8b
+ 377 01de 12       		.uleb128 0x12
+ 378 01df 96010000 		.4byte	.LASF25
+ 379 01e3 96010000 		.4byte	.LASF25
+ 380 01e7 08       		.byte	0x8
+ 381 01e8 29       		.byte	0x29
+ 382 01e9 12       		.uleb128 0x12
+ 383 01ea BC010000 		.4byte	.LASF26
+ 384 01ee BC010000 		.4byte	.LASF26
+ 385 01f2 07       		.byte	0x7
+ 386 01f3 71       		.byte	0x71
+ 387 01f4 12       		.uleb128 0x12
+ 388 01f5 09020000 		.4byte	.LASF27
+ 389 01f9 09020000 		.4byte	.LASF27
+ 390 01fd 09       		.byte	0x9
+ 391 01fe E7       		.byte	0xe7
+ 392 01ff 00       		.byte	0
+ 393              		.section	.debug_abbrev,"",%progbits
+ 394              	.Ldebug_abbrev0:
+ 395 0000 01       		.uleb128 0x1
+ 396 0001 11       		.uleb128 0x11
+ 397 0002 01       		.byte	0x1
+ 398 0003 25       		.uleb128 0x25
+ 399 0004 0E       		.uleb128 0xe
+ 400 0005 13       		.uleb128 0x13
+ 401 0006 0B       		.uleb128 0xb
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccOsMtwx.s 			page 9
+
+
+ 402 0007 03       		.uleb128 0x3
+ 403 0008 0E       		.uleb128 0xe
+ 404 0009 1B       		.uleb128 0x1b
+ 405 000a 0E       		.uleb128 0xe
+ 406 000b 55       		.uleb128 0x55
+ 407 000c 17       		.uleb128 0x17
+ 408 000d 11       		.uleb128 0x11
+ 409 000e 01       		.uleb128 0x1
+ 410 000f 10       		.uleb128 0x10
+ 411 0010 17       		.uleb128 0x17
+ 412 0011 00       		.byte	0
+ 413 0012 00       		.byte	0
+ 414 0013 02       		.uleb128 0x2
+ 415 0014 24       		.uleb128 0x24
+ 416 0015 00       		.byte	0
+ 417 0016 0B       		.uleb128 0xb
+ 418 0017 0B       		.uleb128 0xb
+ 419 0018 3E       		.uleb128 0x3e
+ 420 0019 0B       		.uleb128 0xb
+ 421 001a 03       		.uleb128 0x3
+ 422 001b 0E       		.uleb128 0xe
+ 423 001c 00       		.byte	0
+ 424 001d 00       		.byte	0
+ 425 001e 03       		.uleb128 0x3
+ 426 001f 16       		.uleb128 0x16
+ 427 0020 00       		.byte	0
+ 428 0021 03       		.uleb128 0x3
+ 429 0022 0E       		.uleb128 0xe
+ 430 0023 3A       		.uleb128 0x3a
+ 431 0024 0B       		.uleb128 0xb
+ 432 0025 3B       		.uleb128 0x3b
+ 433 0026 0B       		.uleb128 0xb
+ 434 0027 49       		.uleb128 0x49
+ 435 0028 13       		.uleb128 0x13
+ 436 0029 00       		.byte	0
+ 437 002a 00       		.byte	0
+ 438 002b 04       		.uleb128 0x4
+ 439 002c 24       		.uleb128 0x24
+ 440 002d 00       		.byte	0
+ 441 002e 0B       		.uleb128 0xb
+ 442 002f 0B       		.uleb128 0xb
+ 443 0030 3E       		.uleb128 0x3e
+ 444 0031 0B       		.uleb128 0xb
+ 445 0032 03       		.uleb128 0x3
+ 446 0033 08       		.uleb128 0x8
+ 447 0034 00       		.byte	0
+ 448 0035 00       		.byte	0
+ 449 0036 05       		.uleb128 0x5
+ 450 0037 16       		.uleb128 0x16
+ 451 0038 00       		.byte	0
+ 452 0039 03       		.uleb128 0x3
+ 453 003a 0E       		.uleb128 0xe
+ 454 003b 3A       		.uleb128 0x3a
+ 455 003c 0B       		.uleb128 0xb
+ 456 003d 3B       		.uleb128 0x3b
+ 457 003e 05       		.uleb128 0x5
+ 458 003f 49       		.uleb128 0x49
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccOsMtwx.s 			page 10
+
+
+ 459 0040 13       		.uleb128 0x13
+ 460 0041 00       		.byte	0
+ 461 0042 00       		.byte	0
+ 462 0043 06       		.uleb128 0x6
+ 463 0044 2E       		.uleb128 0x2e
+ 464 0045 01       		.byte	0x1
+ 465 0046 3F       		.uleb128 0x3f
+ 466 0047 19       		.uleb128 0x19
+ 467 0048 03       		.uleb128 0x3
+ 468 0049 0E       		.uleb128 0xe
+ 469 004a 3A       		.uleb128 0x3a
+ 470 004b 0B       		.uleb128 0xb
+ 471 004c 3B       		.uleb128 0x3b
+ 472 004d 0B       		.uleb128 0xb
+ 473 004e 27       		.uleb128 0x27
+ 474 004f 19       		.uleb128 0x19
+ 475 0050 49       		.uleb128 0x49
+ 476 0051 13       		.uleb128 0x13
+ 477 0052 8701     		.uleb128 0x87
+ 478 0054 19       		.uleb128 0x19
+ 479 0055 11       		.uleb128 0x11
+ 480 0056 01       		.uleb128 0x1
+ 481 0057 12       		.uleb128 0x12
+ 482 0058 06       		.uleb128 0x6
+ 483 0059 40       		.uleb128 0x40
+ 484 005a 18       		.uleb128 0x18
+ 485 005b 9742     		.uleb128 0x2117
+ 486 005d 19       		.uleb128 0x19
+ 487 005e 01       		.uleb128 0x1
+ 488 005f 13       		.uleb128 0x13
+ 489 0060 00       		.byte	0
+ 490 0061 00       		.byte	0
+ 491 0062 07       		.uleb128 0x7
+ 492 0063 34       		.uleb128 0x34
+ 493 0064 00       		.byte	0
+ 494 0065 03       		.uleb128 0x3
+ 495 0066 0E       		.uleb128 0xe
+ 496 0067 3A       		.uleb128 0x3a
+ 497 0068 0B       		.uleb128 0xb
+ 498 0069 3B       		.uleb128 0x3b
+ 499 006a 0B       		.uleb128 0xb
+ 500 006b 49       		.uleb128 0x49
+ 501 006c 13       		.uleb128 0x13
+ 502 006d 02       		.uleb128 0x2
+ 503 006e 17       		.uleb128 0x17
+ 504 006f 00       		.byte	0
+ 505 0070 00       		.byte	0
+ 506 0071 08       		.uleb128 0x8
+ 507 0072 34       		.uleb128 0x34
+ 508 0073 00       		.byte	0
+ 509 0074 03       		.uleb128 0x3
+ 510 0075 0E       		.uleb128 0xe
+ 511 0076 3A       		.uleb128 0x3a
+ 512 0077 0B       		.uleb128 0xb
+ 513 0078 3B       		.uleb128 0x3b
+ 514 0079 0B       		.uleb128 0xb
+ 515 007a 49       		.uleb128 0x49
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccOsMtwx.s 			page 11
+
+
+ 516 007b 13       		.uleb128 0x13
+ 517 007c 02       		.uleb128 0x2
+ 518 007d 18       		.uleb128 0x18
+ 519 007e 00       		.byte	0
+ 520 007f 00       		.byte	0
+ 521 0080 09       		.uleb128 0x9
+ 522 0081 0B       		.uleb128 0xb
+ 523 0082 01       		.byte	0x1
+ 524 0083 11       		.uleb128 0x11
+ 525 0084 01       		.uleb128 0x1
+ 526 0085 12       		.uleb128 0x12
+ 527 0086 06       		.uleb128 0x6
+ 528 0087 01       		.uleb128 0x1
+ 529 0088 13       		.uleb128 0x13
+ 530 0089 00       		.byte	0
+ 531 008a 00       		.byte	0
+ 532 008b 0A       		.uleb128 0xa
+ 533 008c 898201   		.uleb128 0x4109
+ 534 008f 01       		.byte	0x1
+ 535 0090 11       		.uleb128 0x11
+ 536 0091 01       		.uleb128 0x1
+ 537 0092 31       		.uleb128 0x31
+ 538 0093 13       		.uleb128 0x13
+ 539 0094 01       		.uleb128 0x1
+ 540 0095 13       		.uleb128 0x13
+ 541 0096 00       		.byte	0
+ 542 0097 00       		.byte	0
+ 543 0098 0B       		.uleb128 0xb
+ 544 0099 8A8201   		.uleb128 0x410a
+ 545 009c 00       		.byte	0
+ 546 009d 02       		.uleb128 0x2
+ 547 009e 18       		.uleb128 0x18
+ 548 009f 9142     		.uleb128 0x2111
+ 549 00a1 18       		.uleb128 0x18
+ 550 00a2 00       		.byte	0
+ 551 00a3 00       		.byte	0
+ 552 00a4 0C       		.uleb128 0xc
+ 553 00a5 898201   		.uleb128 0x4109
+ 554 00a8 00       		.byte	0
+ 555 00a9 11       		.uleb128 0x11
+ 556 00aa 01       		.uleb128 0x1
+ 557 00ab 31       		.uleb128 0x31
+ 558 00ac 13       		.uleb128 0x13
+ 559 00ad 00       		.byte	0
+ 560 00ae 00       		.byte	0
+ 561 00af 0D       		.uleb128 0xd
+ 562 00b0 898201   		.uleb128 0x4109
+ 563 00b3 01       		.byte	0x1
+ 564 00b4 11       		.uleb128 0x11
+ 565 00b5 01       		.uleb128 0x1
+ 566 00b6 31       		.uleb128 0x31
+ 567 00b7 13       		.uleb128 0x13
+ 568 00b8 00       		.byte	0
+ 569 00b9 00       		.byte	0
+ 570 00ba 0E       		.uleb128 0xe
+ 571 00bb 01       		.uleb128 0x1
+ 572 00bc 01       		.byte	0x1
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccOsMtwx.s 			page 12
+
+
+ 573 00bd 49       		.uleb128 0x49
+ 574 00be 13       		.uleb128 0x13
+ 575 00bf 01       		.uleb128 0x1
+ 576 00c0 13       		.uleb128 0x13
+ 577 00c1 00       		.byte	0
+ 578 00c2 00       		.byte	0
+ 579 00c3 0F       		.uleb128 0xf
+ 580 00c4 21       		.uleb128 0x21
+ 581 00c5 00       		.byte	0
+ 582 00c6 49       		.uleb128 0x49
+ 583 00c7 13       		.uleb128 0x13
+ 584 00c8 2F       		.uleb128 0x2f
+ 585 00c9 0B       		.uleb128 0xb
+ 586 00ca 00       		.byte	0
+ 587 00cb 00       		.byte	0
+ 588 00cc 10       		.uleb128 0x10
+ 589 00cd 34       		.uleb128 0x34
+ 590 00ce 00       		.byte	0
+ 591 00cf 03       		.uleb128 0x3
+ 592 00d0 0E       		.uleb128 0xe
+ 593 00d1 3A       		.uleb128 0x3a
+ 594 00d2 0B       		.uleb128 0xb
+ 595 00d3 3B       		.uleb128 0x3b
+ 596 00d4 05       		.uleb128 0x5
+ 597 00d5 49       		.uleb128 0x49
+ 598 00d6 13       		.uleb128 0x13
+ 599 00d7 3F       		.uleb128 0x3f
+ 600 00d8 19       		.uleb128 0x19
+ 601 00d9 3C       		.uleb128 0x3c
+ 602 00da 19       		.uleb128 0x19
+ 603 00db 00       		.byte	0
+ 604 00dc 00       		.byte	0
+ 605 00dd 11       		.uleb128 0x11
+ 606 00de 35       		.uleb128 0x35
+ 607 00df 00       		.byte	0
+ 608 00e0 49       		.uleb128 0x49
+ 609 00e1 13       		.uleb128 0x13
+ 610 00e2 00       		.byte	0
+ 611 00e3 00       		.byte	0
+ 612 00e4 12       		.uleb128 0x12
+ 613 00e5 2E       		.uleb128 0x2e
+ 614 00e6 00       		.byte	0
+ 615 00e7 3F       		.uleb128 0x3f
+ 616 00e8 19       		.uleb128 0x19
+ 617 00e9 3C       		.uleb128 0x3c
+ 618 00ea 19       		.uleb128 0x19
+ 619 00eb 6E       		.uleb128 0x6e
+ 620 00ec 0E       		.uleb128 0xe
+ 621 00ed 03       		.uleb128 0x3
+ 622 00ee 0E       		.uleb128 0xe
+ 623 00ef 3A       		.uleb128 0x3a
+ 624 00f0 0B       		.uleb128 0xb
+ 625 00f1 3B       		.uleb128 0x3b
+ 626 00f2 0B       		.uleb128 0xb
+ 627 00f3 00       		.byte	0
+ 628 00f4 00       		.byte	0
+ 629 00f5 00       		.byte	0
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccOsMtwx.s 			page 13
+
+
+ 630              		.section	.debug_loc,"",%progbits
+ 631              	.Ldebug_loc0:
+ 632              	.LLST0:
+ 633 0000 04000000 		.4byte	.LVL0
+ 634 0004 2E000000 		.4byte	.LVL2
+ 635 0008 0200     		.2byte	0x2
+ 636 000a 30       		.byte	0x30
+ 637 000b 9F       		.byte	0x9f
+ 638 000c 2E000000 		.4byte	.LVL2
+ 639 0010 36000000 		.4byte	.LVL4
+ 640 0014 0100     		.2byte	0x1
+ 641 0016 54       		.byte	0x54
+ 642 0017 38000000 		.4byte	.LVL5
+ 643 001b 74000000 		.4byte	.LFE64
+ 644 001f 0100     		.2byte	0x1
+ 645 0021 54       		.byte	0x54
+ 646 0022 00000000 		.4byte	0
+ 647 0026 00000000 		.4byte	0
+ 648              	.LLST1:
+ 649 002a 3C000000 		.4byte	.LVL6
+ 650 002e 50000000 		.4byte	.LVL8
+ 651 0032 0100     		.2byte	0x1
+ 652 0034 55       		.byte	0x55
+ 653 0035 00000000 		.4byte	0
+ 654 0039 00000000 		.4byte	0
+ 655              		.section	.debug_aranges,"",%progbits
+ 656 0000 1C000000 		.4byte	0x1c
+ 657 0004 0200     		.2byte	0x2
+ 658 0006 00000000 		.4byte	.Ldebug_info0
+ 659 000a 04       		.byte	0x4
+ 660 000b 00       		.byte	0
+ 661 000c 0000     		.2byte	0
+ 662 000e 0000     		.2byte	0
+ 663 0010 00000000 		.4byte	.LFB64
+ 664 0014 74000000 		.4byte	.LFE64-.LFB64
+ 665 0018 00000000 		.4byte	0
+ 666 001c 00000000 		.4byte	0
+ 667              		.section	.debug_ranges,"",%progbits
+ 668              	.Ldebug_ranges0:
+ 669 0000 00000000 		.4byte	.LFB64
+ 670 0004 74000000 		.4byte	.LFE64
+ 671 0008 00000000 		.4byte	0
+ 672 000c 00000000 		.4byte	0
+ 673              		.section	.debug_line,"",%progbits
+ 674              	.Ldebug_line0:
+ 675 0000 12020000 		.section	.debug_str,"MS",%progbits,1
+ 675      0200EA01 
+ 675      00000201 
+ 675      FB0E0D00 
+ 675      01010101 
+ 676              	.LASF21:
+ 677 0000 4C454431 		.ascii	"LED1_Write\000"
+ 677      5F577269 
+ 677      746500
+ 678              	.LASF9:
+ 679 000b 5F5F696E 		.ascii	"__int32_t\000"
+ 679      7433325F 
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccOsMtwx.s 			page 14
+
+
+ 679      7400
+ 680              	.LASF20:
+ 681 0015 6C656453 		.ascii	"ledState\000"
+ 681      74617465 
+ 681      00
+ 682              	.LASF18:
+ 683 001e 6E616D65 		.ascii	"name\000"
+ 683      00
+ 684              	.LASF12:
+ 685 0023 666C6F61 		.ascii	"float\000"
+ 685      7400
+ 686              	.LASF1:
+ 687 0029 756E7369 		.ascii	"unsigned char\000"
+ 687      676E6564 
+ 687      20636861 
+ 687      7200
+ 688              	.LASF28:
+ 689 0037 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 689      43313120 
+ 689      352E342E 
+ 689      31203230 
+ 689      31363036 
+ 690 006a 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m3 -mthumb -g -O"
+ 690      20726576 
+ 690      6973696F 
+ 690      6E203233 
+ 690      37373135 
+ 691 009d 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 691      66756E63 
+ 691      74696F6E 
+ 691      2D736563 
+ 691      74696F6E 
+ 692              	.LASF5:
+ 693 00c5 6C6F6E67 		.ascii	"long unsigned int\000"
+ 693      20756E73 
+ 693      69676E65 
+ 693      6420696E 
+ 693      7400
+ 694              	.LASF3:
+ 695 00d7 73686F72 		.ascii	"short unsigned int\000"
+ 695      7420756E 
+ 695      7369676E 
+ 695      65642069 
+ 695      6E7400
+ 696              	.LASF23:
+ 697 00ea 55415254 		.ascii	"UART_Start\000"
+ 697      5F537461 
+ 697      727400
+ 698              	.LASF32:
+ 699 00f5 49544D5F 		.ascii	"ITM_RxBuffer\000"
+ 699      52784275 
+ 699      66666572 
+ 699      00
+ 700              	.LASF13:
+ 701 0102 646F7562 		.ascii	"double\000"
+ 701      6C6500
+ 702              	.LASF31:
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccOsMtwx.s 			page 15
+
+
+ 703 0109 6D61696E 		.ascii	"main\000"
+ 703      00
+ 704              	.LASF30:
+ 705 010e 433A5C55 		.ascii	"C:\\Users\\iamna\\Documents\\PSoC Creator\\nadimPSo"
+ 705      73657273 
+ 705      5C69616D 
+ 705      6E615C44 
+ 705      6F63756D 
+ 706 013c 434C6162 		.ascii	"CLab1\\nadimaPSoCLab1.cydsn\000"
+ 706      315C6E61 
+ 706      64696D61 
+ 706      50536F43 
+ 706      4C616231 
+ 707              	.LASF8:
+ 708 0157 756E7369 		.ascii	"unsigned int\000"
+ 708      676E6564 
+ 708      20696E74 
+ 708      00
+ 709              	.LASF17:
+ 710 0164 626C6E6B 		.ascii	"blnk\000"
+ 710      00
+ 711              	.LASF19:
+ 712 0169 73656E64 		.ascii	"send\000"
+ 712      00
+ 713              	.LASF7:
+ 714 016e 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 714      206C6F6E 
+ 714      6720756E 
+ 714      7369676E 
+ 714      65642069 
+ 715              	.LASF10:
+ 716 0185 696E7433 		.ascii	"int32_t\000"
+ 716      325F7400 
+ 717              	.LASF16:
+ 718 018d 73697A65 		.ascii	"sizetype\000"
+ 718      74797065 
+ 718      00
+ 719              	.LASF25:
+ 720 0196 42757474 		.ascii	"Button_Read\000"
+ 720      6F6E5F52 
+ 720      65616400 
+ 721              	.LASF6:
+ 722 01a2 6C6F6E67 		.ascii	"long long int\000"
+ 722      206C6F6E 
+ 722      6720696E 
+ 722      7400
+ 723              	.LASF29:
+ 724 01b0 6D61696E 		.ascii	"main.c\000"
+ 724      2E6300
+ 725              	.LASF14:
+ 726 01b7 63686172 		.ascii	"char\000"
+ 726      00
+ 727              	.LASF26:
+ 728 01bc 55415254 		.ascii	"UART_GetChar\000"
+ 728      5F476574 
+ 728      43686172 
+ 728      00
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccOsMtwx.s 			page 16
+
+
+ 729              	.LASF2:
+ 730 01c9 73686F72 		.ascii	"short int\000"
+ 730      7420696E 
+ 730      7400
+ 731              	.LASF11:
+ 732 01d3 75696E74 		.ascii	"uint8\000"
+ 732      3800
+ 733              	.LASF4:
+ 734 01d9 6C6F6E67 		.ascii	"long int\000"
+ 734      20696E74 
+ 734      00
+ 735              	.LASF15:
+ 736 01e2 6C6F6E67 		.ascii	"long double\000"
+ 736      20646F75 
+ 736      626C6500 
+ 737              	.LASF0:
+ 738 01ee 7369676E 		.ascii	"signed char\000"
+ 738      65642063 
+ 738      68617200 
+ 739              	.LASF24:
+ 740 01fa 55415254 		.ascii	"UART_PutString\000"
+ 740      5F507574 
+ 740      53747269 
+ 740      6E6700
+ 741              	.LASF27:
+ 742 0209 73707269 		.ascii	"sprintf\000"
+ 742      6E746600 
+ 743              	.LASF22:
+ 744 0211 43794465 		.ascii	"CyDelay\000"
+ 744      6C617900 
+ 745              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran
