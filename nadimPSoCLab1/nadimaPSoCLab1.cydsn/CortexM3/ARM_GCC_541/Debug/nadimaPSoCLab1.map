@@ -1040,31 +1040,31 @@ END GROUP
  .debug_frame   0x00001548       0x20 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-msizer.o)
  .debug_frame   0x00001568       0x5c c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-reent.o)
 
-.debug_str      0x00000000     0x1857
+.debug_str      0x00000000     0x185e
  *(.debug_str)
- .debug_str     0x00000000      0x1d1 .\CortexM3\ARM_GCC_541\Debug\main.o
-                                0x219 (size before relaxing)
- .debug_str     0x000001d1      0x1fe .\CortexM3\ARM_GCC_541\Debug\cyfitter_cfg.o
+ .debug_str     0x00000000      0x1d8 .\CortexM3\ARM_GCC_541\Debug\main.o
+                                0x220 (size before relaxing)
+ .debug_str     0x000001d8      0x1fe .\CortexM3\ARM_GCC_541\Debug\cyfitter_cfg.o
                                 0x34a (size before relaxing)
- .debug_str     0x000003cf       0x7f .\CortexM3\ARM_GCC_541\Debug\cymetadata.o
+ .debug_str     0x000003d6       0x7f .\CortexM3\ARM_GCC_541\Debug\cymetadata.o
                                 0x1ea (size before relaxing)
- .debug_str     0x0000044e      0x144 .\CortexM3\ARM_GCC_541\Debug\Cm3Start.o
+ .debug_str     0x00000455      0x144 .\CortexM3\ARM_GCC_541\Debug\Cm3Start.o
                                 0x310 (size before relaxing)
- .debug_str     0x00000592       0x5b .\CortexM3\ARM_GCC_541\Debug\nadimaPSoCLab1.a(LED1.o)
+ .debug_str     0x00000599       0x5b .\CortexM3\ARM_GCC_541\Debug\nadimaPSoCLab1.a(LED1.o)
                                 0x1e3 (size before relaxing)
- .debug_str     0x000005ed      0x847 .\CortexM3\ARM_GCC_541\Debug\nadimaPSoCLab1.a(CyLib.o)
+ .debug_str     0x000005f4      0x847 .\CortexM3\ARM_GCC_541\Debug\nadimaPSoCLab1.a(CyLib.o)
                                 0xa4d (size before relaxing)
- .debug_str     0x00000e34      0x365 .\CortexM3\ARM_GCC_541\Debug\nadimaPSoCLab1.a(cyPm.o)
+ .debug_str     0x00000e3b      0x365 .\CortexM3\ARM_GCC_541\Debug\nadimaPSoCLab1.a(cyPm.o)
                                 0x739 (size before relaxing)
- .debug_str     0x00001199       0x54 .\CortexM3\ARM_GCC_541\Debug\nadimaPSoCLab1.a(Button.o)
+ .debug_str     0x000011a0       0x54 .\CortexM3\ARM_GCC_541\Debug\nadimaPSoCLab1.a(Button.o)
                                 0x1ed (size before relaxing)
- .debug_str     0x000011ed      0x280 .\CortexM3\ARM_GCC_541\Debug\nadimaPSoCLab1.a(UART.o)
+ .debug_str     0x000011f4      0x280 .\CortexM3\ARM_GCC_541\Debug\nadimaPSoCLab1.a(UART.o)
                                 0x47b (size before relaxing)
- .debug_str     0x0000146d      0x183 .\CortexM3\ARM_GCC_541\Debug\nadimaPSoCLab1.a(UART_IntClock.o)
+ .debug_str     0x00001474      0x183 .\CortexM3\ARM_GCC_541\Debug\nadimaPSoCLab1.a(UART_IntClock.o)
                                 0x33c (size before relaxing)
- .debug_str     0x000015f0      0x1bb .\CortexM3\ARM_GCC_541\Debug\nadimaPSoCLab1.a(CyFlash.o)
+ .debug_str     0x000015f7      0x1bb .\CortexM3\ARM_GCC_541\Debug\nadimaPSoCLab1.a(CyFlash.o)
                                 0x3c6 (size before relaxing)
- .debug_str     0x000017ab       0xac .\CortexM3\ARM_GCC_541\Debug\nadimaPSoCLab1.a(CySpc.o)
+ .debug_str     0x000017b2       0xac .\CortexM3\ARM_GCC_541\Debug\nadimaPSoCLab1.a(CySpc.o)
                                 0x33e (size before relaxing)
 
 .debug_loc      0x00000000     0x1e8f

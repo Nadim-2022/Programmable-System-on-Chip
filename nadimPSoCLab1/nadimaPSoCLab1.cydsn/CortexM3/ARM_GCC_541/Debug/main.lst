@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccOsMtwx.s 			page 1
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\cc3bO4Ke.s 			page 1
 
 
    1              		.syntax unified
@@ -36,7 +36,7 @@ ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccOsMtwx.s 			page 1
    6:main.c        ****  *
    7:main.c        ****  * PSoC Design Course 2024: Exercise 1, Fundamentals
    8:main.c        ****  *
-   9:main.c        ****  * Blink LED at btton press and send counter value through UART to terminal
+   9:main.c        ****  * Blink LED at btton press 1/sec ( 200ms on / 800ms off) and send counter value through UART to te
   10:main.c        ****  *
   11:main.c        ****  * CC-NA-SA 4.0
   12:main.c        ****  *
@@ -58,12 +58,12 @@ ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccOsMtwx.s 			page 1
   36              		.cfi_offset 14, -4
   37 0002 8BB0     		sub	sp, sp, #44
   38              		.cfi_def_cfa_offset 56
-ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccOsMtwx.s 			page 2
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\cc3bO4Ke.s 			page 2
 
 
   39              	.LVL0:
   20:main.c        ****     // Counter variable
-  21:main.c        ****     uint8 blnk = 0;
+  21:main.c        ****     uint8 blnkcounter = 0;
   22:main.c        ****     
   23:main.c        ****     CyGlobalIntEnable; /* Enable global interrupts. */
   40              		.loc 1 23 0
@@ -118,12 +118,12 @@ ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccOsMtwx.s 			page 1
   70              		.loc 1 42 0
   71 002e FFF7FEFF 		bl	Button_Read
   72              	.LVL3:
-ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccOsMtwx.s 			page 3
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\cc3bO4Ke.s 			page 3
 
 
   73 0032 68B9     		cbnz	r0, .L3
   74              	.LBB2:
-  43:main.c        ****             uint8 ledState = ++blnk % 2;
+  43:main.c        ****             uint8 ledState = ++blnkcounter % 2;
   75              		.loc 1 43 0
   76 0034 0134     		adds	r4, r4, #1
   77              	.LVL4:
@@ -157,7 +157,7 @@ ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccOsMtwx.s 			page 1
  100              	.LVL9:
  101 0054 0028     		cmp	r0, #0
  102 0056 EAD0     		beq	.L2
-  49:main.c        ****             sprintf(send, "%d\r\n", blnk);
+  49:main.c        ****             sprintf(send, "%d\r\n", blnkcounter);
  103              		.loc 1 49 0
  104 0058 2246     		mov	r2, r4
  105 005a 0549     		ldr	r1, .L8+4
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccOsMtwx.s 			page 1
  119              		.cfi_endproc
  120              	.LFE64:
  121              		.size	main, .-main
-ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccOsMtwx.s 			page 4
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\cc3bO4Ke.s 			page 4
 
 
  122              		.section	.rodata
@@ -216,7 +216,7 @@ ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccOsMtwx.s 			page 1
  149 000b 01       		.uleb128 0x1
  150 000c 37000000 		.4byte	.LASF28
  151 0010 0C       		.byte	0xc
- 152 0011 B0010000 		.4byte	.LASF29
+ 152 0011 B7010000 		.4byte	.LASF29
  153 0015 0E010000 		.4byte	.LASF30
  154 0019 00000000 		.4byte	.Ldebug_ranges0+0
  155 001d 00000000 		.4byte	0
@@ -224,7 +224,7 @@ ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccOsMtwx.s 			page 1
  157 0025 02       		.uleb128 0x2
  158 0026 01       		.byte	0x1
  159 0027 06       		.byte	0x6
- 160 0028 EE010000 		.4byte	.LASF0
+ 160 0028 F5010000 		.4byte	.LASF0
  161 002c 02       		.uleb128 0x2
  162 002d 01       		.byte	0x1
  163 002e 08       		.byte	0x8
@@ -232,13 +232,13 @@ ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccOsMtwx.s 			page 1
  165 0033 02       		.uleb128 0x2
  166 0034 02       		.byte	0x2
  167 0035 05       		.byte	0x5
- 168 0036 C9010000 		.4byte	.LASF2
+ 168 0036 D0010000 		.4byte	.LASF2
  169 003a 02       		.uleb128 0x2
  170 003b 02       		.byte	0x2
  171 003c 07       		.byte	0x7
  172 003d D7000000 		.4byte	.LASF3
  173 0041 03       		.uleb128 0x3
-ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccOsMtwx.s 			page 5
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\cc3bO4Ke.s 			page 5
 
 
  174 0042 0B000000 		.4byte	.LASF9
@@ -248,7 +248,7 @@ ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccOsMtwx.s 			page 1
  178 004c 02       		.uleb128 0x2
  179 004d 04       		.byte	0x4
  180 004e 05       		.byte	0x5
- 181 004f D9010000 		.4byte	.LASF4
+ 181 004f E0010000 		.4byte	.LASF4
  182 0053 02       		.uleb128 0x2
  183 0054 04       		.byte	0x4
  184 0055 07       		.byte	0x7
@@ -256,11 +256,11 @@ ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccOsMtwx.s 			page 1
  186 005a 02       		.uleb128 0x2
  187 005b 08       		.byte	0x8
  188 005c 05       		.byte	0x5
- 189 005d A2010000 		.4byte	.LASF6
+ 189 005d A9010000 		.4byte	.LASF6
  190 0061 02       		.uleb128 0x2
  191 0062 08       		.byte	0x8
  192 0063 07       		.byte	0x7
- 193 0064 6E010000 		.4byte	.LASF7
+ 193 0064 75010000 		.4byte	.LASF7
  194 0068 04       		.uleb128 0x4
  195 0069 04       		.byte	0x4
  196 006a 05       		.byte	0x5
@@ -268,14 +268,14 @@ ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccOsMtwx.s 			page 1
  198 006f 02       		.uleb128 0x2
  199 0070 04       		.byte	0x4
  200 0071 07       		.byte	0x7
- 201 0072 57010000 		.4byte	.LASF8
+ 201 0072 63010000 		.4byte	.LASF8
  202 0076 03       		.uleb128 0x3
- 203 0077 85010000 		.4byte	.LASF10
+ 203 0077 8C010000 		.4byte	.LASF10
  204 007b 03       		.byte	0x3
  205 007c 2C       		.byte	0x2c
  206 007d 41000000 		.4byte	0x41
  207 0081 05       		.uleb128 0x5
- 208 0082 D3010000 		.4byte	.LASF11
+ 208 0082 DA010000 		.4byte	.LASF11
  209 0086 04       		.byte	0x4
  210 0087 E801     		.2byte	0x1e8
  211 0089 2C000000 		.4byte	0x2c
@@ -290,18 +290,18 @@ ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccOsMtwx.s 			page 1
  220 009b 02       		.uleb128 0x2
  221 009c 01       		.byte	0x1
  222 009d 08       		.byte	0x8
- 223 009e B7010000 		.4byte	.LASF14
+ 223 009e BE010000 		.4byte	.LASF14
  224 00a2 02       		.uleb128 0x2
  225 00a3 08       		.byte	0x8
  226 00a4 04       		.byte	0x4
- 227 00a5 E2010000 		.4byte	.LASF15
+ 227 00a5 E9010000 		.4byte	.LASF15
  228 00a9 02       		.uleb128 0x2
  229 00aa 04       		.byte	0x4
  230 00ab 07       		.byte	0x7
-ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccOsMtwx.s 			page 6
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\cc3bO4Ke.s 			page 6
 
 
- 231 00ac 8D010000 		.4byte	.LASF16
+ 231 00ac 94010000 		.4byte	.LASF16
  232 00b0 06       		.uleb128 0x6
  233 00b1 09010000 		.4byte	.LASF31
  234 00b5 01       		.byte	0x1
@@ -313,7 +313,7 @@ ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccOsMtwx.s 			page 1
  240 00c4 9C       		.byte	0x9c
  241 00c5 91010000 		.4byte	0x191
  242 00c9 07       		.uleb128 0x7
- 243 00ca 64010000 		.4byte	.LASF17
+ 243 00ca 57010000 		.4byte	.LASF17
  244 00ce 01       		.byte	0x1
  245 00cf 15       		.byte	0x15
  246 00d0 81000000 		.4byte	0x81
@@ -327,7 +327,7 @@ ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccOsMtwx.s 			page 1
  254 00e4 91       		.byte	0x91
  255 00e5 5C       		.sleb128 -36
  256 00e6 08       		.uleb128 0x8
- 257 00e7 69010000 		.4byte	.LASF19
+ 257 00e7 70010000 		.4byte	.LASF19
  258 00eb 01       		.byte	0x1
  259 00ec 23       		.byte	0x23
  260 00ed 91010000 		.4byte	0x191
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccOsMtwx.s 			page 1
  285 0124 0C       		.uleb128 0xc
  286 0125 50000000 		.4byte	.LVL8
  287 0129 BD010000 		.4byte	0x1bd
-ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccOsMtwx.s 			page 7
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\cc3bO4Ke.s 			page 7
 
 
  288 012d 00       		.byte	0
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccOsMtwx.s 			page 1
  342 0190 00       		.byte	0
  343 0191 0E       		.uleb128 0xe
  344 0192 9B000000 		.4byte	0x9b
-ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccOsMtwx.s 			page 8
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\cc3bO4Ke.s 			page 8
 
 
  345 0196 A1010000 		.4byte	0x1a1
@@ -439,8 +439,8 @@ ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccOsMtwx.s 			page 1
  360 01bb 05       		.byte	0x5
  361 01bc 26       		.byte	0x26
  362 01bd 12       		.uleb128 0x12
- 363 01be 11020000 		.4byte	.LASF22
- 364 01c2 11020000 		.4byte	.LASF22
+ 363 01be 18020000 		.4byte	.LASF22
+ 364 01c2 18020000 		.4byte	.LASF22
  365 01c6 06       		.byte	0x6
  366 01c7 76       		.byte	0x76
  367 01c8 12       		.uleb128 0x12
@@ -449,23 +449,23 @@ ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccOsMtwx.s 			page 1
  370 01d1 07       		.byte	0x7
  371 01d2 54       		.byte	0x54
  372 01d3 12       		.uleb128 0x12
- 373 01d4 FA010000 		.4byte	.LASF24
- 374 01d8 FA010000 		.4byte	.LASF24
+ 373 01d4 01020000 		.4byte	.LASF24
+ 374 01d8 01020000 		.4byte	.LASF24
  375 01dc 07       		.byte	0x7
  376 01dd 8B       		.byte	0x8b
  377 01de 12       		.uleb128 0x12
- 378 01df 96010000 		.4byte	.LASF25
- 379 01e3 96010000 		.4byte	.LASF25
+ 378 01df 9D010000 		.4byte	.LASF25
+ 379 01e3 9D010000 		.4byte	.LASF25
  380 01e7 08       		.byte	0x8
  381 01e8 29       		.byte	0x29
  382 01e9 12       		.uleb128 0x12
- 383 01ea BC010000 		.4byte	.LASF26
- 384 01ee BC010000 		.4byte	.LASF26
+ 383 01ea C3010000 		.4byte	.LASF26
+ 384 01ee C3010000 		.4byte	.LASF26
  385 01f2 07       		.byte	0x7
  386 01f3 71       		.byte	0x71
  387 01f4 12       		.uleb128 0x12
- 388 01f5 09020000 		.4byte	.LASF27
- 389 01f9 09020000 		.4byte	.LASF27
+ 388 01f5 10020000 		.4byte	.LASF27
+ 389 01f9 10020000 		.4byte	.LASF27
  390 01fd 09       		.byte	0x9
  391 01fe E7       		.byte	0xe7
  392 01ff 00       		.byte	0
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccOsMtwx.s 			page 1
  399 0004 0E       		.uleb128 0xe
  400 0005 13       		.uleb128 0x13
  401 0006 0B       		.uleb128 0xb
-ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccOsMtwx.s 			page 9
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\cc3bO4Ke.s 			page 9
 
 
  402 0007 03       		.uleb128 0x3
@@ -538,7 +538,7 @@ ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccOsMtwx.s 			page 1
  456 003d 3B       		.uleb128 0x3b
  457 003e 05       		.uleb128 0x5
  458 003f 49       		.uleb128 0x49
-ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccOsMtwx.s 			page 10
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\cc3bO4Ke.s 			page 10
 
 
  459 0040 13       		.uleb128 0x13
@@ -598,7 +598,7 @@ ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccOsMtwx.s 			page 1
  513 0078 3B       		.uleb128 0x3b
  514 0079 0B       		.uleb128 0xb
  515 007a 49       		.uleb128 0x49
-ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccOsMtwx.s 			page 11
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\cc3bO4Ke.s 			page 11
 
 
  516 007b 13       		.uleb128 0x13
@@ -658,7 +658,7 @@ ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccOsMtwx.s 			page 1
  570 00ba 0E       		.uleb128 0xe
  571 00bb 01       		.uleb128 0x1
  572 00bc 01       		.byte	0x1
-ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccOsMtwx.s 			page 12
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\cc3bO4Ke.s 			page 12
 
 
  573 00bd 49       		.uleb128 0x49
@@ -718,7 +718,7 @@ ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccOsMtwx.s 			page 1
  627 00f3 00       		.byte	0
  628 00f4 00       		.byte	0
  629 00f5 00       		.byte	0
-ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccOsMtwx.s 			page 13
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\cc3bO4Ke.s 			page 13
 
 
  630              		.section	.debug_loc,"",%progbits
@@ -778,7 +778,7 @@ ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccOsMtwx.s 			page 1
  678              	.LASF9:
  679 000b 5F5F696E 		.ascii	"__int32_t\000"
  679      7433325F 
-ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccOsMtwx.s 			page 14
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\cc3bO4Ke.s 			page 14
 
 
  679      7400
@@ -838,7 +838,7 @@ ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccOsMtwx.s 			page 1
  701 0102 646F7562 		.ascii	"double\000"
  701      6C6500
  702              	.LASF31:
-ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccOsMtwx.s 			page 15
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\cc3bO4Ke.s 			page 15
 
 
  703 0109 6D61696E 		.ascii	"main\000"
@@ -854,81 +854,82 @@ ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccOsMtwx.s 			page 1
  706      64696D61 
  706      50536F43 
  706      4C616231 
- 707              	.LASF8:
- 708 0157 756E7369 		.ascii	"unsigned int\000"
- 708      676E6564 
- 708      20696E74 
- 708      00
- 709              	.LASF17:
- 710 0164 626C6E6B 		.ascii	"blnk\000"
+ 707              	.LASF17:
+ 708 0157 626C6E6B 		.ascii	"blnkcounter\000"
+ 708      636F756E 
+ 708      74657200 
+ 709              	.LASF8:
+ 710 0163 756E7369 		.ascii	"unsigned int\000"
+ 710      676E6564 
+ 710      20696E74 
  710      00
  711              	.LASF19:
- 712 0169 73656E64 		.ascii	"send\000"
+ 712 0170 73656E64 		.ascii	"send\000"
  712      00
  713              	.LASF7:
- 714 016e 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 714 0175 6C6F6E67 		.ascii	"long long unsigned int\000"
  714      206C6F6E 
  714      6720756E 
  714      7369676E 
  714      65642069 
  715              	.LASF10:
- 716 0185 696E7433 		.ascii	"int32_t\000"
+ 716 018c 696E7433 		.ascii	"int32_t\000"
  716      325F7400 
  717              	.LASF16:
- 718 018d 73697A65 		.ascii	"sizetype\000"
+ 718 0194 73697A65 		.ascii	"sizetype\000"
  718      74797065 
  718      00
  719              	.LASF25:
- 720 0196 42757474 		.ascii	"Button_Read\000"
+ 720 019d 42757474 		.ascii	"Button_Read\000"
  720      6F6E5F52 
  720      65616400 
  721              	.LASF6:
- 722 01a2 6C6F6E67 		.ascii	"long long int\000"
+ 722 01a9 6C6F6E67 		.ascii	"long long int\000"
  722      206C6F6E 
  722      6720696E 
  722      7400
  723              	.LASF29:
- 724 01b0 6D61696E 		.ascii	"main.c\000"
+ 724 01b7 6D61696E 		.ascii	"main.c\000"
  724      2E6300
  725              	.LASF14:
- 726 01b7 63686172 		.ascii	"char\000"
+ 726 01be 63686172 		.ascii	"char\000"
  726      00
  727              	.LASF26:
- 728 01bc 55415254 		.ascii	"UART_GetChar\000"
+ 728 01c3 55415254 		.ascii	"UART_GetChar\000"
  728      5F476574 
  728      43686172 
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\cc3bO4Ke.s 			page 16
+
+
  728      00
-ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccOsMtwx.s 			page 16
-
-
  729              	.LASF2:
- 730 01c9 73686F72 		.ascii	"short int\000"
+ 730 01d0 73686F72 		.ascii	"short int\000"
  730      7420696E 
  730      7400
  731              	.LASF11:
- 732 01d3 75696E74 		.ascii	"uint8\000"
+ 732 01da 75696E74 		.ascii	"uint8\000"
  732      3800
  733              	.LASF4:
- 734 01d9 6C6F6E67 		.ascii	"long int\000"
+ 734 01e0 6C6F6E67 		.ascii	"long int\000"
  734      20696E74 
  734      00
  735              	.LASF15:
- 736 01e2 6C6F6E67 		.ascii	"long double\000"
+ 736 01e9 6C6F6E67 		.ascii	"long double\000"
  736      20646F75 
  736      626C6500 
  737              	.LASF0:
- 738 01ee 7369676E 		.ascii	"signed char\000"
+ 738 01f5 7369676E 		.ascii	"signed char\000"
  738      65642063 
  738      68617200 
  739              	.LASF24:
- 740 01fa 55415254 		.ascii	"UART_PutString\000"
+ 740 0201 55415254 		.ascii	"UART_PutString\000"
  740      5F507574 
  740      53747269 
  740      6E6700
  741              	.LASF27:
- 742 0209 73707269 		.ascii	"sprintf\000"
+ 742 0210 73707269 		.ascii	"sprintf\000"
  742      6E746600 
  743              	.LASF22:
- 744 0211 43794465 		.ascii	"CyDelay\000"
+ 744 0218 43794465 		.ascii	"CyDelay\000"
  744      6C617900 
  745              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

@@ -46,7 +46,7 @@ int main(void)
         }
         // Read input  char from UART and send the blnk counter value
         if (UART_GetChar()) {
-            sprintf(send, "%d\r\n", blnk);
+            sprintf(send, "%d\r\n", blnkcounter);
             UART_PutString(send);
         }
     }
