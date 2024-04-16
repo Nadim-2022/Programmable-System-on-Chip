@@ -1,0 +1,1231 @@
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccpj2M44.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"main.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.button_press_isr,"ax",%progbits
+  20              		.align	2
+  21              		.global	button_press_isr
+  22              		.thumb
+  23              		.thumb_func
+  24              		.type	button_press_isr, %function
+  25              	button_press_isr:
+  26              	.LFB65:
+  27              		.file 1 "main.c"
+   1:main.c        **** /* ========================================
+   2:main.c        ****  *
+   3:main.c        ****  * Copyright Nadim Ahmed, Metropolia University of Applied Science, Finland, 2024
+   4:main.c        ****  * 
+   5:main.c        ****  * April 16, 2024
+   6:main.c        ****  *
+   7:main.c        ****  * PSoC Design Course 2024: Exercise 2, PWM, Interrupte and Servo
+   8:main.c        ****  *
+   9:main.c        ****  * Servo motor run  and speed change on button press {4 speed mode Stop, Full speed, Medium speed, 
+  10:main.c        ****  *
+  11:main.c        ****  * CC-NA-SA 4.0
+  12:main.c        ****  *
+  13:main.c        ****  * ========================================
+  14:main.c        **** */
+  15:main.c        **** #include "project.h"
+  16:main.c        **** #include <stdio.h>
+  17:main.c        **** #include <stdbool.h>
+  18:main.c        **** 
+  19:main.c        **** /* Project Defines */
+  20:main.c        **** #define MAX_SPEEDS 4
+  21:main.c        **** #define SPEED_INCREMENT 10
+  22:main.c        **** 
+  23:main.c        **** /* Global variables */
+  24:main.c        **** uint8_t speed_index = 0;
+  25:main.c        **** uint16_t speed_values[MAX_SPEEDS] = { 1500, 2500, 3500, 4500}; // Stop, Max Speed, Medium speed , S
+  26:main.c        **** static uint16_t current_speed_value = 0;
+  27:main.c        **** 
+  28:main.c        **** //Interrupt service routines
+  29:main.c        **** CY_ISR_PROTO(button_press_isr);
+  30:main.c        **** CY_ISR_PROTO(pwm_cycle_isr);
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccpj2M44.s 			page 2
+
+
+  31:main.c        **** 
+  32:main.c        **** int main(void)
+  33:main.c        **** {   
+  34:main.c        ****     CyGlobalIntEnable; /* Enable global interrupts. */
+  35:main.c        ****     Clock_1_Start();
+  36:main.c        ****     Button_isr_StartEx(button_press_isr);
+  37:main.c        ****     LED1_Write(0);
+  38:main.c        ****     PWM_Start();
+  39:main.c        ****     PWM_ctrl_StartEx(pwm_cycle_isr);
+  40:main.c        ****     
+  41:main.c        ****     /* Place your initialization/startup code here (e.g. MyInst_Start()) */
+  42:main.c        ****     
+  43:main.c        ****     for(;;)
+  44:main.c        ****     {
+  45:main.c        ****         // Main loop
+  46:main.c        ****     }
+  47:main.c        **** }
+  48:main.c        **** 
+  49:main.c        **** /*
+  50:main.c        **** * ISR for button press
+  51:main.c        **** * This ISR is called when the button is pressed
+  52:main.c        **** * It will increment the current speed index
+  53:main.c        **** * This will change the target speed
+  54:main.c        **** * The PWM ISR will then change the current speed to the target speed
+  55:main.c        **** */
+  56:main.c        **** CY_ISR(button_press_isr){
+  28              		.loc 1 56 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32 0000 08B5     		push	{r3, lr}
+  33              		.cfi_def_cfa_offset 8
+  34              		.cfi_offset 3, -8
+  35              		.cfi_offset 14, -4
+  57:main.c        ****      /* Increment and check speed index */
+  58:main.c        ****     if (++speed_index >= MAX_SPEEDS) {
+  36              		.loc 1 58 0
+  37 0002 064A     		ldr	r2, .L4
+  38 0004 1378     		ldrb	r3, [r2]	@ zero_extendqisi2
+  39 0006 0133     		adds	r3, r3, #1
+  40 0008 DBB2     		uxtb	r3, r3
+  41 000a 1370     		strb	r3, [r2]
+  42 000c 032B     		cmp	r3, #3
+  43 000e 02D9     		bls	.L2
+  59:main.c        ****         speed_index = 0;    
+  44              		.loc 1 59 0
+  45 0010 0022     		movs	r2, #0
+  46 0012 024B     		ldr	r3, .L4
+  47 0014 1A70     		strb	r2, [r3]
+  48              	.L2:
+  60:main.c        ****     }
+  61:main.c        ****     Button_ClearInterrupt();        // Clears the pending interrupt.
+  49              		.loc 1 61 0
+  50 0016 FFF7FEFF 		bl	Button_ClearInterrupt
+  51              	.LVL0:
+  52 001a 08BD     		pop	{r3, pc}
+  53              	.L5:
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccpj2M44.s 			page 3
+
+
+  54              		.align	2
+  55              	.L4:
+  56 001c 00000000 		.word	.LANCHOR0
+  57              		.cfi_endproc
+  58              	.LFE65:
+  59              		.size	button_press_isr, .-button_press_isr
+  60              		.section	.text.pwm_cycle_isr,"ax",%progbits
+  61              		.align	2
+  62              		.global	pwm_cycle_isr
+  63              		.thumb
+  64              		.thumb_func
+  65              		.type	pwm_cycle_isr, %function
+  66              	pwm_cycle_isr:
+  67              	.LFB66:
+  62:main.c        **** }
+  63:main.c        **** 
+  64:main.c        **** /*
+  65:main.c        **** * ISR for PWM
+  66:main.c        **** * This ISR is called when PWM is done with the current cycle
+  67:main.c        **** * It will increment or decrement the current speed based on the target speed
+  68:main.c        **** * It will then update the PWM compare value to the new speed
+  69:main.c        **** * This will create a smooth transition between speeds
+  70:main.c        **** * This is done by incrementing or decrementing the current speed by a fixed step
+  71:main.c        **** * until it reaches the target speed
+  72:main.c        **** * The step size is defined by SPEED_INCREMENT
+  73:main.c        **** * The target speed is defined by speed_values[speed_index]
+  74:main.c        **** * The current speed is stored in current_speed_value
+  75:main.c        **** * The PWM compare value is updated with the new current speed
+  76:main.c        **** */
+  77:main.c        **** CY_ISR(pwm_cycle_isr){
+  68              		.loc 1 77 0
+  69              		.cfi_startproc
+  70              		@ args = 0, pretend = 0, frame = 0
+  71              		@ frame_needed = 0, uses_anonymous_args = 0
+  72 0000 08B5     		push	{r3, lr}
+  73              		.cfi_def_cfa_offset 8
+  74              		.cfi_offset 3, -8
+  75              		.cfi_offset 14, -4
+  78:main.c        ****     if (PWM_ReadStatusRegister() ) {
+  76              		.loc 1 78 0
+  77 0002 FFF7FEFF 		bl	PWM_ReadStatusRegister
+  78              	.LVL1:
+  79 0006 D0B1     		cbz	r0, .L6
+  80              	.LBB2:
+  79:main.c        ****         bool isCurrentSpeedLess = current_speed_value < speed_values[speed_index];
+  81              		.loc 1 79 0
+  82 0008 0D4B     		ldr	r3, .L11
+  83 000a 1978     		ldrb	r1, [r3]	@ zero_extendqisi2
+  84 000c 0D4A     		ldr	r2, .L11+4
+  85 000e 32F81120 		ldrh	r2, [r2, r1, lsl #1]
+  86 0012 5B88     		ldrh	r3, [r3, #2]
+  87              	.LVL2:
+  80:main.c        ****         bool isCurrentSpeedMore = current_speed_value > speed_values[speed_index];
+  81:main.c        ****         if (isCurrentSpeedLess) {
+  88              		.loc 1 81 0
+  89 0014 9A42     		cmp	r2, r3
+  90 0016 06D9     		bls	.L8
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccpj2M44.s 			page 4
+
+
+  82:main.c        ****             current_speed_value += SPEED_INCREMENT;
+  91              		.loc 1 82 0
+  92 0018 03F10A00 		add	r0, r3, #10
+  93 001c 0849     		ldr	r1, .L11
+  94 001e 4880     		strh	r0, [r1, #2]	@ movhi
+  83:main.c        ****             if (isCurrentSpeedLess) {
+  95              		.loc 1 83 0
+  96 0020 09D9     		bls	.L9
+  84:main.c        ****                 current_speed_value = speed_values[speed_index];
+  97              		.loc 1 84 0
+  98 0022 4A80     		strh	r2, [r1, #2]	@ movhi
+  99 0024 07E0     		b	.L9
+ 100              	.L8:
+  85:main.c        ****             }
+  86:main.c        ****         } else if (isCurrentSpeedMore) {
+ 101              		.loc 1 86 0
+ 102 0026 9A42     		cmp	r2, r3
+ 103 0028 05D2     		bcs	.L9
+  87:main.c        ****             current_speed_value -= SPEED_INCREMENT;
+ 104              		.loc 1 87 0
+ 105 002a A3F10A00 		sub	r0, r3, #10
+ 106 002e 0449     		ldr	r1, .L11
+ 107 0030 4880     		strh	r0, [r1, #2]	@ movhi
+  88:main.c        ****             if (isCurrentSpeedMore) {
+ 108              		.loc 1 88 0
+ 109 0032 00D2     		bcs	.L9
+  89:main.c        ****                 current_speed_value = speed_values[speed_index];
+ 110              		.loc 1 89 0
+ 111 0034 4A80     		strh	r2, [r1, #2]	@ movhi
+ 112              	.L9:
+  90:main.c        ****             }
+  91:main.c        ****         }
+  92:main.c        ****         PWM_WriteCompare(current_speed_value);
+ 113              		.loc 1 92 0
+ 114 0036 024B     		ldr	r3, .L11
+ 115              	.LVL3:
+ 116 0038 5888     		ldrh	r0, [r3, #2]
+ 117 003a FFF7FEFF 		bl	PWM_WriteCompare
+ 118              	.LVL4:
+ 119              	.L6:
+ 120 003e 08BD     		pop	{r3, pc}
+ 121              	.L12:
+ 122              		.align	2
+ 123              	.L11:
+ 124 0040 00000000 		.word	.LANCHOR0
+ 125 0044 00000000 		.word	.LANCHOR1
+ 126              	.LBE2:
+ 127              		.cfi_endproc
+ 128              	.LFE66:
+ 129              		.size	pwm_cycle_isr, .-pwm_cycle_isr
+ 130              		.section	.text.main,"ax",%progbits
+ 131              		.align	2
+ 132              		.global	main
+ 133              		.thumb
+ 134              		.thumb_func
+ 135              		.type	main, %function
+ 136              	main:
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccpj2M44.s 			page 5
+
+
+ 137              	.LFB64:
+  33:main.c        ****     CyGlobalIntEnable; /* Enable global interrupts. */
+ 138              		.loc 1 33 0
+ 139              		.cfi_startproc
+ 140              		@ Volatile: function does not return.
+ 141              		@ args = 0, pretend = 0, frame = 0
+ 142              		@ frame_needed = 0, uses_anonymous_args = 0
+ 143 0000 08B5     		push	{r3, lr}
+ 144              		.cfi_def_cfa_offset 8
+ 145              		.cfi_offset 3, -8
+ 146              		.cfi_offset 14, -4
+  34:main.c        ****     Clock_1_Start();
+ 147              		.loc 1 34 0
+ 148              		.syntax unified
+ 149              	@ 34 "main.c" 1
+ 150 0002 62B6     		CPSIE   i
+ 151              	@ 0 "" 2
+  35:main.c        ****     Button_isr_StartEx(button_press_isr);
+ 152              		.loc 1 35 0
+ 153              		.thumb
+ 154              		.syntax unified
+ 155 0004 FFF7FEFF 		bl	Clock_1_Start
+ 156              	.LVL5:
+  36:main.c        ****     LED1_Write(0);
+ 157              		.loc 1 36 0
+ 158 0008 0548     		ldr	r0, .L16
+ 159 000a FFF7FEFF 		bl	Button_isr_StartEx
+ 160              	.LVL6:
+  37:main.c        ****     PWM_Start();
+ 161              		.loc 1 37 0
+ 162 000e 0020     		movs	r0, #0
+ 163 0010 FFF7FEFF 		bl	LED1_Write
+ 164              	.LVL7:
+  38:main.c        ****     PWM_ctrl_StartEx(pwm_cycle_isr);
+ 165              		.loc 1 38 0
+ 166 0014 FFF7FEFF 		bl	PWM_Start
+ 167              	.LVL8:
+  39:main.c        ****     
+ 168              		.loc 1 39 0
+ 169 0018 0248     		ldr	r0, .L16+4
+ 170 001a FFF7FEFF 		bl	PWM_ctrl_StartEx
+ 171              	.LVL9:
+ 172              	.L14:
+ 173 001e FEE7     		b	.L14
+ 174              	.L17:
+ 175              		.align	2
+ 176              	.L16:
+ 177 0020 00000000 		.word	button_press_isr
+ 178 0024 00000000 		.word	pwm_cycle_isr
+ 179              		.cfi_endproc
+ 180              	.LFE64:
+ 181              		.size	main, .-main
+ 182              		.global	speed_values
+ 183              		.global	speed_index
+ 184              		.data
+ 185              		.align	2
+ 186              		.set	.LANCHOR1,. + 0
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccpj2M44.s 			page 6
+
+
+ 187              		.type	speed_values, %object
+ 188              		.size	speed_values, 8
+ 189              	speed_values:
+ 190 0000 DC05     		.short	1500
+ 191 0002 C409     		.short	2500
+ 192 0004 AC0D     		.short	3500
+ 193 0006 9411     		.short	4500
+ 194              		.bss
+ 195              		.align	1
+ 196              		.set	.LANCHOR0,. + 0
+ 197              		.type	speed_index, %object
+ 198              		.size	speed_index, 1
+ 199              	speed_index:
+ 200 0000 00       		.space	1
+ 201 0001 00       		.space	1
+ 202              		.type	current_speed_value, %object
+ 203              		.size	current_speed_value, 2
+ 204              	current_speed_value:
+ 205 0002 0000     		.space	2
+ 206              		.text
+ 207              	.Letext0:
+ 208              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.
+ 209              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.
+ 210              		.file 4 "Generated_Source\\PSoC5/core_cm3.h"
+ 211              		.file 5 "Generated_Source\\PSoC5/Button.h"
+ 212              		.file 6 "Generated_Source\\PSoC5/PWM.h"
+ 213              		.file 7 "Generated_Source\\PSoC5/Clock_1.h"
+ 214              		.file 8 "Generated_Source\\PSoC5/Button_isr.h"
+ 215              		.file 9 "Generated_Source\\PSoC5/LED1.h"
+ 216              		.file 10 "Generated_Source\\PSoC5/PWM_ctrl.h"
+ 217              		.section	.debug_info,"",%progbits
+ 218              	.Ldebug_info0:
+ 219 0000 5C020000 		.4byte	0x25c
+ 220 0004 0400     		.2byte	0x4
+ 221 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 222 000a 04       		.byte	0x4
+ 223 000b 01       		.uleb128 0x1
+ 224 000c 9F000000 		.4byte	.LASF37
+ 225 0010 0C       		.byte	0xc
+ 226 0011 26020000 		.4byte	.LASF38
+ 227 0015 3F000000 		.4byte	.LASF39
+ 228 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 229 001d 00000000 		.4byte	0
+ 230 0021 00000000 		.4byte	.Ldebug_line0
+ 231 0025 02       		.uleb128 0x2
+ 232 0026 01       		.byte	0x1
+ 233 0027 06       		.byte	0x6
+ 234 0028 97020000 		.4byte	.LASF0
+ 235 002c 03       		.uleb128 0x3
+ 236 002d 1F000000 		.4byte	.LASF3
+ 237 0031 02       		.byte	0x2
+ 238 0032 1D       		.byte	0x1d
+ 239 0033 37000000 		.4byte	0x37
+ 240 0037 02       		.uleb128 0x2
+ 241 0038 01       		.byte	0x1
+ 242 0039 08       		.byte	0x8
+ 243 003a 91000000 		.4byte	.LASF1
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccpj2M44.s 			page 7
+
+
+ 244 003e 02       		.uleb128 0x2
+ 245 003f 02       		.byte	0x2
+ 246 0040 05       		.byte	0x5
+ 247 0041 3B020000 		.4byte	.LASF2
+ 248 0045 03       		.uleb128 0x3
+ 249 0046 6D010000 		.4byte	.LASF4
+ 250 004a 02       		.byte	0x2
+ 251 004b 2B       		.byte	0x2b
+ 252 004c 50000000 		.4byte	0x50
+ 253 0050 02       		.uleb128 0x2
+ 254 0051 02       		.byte	0x2
+ 255 0052 07       		.byte	0x7
+ 256 0053 4D010000 		.4byte	.LASF5
+ 257 0057 03       		.uleb128 0x3
+ 258 0058 35000000 		.4byte	.LASF6
+ 259 005c 02       		.byte	0x2
+ 260 005d 3F       		.byte	0x3f
+ 261 005e 62000000 		.4byte	0x62
+ 262 0062 02       		.uleb128 0x2
+ 263 0063 04       		.byte	0x4
+ 264 0064 05       		.byte	0x5
+ 265 0065 6F020000 		.4byte	.LASF7
+ 266 0069 02       		.uleb128 0x2
+ 267 006a 04       		.byte	0x4
+ 268 006b 07       		.byte	0x7
+ 269 006c 3B010000 		.4byte	.LASF8
+ 270 0070 02       		.uleb128 0x2
+ 271 0071 08       		.byte	0x8
+ 272 0072 05       		.byte	0x5
+ 273 0073 18020000 		.4byte	.LASF9
+ 274 0077 02       		.uleb128 0x2
+ 275 0078 08       		.byte	0x8
+ 276 0079 07       		.byte	0x7
+ 277 007a B0010000 		.4byte	.LASF10
+ 278 007e 04       		.uleb128 0x4
+ 279 007f 04       		.byte	0x4
+ 280 0080 05       		.byte	0x5
+ 281 0081 696E7400 		.ascii	"int\000"
+ 282 0085 02       		.uleb128 0x2
+ 283 0086 04       		.byte	0x4
+ 284 0087 07       		.byte	0x7
+ 285 0088 95010000 		.4byte	.LASF11
+ 286 008c 03       		.uleb128 0x3
+ 287 008d C7010000 		.4byte	.LASF12
+ 288 0091 03       		.byte	0x3
+ 289 0092 18       		.byte	0x18
+ 290 0093 2C000000 		.4byte	0x2c
+ 291 0097 03       		.uleb128 0x3
+ 292 0098 32020000 		.4byte	.LASF13
+ 293 009c 03       		.byte	0x3
+ 294 009d 24       		.byte	0x24
+ 295 009e 45000000 		.4byte	0x45
+ 296 00a2 03       		.uleb128 0x3
+ 297 00a3 F6010000 		.4byte	.LASF14
+ 298 00a7 03       		.byte	0x3
+ 299 00a8 2C       		.byte	0x2c
+ 300 00a9 57000000 		.4byte	0x57
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccpj2M44.s 			page 8
+
+
+ 301 00ad 02       		.uleb128 0x2
+ 302 00ae 04       		.byte	0x4
+ 303 00af 04       		.byte	0x4
+ 304 00b0 8B000000 		.4byte	.LASF15
+ 305 00b4 02       		.uleb128 0x2
+ 306 00b5 08       		.byte	0x8
+ 307 00b6 04       		.byte	0x4
+ 308 00b7 78010000 		.4byte	.LASF16
+ 309 00bb 02       		.uleb128 0x2
+ 310 00bc 01       		.byte	0x1
+ 311 00bd 08       		.byte	0x8
+ 312 00be 2D020000 		.4byte	.LASF17
+ 313 00c2 02       		.uleb128 0x2
+ 314 00c3 08       		.byte	0x8
+ 315 00c4 04       		.byte	0x4
+ 316 00c5 8B020000 		.4byte	.LASF18
+ 317 00c9 02       		.uleb128 0x2
+ 318 00ca 04       		.byte	0x4
+ 319 00cb 07       		.byte	0x7
+ 320 00cc 0F020000 		.4byte	.LASF19
+ 321 00d0 05       		.uleb128 0x5
+ 322 00d1 FE010000 		.4byte	.LASF20
+ 323 00d5 01       		.byte	0x1
+ 324 00d6 38       		.byte	0x38
+ 325 00d7 00000000 		.4byte	.LFB65
+ 326 00db 20000000 		.4byte	.LFE65-.LFB65
+ 327 00df 01       		.uleb128 0x1
+ 328 00e0 9C       		.byte	0x9c
+ 329 00e1 EF000000 		.4byte	0xef
+ 330 00e5 06       		.uleb128 0x6
+ 331 00e6 1A000000 		.4byte	.LVL0
+ 332 00ea 07020000 		.4byte	0x207
+ 333 00ee 00       		.byte	0
+ 334 00ef 05       		.uleb128 0x5
+ 335 00f0 A2010000 		.4byte	.LASF21
+ 336 00f4 01       		.byte	0x1
+ 337 00f5 4D       		.byte	0x4d
+ 338 00f6 00000000 		.4byte	.LFB66
+ 339 00fa 48000000 		.4byte	.LFE66-.LFB66
+ 340 00fe 01       		.uleb128 0x1
+ 341 00ff 9C       		.byte	0x9c
+ 342 0100 43010000 		.4byte	0x143
+ 343 0104 07       		.uleb128 0x7
+ 344 0105 08000000 		.4byte	.LBB2
+ 345 0109 40000000 		.4byte	.LBE2-.LBB2
+ 346 010d 39010000 		.4byte	0x139
+ 347 0111 08       		.uleb128 0x8
+ 348 0112 5C020000 		.4byte	.LASF22
+ 349 0116 01       		.byte	0x1
+ 350 0117 4F       		.byte	0x4f
+ 351 0118 43010000 		.4byte	0x143
+ 352 011c 00000000 		.4byte	.LLST0
+ 353 0120 08       		.uleb128 0x8
+ 354 0121 78020000 		.4byte	.LASF23
+ 355 0125 01       		.byte	0x1
+ 356 0126 50       		.byte	0x50
+ 357 0127 43010000 		.4byte	0x143
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccpj2M44.s 			page 9
+
+
+ 358 012b 39000000 		.4byte	.LLST1
+ 359 012f 06       		.uleb128 0x6
+ 360 0130 3E000000 		.4byte	.LVL4
+ 361 0134 12020000 		.4byte	0x212
+ 362 0138 00       		.byte	0
+ 363 0139 06       		.uleb128 0x6
+ 364 013a 06000000 		.4byte	.LVL1
+ 365 013e 1D020000 		.4byte	0x21d
+ 366 0142 00       		.byte	0
+ 367 0143 02       		.uleb128 0x2
+ 368 0144 01       		.byte	0x1
+ 369 0145 02       		.byte	0x2
+ 370 0146 BA020000 		.4byte	.LASF24
+ 371 014a 09       		.uleb128 0x9
+ 372 014b 90010000 		.4byte	.LASF40
+ 373 014f 01       		.byte	0x1
+ 374 0150 20       		.byte	0x20
+ 375 0151 7E000000 		.4byte	0x7e
+ 376 0155 00000000 		.4byte	.LFB64
+ 377 0159 28000000 		.4byte	.LFE64-.LFB64
+ 378 015d 01       		.uleb128 0x1
+ 379 015e 9C       		.byte	0x9c
+ 380 015f B3010000 		.4byte	0x1b3
+ 381 0163 06       		.uleb128 0x6
+ 382 0164 08000000 		.4byte	.LVL5
+ 383 0168 28020000 		.4byte	0x228
+ 384 016c 0A       		.uleb128 0xa
+ 385 016d 0E000000 		.4byte	.LVL6
+ 386 0171 33020000 		.4byte	0x233
+ 387 0175 83010000 		.4byte	0x183
+ 388 0179 0B       		.uleb128 0xb
+ 389 017a 01       		.uleb128 0x1
+ 390 017b 50       		.byte	0x50
+ 391 017c 05       		.uleb128 0x5
+ 392 017d 03       		.byte	0x3
+ 393 017e 00000000 		.4byte	button_press_isr
+ 394 0182 00       		.byte	0
+ 395 0183 0A       		.uleb128 0xa
+ 396 0184 14000000 		.4byte	.LVL7
+ 397 0188 3E020000 		.4byte	0x23e
+ 398 018c 96010000 		.4byte	0x196
+ 399 0190 0B       		.uleb128 0xb
+ 400 0191 01       		.uleb128 0x1
+ 401 0192 50       		.byte	0x50
+ 402 0193 01       		.uleb128 0x1
+ 403 0194 30       		.byte	0x30
+ 404 0195 00       		.byte	0
+ 405 0196 06       		.uleb128 0x6
+ 406 0197 18000000 		.4byte	.LVL8
+ 407 019b 49020000 		.4byte	0x249
+ 408 019f 0C       		.uleb128 0xc
+ 409 01a0 1E000000 		.4byte	.LVL9
+ 410 01a4 54020000 		.4byte	0x254
+ 411 01a8 0B       		.uleb128 0xb
+ 412 01a9 01       		.uleb128 0x1
+ 413 01aa 50       		.byte	0x50
+ 414 01ab 05       		.uleb128 0x5
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccpj2M44.s 			page 10
+
+
+ 415 01ac 03       		.byte	0x3
+ 416 01ad 00000000 		.4byte	pwm_cycle_isr
+ 417 01b1 00       		.byte	0
+ 418 01b2 00       		.byte	0
+ 419 01b3 0D       		.uleb128 0xd
+ 420 01b4 0B000000 		.4byte	.LASF25
+ 421 01b8 01       		.byte	0x1
+ 422 01b9 1A       		.byte	0x1a
+ 423 01ba 97000000 		.4byte	0x97
+ 424 01be 05       		.uleb128 0x5
+ 425 01bf 03       		.byte	0x3
+ 426 01c0 02000000 		.4byte	current_speed_value
+ 427 01c4 0E       		.uleb128 0xe
+ 428 01c5 60010000 		.4byte	.LASF26
+ 429 01c9 04       		.byte	0x4
+ 430 01ca 1207     		.2byte	0x712
+ 431 01cc D0010000 		.4byte	0x1d0
+ 432 01d0 0F       		.uleb128 0xf
+ 433 01d1 A2000000 		.4byte	0xa2
+ 434 01d5 10       		.uleb128 0x10
+ 435 01d6 29000000 		.4byte	.LASF27
+ 436 01da 01       		.byte	0x1
+ 437 01db 18       		.byte	0x18
+ 438 01dc 8C000000 		.4byte	0x8c
+ 439 01e0 05       		.uleb128 0x5
+ 440 01e1 03       		.byte	0x3
+ 441 01e2 00000000 		.4byte	speed_index
+ 442 01e6 11       		.uleb128 0x11
+ 443 01e7 97000000 		.4byte	0x97
+ 444 01eb F6010000 		.4byte	0x1f6
+ 445 01ef 12       		.uleb128 0x12
+ 446 01f0 C9000000 		.4byte	0xc9
+ 447 01f4 03       		.byte	0x3
+ 448 01f5 00       		.byte	0
+ 449 01f6 10       		.uleb128 0x10
+ 450 01f7 45020000 		.4byte	.LASF28
+ 451 01fb 01       		.byte	0x1
+ 452 01fc 19       		.byte	0x19
+ 453 01fd E6010000 		.4byte	0x1e6
+ 454 0201 05       		.uleb128 0x5
+ 455 0202 03       		.byte	0x3
+ 456 0203 00000000 		.4byte	speed_values
+ 457 0207 13       		.uleb128 0x13
+ 458 0208 CF010000 		.4byte	.LASF29
+ 459 020c CF010000 		.4byte	.LASF29
+ 460 0210 05       		.byte	0x5
+ 461 0211 2B       		.byte	0x2b
+ 462 0212 13       		.uleb128 0x13
+ 463 0213 7F010000 		.4byte	.LASF30
+ 464 0217 7F010000 		.4byte	.LASF30
+ 465 021b 06       		.byte	0x6
+ 466 021c C3       		.byte	0xc3
+ 467 021d 13       		.uleb128 0x13
+ 468 021e A3020000 		.4byte	.LASF31
+ 469 0222 A3020000 		.4byte	.LASF31
+ 470 0226 06       		.byte	0x6
+ 471 0227 97       		.byte	0x97
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccpj2M44.s 			page 11
+
+
+ 472 0228 13       		.uleb128 0x13
+ 473 0229 2D010000 		.4byte	.LASF32
+ 474 022d 2D010000 		.4byte	.LASF32
+ 475 0231 07       		.byte	0x7
+ 476 0232 27       		.byte	0x27
+ 477 0233 13       		.uleb128 0x13
+ 478 0234 C0020000 		.4byte	.LASF33
+ 479 0238 C0020000 		.4byte	.LASF33
+ 480 023c 08       		.byte	0x8
+ 481 023d 18       		.byte	0x18
+ 482 023e 13       		.uleb128 0x13
+ 483 023f 00000000 		.4byte	.LASF34
+ 484 0243 00000000 		.4byte	.LASF34
+ 485 0247 09       		.byte	0x9
+ 486 0248 26       		.byte	0x26
+ 487 0249 13       		.uleb128 0x13
+ 488 024a 52020000 		.4byte	.LASF35
+ 489 024e 52020000 		.4byte	.LASF35
+ 490 0252 06       		.byte	0x6
+ 491 0253 92       		.byte	0x92
+ 492 0254 13       		.uleb128 0x13
+ 493 0255 E5010000 		.4byte	.LASF36
+ 494 0259 E5010000 		.4byte	.LASF36
+ 495 025d 0A       		.byte	0xa
+ 496 025e 18       		.byte	0x18
+ 497 025f 00       		.byte	0
+ 498              		.section	.debug_abbrev,"",%progbits
+ 499              	.Ldebug_abbrev0:
+ 500 0000 01       		.uleb128 0x1
+ 501 0001 11       		.uleb128 0x11
+ 502 0002 01       		.byte	0x1
+ 503 0003 25       		.uleb128 0x25
+ 504 0004 0E       		.uleb128 0xe
+ 505 0005 13       		.uleb128 0x13
+ 506 0006 0B       		.uleb128 0xb
+ 507 0007 03       		.uleb128 0x3
+ 508 0008 0E       		.uleb128 0xe
+ 509 0009 1B       		.uleb128 0x1b
+ 510 000a 0E       		.uleb128 0xe
+ 511 000b 55       		.uleb128 0x55
+ 512 000c 17       		.uleb128 0x17
+ 513 000d 11       		.uleb128 0x11
+ 514 000e 01       		.uleb128 0x1
+ 515 000f 10       		.uleb128 0x10
+ 516 0010 17       		.uleb128 0x17
+ 517 0011 00       		.byte	0
+ 518 0012 00       		.byte	0
+ 519 0013 02       		.uleb128 0x2
+ 520 0014 24       		.uleb128 0x24
+ 521 0015 00       		.byte	0
+ 522 0016 0B       		.uleb128 0xb
+ 523 0017 0B       		.uleb128 0xb
+ 524 0018 3E       		.uleb128 0x3e
+ 525 0019 0B       		.uleb128 0xb
+ 526 001a 03       		.uleb128 0x3
+ 527 001b 0E       		.uleb128 0xe
+ 528 001c 00       		.byte	0
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccpj2M44.s 			page 12
+
+
+ 529 001d 00       		.byte	0
+ 530 001e 03       		.uleb128 0x3
+ 531 001f 16       		.uleb128 0x16
+ 532 0020 00       		.byte	0
+ 533 0021 03       		.uleb128 0x3
+ 534 0022 0E       		.uleb128 0xe
+ 535 0023 3A       		.uleb128 0x3a
+ 536 0024 0B       		.uleb128 0xb
+ 537 0025 3B       		.uleb128 0x3b
+ 538 0026 0B       		.uleb128 0xb
+ 539 0027 49       		.uleb128 0x49
+ 540 0028 13       		.uleb128 0x13
+ 541 0029 00       		.byte	0
+ 542 002a 00       		.byte	0
+ 543 002b 04       		.uleb128 0x4
+ 544 002c 24       		.uleb128 0x24
+ 545 002d 00       		.byte	0
+ 546 002e 0B       		.uleb128 0xb
+ 547 002f 0B       		.uleb128 0xb
+ 548 0030 3E       		.uleb128 0x3e
+ 549 0031 0B       		.uleb128 0xb
+ 550 0032 03       		.uleb128 0x3
+ 551 0033 08       		.uleb128 0x8
+ 552 0034 00       		.byte	0
+ 553 0035 00       		.byte	0
+ 554 0036 05       		.uleb128 0x5
+ 555 0037 2E       		.uleb128 0x2e
+ 556 0038 01       		.byte	0x1
+ 557 0039 3F       		.uleb128 0x3f
+ 558 003a 19       		.uleb128 0x19
+ 559 003b 03       		.uleb128 0x3
+ 560 003c 0E       		.uleb128 0xe
+ 561 003d 3A       		.uleb128 0x3a
+ 562 003e 0B       		.uleb128 0xb
+ 563 003f 3B       		.uleb128 0x3b
+ 564 0040 0B       		.uleb128 0xb
+ 565 0041 27       		.uleb128 0x27
+ 566 0042 19       		.uleb128 0x19
+ 567 0043 11       		.uleb128 0x11
+ 568 0044 01       		.uleb128 0x1
+ 569 0045 12       		.uleb128 0x12
+ 570 0046 06       		.uleb128 0x6
+ 571 0047 40       		.uleb128 0x40
+ 572 0048 18       		.uleb128 0x18
+ 573 0049 9742     		.uleb128 0x2117
+ 574 004b 19       		.uleb128 0x19
+ 575 004c 01       		.uleb128 0x1
+ 576 004d 13       		.uleb128 0x13
+ 577 004e 00       		.byte	0
+ 578 004f 00       		.byte	0
+ 579 0050 06       		.uleb128 0x6
+ 580 0051 898201   		.uleb128 0x4109
+ 581 0054 00       		.byte	0
+ 582 0055 11       		.uleb128 0x11
+ 583 0056 01       		.uleb128 0x1
+ 584 0057 31       		.uleb128 0x31
+ 585 0058 13       		.uleb128 0x13
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccpj2M44.s 			page 13
+
+
+ 586 0059 00       		.byte	0
+ 587 005a 00       		.byte	0
+ 588 005b 07       		.uleb128 0x7
+ 589 005c 0B       		.uleb128 0xb
+ 590 005d 01       		.byte	0x1
+ 591 005e 11       		.uleb128 0x11
+ 592 005f 01       		.uleb128 0x1
+ 593 0060 12       		.uleb128 0x12
+ 594 0061 06       		.uleb128 0x6
+ 595 0062 01       		.uleb128 0x1
+ 596 0063 13       		.uleb128 0x13
+ 597 0064 00       		.byte	0
+ 598 0065 00       		.byte	0
+ 599 0066 08       		.uleb128 0x8
+ 600 0067 34       		.uleb128 0x34
+ 601 0068 00       		.byte	0
+ 602 0069 03       		.uleb128 0x3
+ 603 006a 0E       		.uleb128 0xe
+ 604 006b 3A       		.uleb128 0x3a
+ 605 006c 0B       		.uleb128 0xb
+ 606 006d 3B       		.uleb128 0x3b
+ 607 006e 0B       		.uleb128 0xb
+ 608 006f 49       		.uleb128 0x49
+ 609 0070 13       		.uleb128 0x13
+ 610 0071 02       		.uleb128 0x2
+ 611 0072 17       		.uleb128 0x17
+ 612 0073 00       		.byte	0
+ 613 0074 00       		.byte	0
+ 614 0075 09       		.uleb128 0x9
+ 615 0076 2E       		.uleb128 0x2e
+ 616 0077 01       		.byte	0x1
+ 617 0078 3F       		.uleb128 0x3f
+ 618 0079 19       		.uleb128 0x19
+ 619 007a 03       		.uleb128 0x3
+ 620 007b 0E       		.uleb128 0xe
+ 621 007c 3A       		.uleb128 0x3a
+ 622 007d 0B       		.uleb128 0xb
+ 623 007e 3B       		.uleb128 0x3b
+ 624 007f 0B       		.uleb128 0xb
+ 625 0080 27       		.uleb128 0x27
+ 626 0081 19       		.uleb128 0x19
+ 627 0082 49       		.uleb128 0x49
+ 628 0083 13       		.uleb128 0x13
+ 629 0084 8701     		.uleb128 0x87
+ 630 0086 19       		.uleb128 0x19
+ 631 0087 11       		.uleb128 0x11
+ 632 0088 01       		.uleb128 0x1
+ 633 0089 12       		.uleb128 0x12
+ 634 008a 06       		.uleb128 0x6
+ 635 008b 40       		.uleb128 0x40
+ 636 008c 18       		.uleb128 0x18
+ 637 008d 9742     		.uleb128 0x2117
+ 638 008f 19       		.uleb128 0x19
+ 639 0090 01       		.uleb128 0x1
+ 640 0091 13       		.uleb128 0x13
+ 641 0092 00       		.byte	0
+ 642 0093 00       		.byte	0
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccpj2M44.s 			page 14
+
+
+ 643 0094 0A       		.uleb128 0xa
+ 644 0095 898201   		.uleb128 0x4109
+ 645 0098 01       		.byte	0x1
+ 646 0099 11       		.uleb128 0x11
+ 647 009a 01       		.uleb128 0x1
+ 648 009b 31       		.uleb128 0x31
+ 649 009c 13       		.uleb128 0x13
+ 650 009d 01       		.uleb128 0x1
+ 651 009e 13       		.uleb128 0x13
+ 652 009f 00       		.byte	0
+ 653 00a0 00       		.byte	0
+ 654 00a1 0B       		.uleb128 0xb
+ 655 00a2 8A8201   		.uleb128 0x410a
+ 656 00a5 00       		.byte	0
+ 657 00a6 02       		.uleb128 0x2
+ 658 00a7 18       		.uleb128 0x18
+ 659 00a8 9142     		.uleb128 0x2111
+ 660 00aa 18       		.uleb128 0x18
+ 661 00ab 00       		.byte	0
+ 662 00ac 00       		.byte	0
+ 663 00ad 0C       		.uleb128 0xc
+ 664 00ae 898201   		.uleb128 0x4109
+ 665 00b1 01       		.byte	0x1
+ 666 00b2 11       		.uleb128 0x11
+ 667 00b3 01       		.uleb128 0x1
+ 668 00b4 31       		.uleb128 0x31
+ 669 00b5 13       		.uleb128 0x13
+ 670 00b6 00       		.byte	0
+ 671 00b7 00       		.byte	0
+ 672 00b8 0D       		.uleb128 0xd
+ 673 00b9 34       		.uleb128 0x34
+ 674 00ba 00       		.byte	0
+ 675 00bb 03       		.uleb128 0x3
+ 676 00bc 0E       		.uleb128 0xe
+ 677 00bd 3A       		.uleb128 0x3a
+ 678 00be 0B       		.uleb128 0xb
+ 679 00bf 3B       		.uleb128 0x3b
+ 680 00c0 0B       		.uleb128 0xb
+ 681 00c1 49       		.uleb128 0x49
+ 682 00c2 13       		.uleb128 0x13
+ 683 00c3 02       		.uleb128 0x2
+ 684 00c4 18       		.uleb128 0x18
+ 685 00c5 00       		.byte	0
+ 686 00c6 00       		.byte	0
+ 687 00c7 0E       		.uleb128 0xe
+ 688 00c8 34       		.uleb128 0x34
+ 689 00c9 00       		.byte	0
+ 690 00ca 03       		.uleb128 0x3
+ 691 00cb 0E       		.uleb128 0xe
+ 692 00cc 3A       		.uleb128 0x3a
+ 693 00cd 0B       		.uleb128 0xb
+ 694 00ce 3B       		.uleb128 0x3b
+ 695 00cf 05       		.uleb128 0x5
+ 696 00d0 49       		.uleb128 0x49
+ 697 00d1 13       		.uleb128 0x13
+ 698 00d2 3F       		.uleb128 0x3f
+ 699 00d3 19       		.uleb128 0x19
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccpj2M44.s 			page 15
+
+
+ 700 00d4 3C       		.uleb128 0x3c
+ 701 00d5 19       		.uleb128 0x19
+ 702 00d6 00       		.byte	0
+ 703 00d7 00       		.byte	0
+ 704 00d8 0F       		.uleb128 0xf
+ 705 00d9 35       		.uleb128 0x35
+ 706 00da 00       		.byte	0
+ 707 00db 49       		.uleb128 0x49
+ 708 00dc 13       		.uleb128 0x13
+ 709 00dd 00       		.byte	0
+ 710 00de 00       		.byte	0
+ 711 00df 10       		.uleb128 0x10
+ 712 00e0 34       		.uleb128 0x34
+ 713 00e1 00       		.byte	0
+ 714 00e2 03       		.uleb128 0x3
+ 715 00e3 0E       		.uleb128 0xe
+ 716 00e4 3A       		.uleb128 0x3a
+ 717 00e5 0B       		.uleb128 0xb
+ 718 00e6 3B       		.uleb128 0x3b
+ 719 00e7 0B       		.uleb128 0xb
+ 720 00e8 49       		.uleb128 0x49
+ 721 00e9 13       		.uleb128 0x13
+ 722 00ea 3F       		.uleb128 0x3f
+ 723 00eb 19       		.uleb128 0x19
+ 724 00ec 02       		.uleb128 0x2
+ 725 00ed 18       		.uleb128 0x18
+ 726 00ee 00       		.byte	0
+ 727 00ef 00       		.byte	0
+ 728 00f0 11       		.uleb128 0x11
+ 729 00f1 01       		.uleb128 0x1
+ 730 00f2 01       		.byte	0x1
+ 731 00f3 49       		.uleb128 0x49
+ 732 00f4 13       		.uleb128 0x13
+ 733 00f5 01       		.uleb128 0x1
+ 734 00f6 13       		.uleb128 0x13
+ 735 00f7 00       		.byte	0
+ 736 00f8 00       		.byte	0
+ 737 00f9 12       		.uleb128 0x12
+ 738 00fa 21       		.uleb128 0x21
+ 739 00fb 00       		.byte	0
+ 740 00fc 49       		.uleb128 0x49
+ 741 00fd 13       		.uleb128 0x13
+ 742 00fe 2F       		.uleb128 0x2f
+ 743 00ff 0B       		.uleb128 0xb
+ 744 0100 00       		.byte	0
+ 745 0101 00       		.byte	0
+ 746 0102 13       		.uleb128 0x13
+ 747 0103 2E       		.uleb128 0x2e
+ 748 0104 00       		.byte	0
+ 749 0105 3F       		.uleb128 0x3f
+ 750 0106 19       		.uleb128 0x19
+ 751 0107 3C       		.uleb128 0x3c
+ 752 0108 19       		.uleb128 0x19
+ 753 0109 6E       		.uleb128 0x6e
+ 754 010a 0E       		.uleb128 0xe
+ 755 010b 03       		.uleb128 0x3
+ 756 010c 0E       		.uleb128 0xe
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccpj2M44.s 			page 16
+
+
+ 757 010d 3A       		.uleb128 0x3a
+ 758 010e 0B       		.uleb128 0xb
+ 759 010f 3B       		.uleb128 0x3b
+ 760 0110 0B       		.uleb128 0xb
+ 761 0111 00       		.byte	0
+ 762 0112 00       		.byte	0
+ 763 0113 00       		.byte	0
+ 764              		.section	.debug_loc,"",%progbits
+ 765              	.Ldebug_loc0:
+ 766              	.LLST0:
+ 767 0000 14000000 		.4byte	.LVL2
+ 768 0004 38000000 		.4byte	.LVL3
+ 769 0008 0E00     		.2byte	0xe
+ 770 000a 72       		.byte	0x72
+ 771 000b 00       		.sleb128 0
+ 772 000c 0A       		.byte	0xa
+ 773 000d FFFF     		.2byte	0xffff
+ 774 000f 1A       		.byte	0x1a
+ 775 0010 73       		.byte	0x73
+ 776 0011 00       		.sleb128 0
+ 777 0012 0A       		.byte	0xa
+ 778 0013 FFFF     		.2byte	0xffff
+ 779 0015 1A       		.byte	0x1a
+ 780 0016 2B       		.byte	0x2b
+ 781 0017 9F       		.byte	0x9f
+ 782 0018 38000000 		.4byte	.LVL3
+ 783 001c 3D000000 		.4byte	.LVL4-1
+ 784 0020 0F00     		.2byte	0xf
+ 785 0022 72       		.byte	0x72
+ 786 0023 00       		.sleb128 0
+ 787 0024 0A       		.byte	0xa
+ 788 0025 FFFF     		.2byte	0xffff
+ 789 0027 1A       		.byte	0x1a
+ 790 0028 03       		.byte	0x3
+ 791 0029 02000000 		.4byte	current_speed_value
+ 792 002d 94       		.byte	0x94
+ 793 002e 02       		.byte	0x2
+ 794 002f 2B       		.byte	0x2b
+ 795 0030 9F       		.byte	0x9f
+ 796 0031 00000000 		.4byte	0
+ 797 0035 00000000 		.4byte	0
+ 798              	.LLST1:
+ 799 0039 14000000 		.4byte	.LVL2
+ 800 003d 38000000 		.4byte	.LVL3
+ 801 0041 0E00     		.2byte	0xe
+ 802 0043 72       		.byte	0x72
+ 803 0044 00       		.sleb128 0
+ 804 0045 0A       		.byte	0xa
+ 805 0046 FFFF     		.2byte	0xffff
+ 806 0048 1A       		.byte	0x1a
+ 807 0049 73       		.byte	0x73
+ 808 004a 00       		.sleb128 0
+ 809 004b 0A       		.byte	0xa
+ 810 004c FFFF     		.2byte	0xffff
+ 811 004e 1A       		.byte	0x1a
+ 812 004f 2D       		.byte	0x2d
+ 813 0050 9F       		.byte	0x9f
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccpj2M44.s 			page 17
+
+
+ 814 0051 38000000 		.4byte	.LVL3
+ 815 0055 3D000000 		.4byte	.LVL4-1
+ 816 0059 0F00     		.2byte	0xf
+ 817 005b 72       		.byte	0x72
+ 818 005c 00       		.sleb128 0
+ 819 005d 0A       		.byte	0xa
+ 820 005e FFFF     		.2byte	0xffff
+ 821 0060 1A       		.byte	0x1a
+ 822 0061 03       		.byte	0x3
+ 823 0062 02000000 		.4byte	current_speed_value
+ 824 0066 94       		.byte	0x94
+ 825 0067 02       		.byte	0x2
+ 826 0068 2D       		.byte	0x2d
+ 827 0069 9F       		.byte	0x9f
+ 828 006a 00000000 		.4byte	0
+ 829 006e 00000000 		.4byte	0
+ 830              		.section	.debug_aranges,"",%progbits
+ 831 0000 2C000000 		.4byte	0x2c
+ 832 0004 0200     		.2byte	0x2
+ 833 0006 00000000 		.4byte	.Ldebug_info0
+ 834 000a 04       		.byte	0x4
+ 835 000b 00       		.byte	0
+ 836 000c 0000     		.2byte	0
+ 837 000e 0000     		.2byte	0
+ 838 0010 00000000 		.4byte	.LFB65
+ 839 0014 20000000 		.4byte	.LFE65-.LFB65
+ 840 0018 00000000 		.4byte	.LFB66
+ 841 001c 48000000 		.4byte	.LFE66-.LFB66
+ 842 0020 00000000 		.4byte	.LFB64
+ 843 0024 28000000 		.4byte	.LFE64-.LFB64
+ 844 0028 00000000 		.4byte	0
+ 845 002c 00000000 		.4byte	0
+ 846              		.section	.debug_ranges,"",%progbits
+ 847              	.Ldebug_ranges0:
+ 848 0000 00000000 		.4byte	.LFB65
+ 849 0004 20000000 		.4byte	.LFE65
+ 850 0008 00000000 		.4byte	.LFB66
+ 851 000c 48000000 		.4byte	.LFE66
+ 852 0010 00000000 		.4byte	.LFB64
+ 853 0014 28000000 		.4byte	.LFE64
+ 854 0018 00000000 		.4byte	0
+ 855 001c 00000000 		.4byte	0
+ 856              		.section	.debug_line,"",%progbits
+ 857              	.Ldebug_line0:
+ 858 0000 D1010000 		.section	.debug_str,"MS",%progbits,1
+ 858      02008901 
+ 858      00000201 
+ 858      FB0E0D00 
+ 858      01010101 
+ 859              	.LASF34:
+ 860 0000 4C454431 		.ascii	"LED1_Write\000"
+ 860      5F577269 
+ 860      746500
+ 861              	.LASF25:
+ 862 000b 63757272 		.ascii	"current_speed_value\000"
+ 862      656E745F 
+ 862      73706565 
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccpj2M44.s 			page 18
+
+
+ 862      645F7661 
+ 862      6C756500 
+ 863              	.LASF3:
+ 864 001f 5F5F7569 		.ascii	"__uint8_t\000"
+ 864      6E74385F 
+ 864      7400
+ 865              	.LASF27:
+ 866 0029 73706565 		.ascii	"speed_index\000"
+ 866      645F696E 
+ 866      64657800 
+ 867              	.LASF6:
+ 868 0035 5F5F696E 		.ascii	"__int32_t\000"
+ 868      7433325F 
+ 868      7400
+ 869              	.LASF39:
+ 870 003f 433A5C55 		.ascii	"C:\\Users\\iamna\\Documents\\PSoC Creator\\nadimaPS"
+ 870      73657273 
+ 870      5C69616D 
+ 870      6E615C44 
+ 870      6F63756D 
+ 871 006d 6F435365 		.ascii	"oCServo\\nadimaPSoCServo.cydsn\000"
+ 871      72766F5C 
+ 871      6E616469 
+ 871      6D615053 
+ 871      6F435365 
+ 872              	.LASF15:
+ 873 008b 666C6F61 		.ascii	"float\000"
+ 873      7400
+ 874              	.LASF1:
+ 875 0091 756E7369 		.ascii	"unsigned char\000"
+ 875      676E6564 
+ 875      20636861 
+ 875      7200
+ 876              	.LASF37:
+ 877 009f 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 877      43313120 
+ 877      352E342E 
+ 877      31203230 
+ 877      31363036 
+ 878 00d2 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m3 -mthumb -g -O"
+ 878      20726576 
+ 878      6973696F 
+ 878      6E203233 
+ 878      37373135 
+ 879 0105 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 879      66756E63 
+ 879      74696F6E 
+ 879      2D736563 
+ 879      74696F6E 
+ 880              	.LASF32:
+ 881 012d 436C6F63 		.ascii	"Clock_1_Start\000"
+ 881      6B5F315F 
+ 881      53746172 
+ 881      7400
+ 882              	.LASF8:
+ 883 013b 6C6F6E67 		.ascii	"long unsigned int\000"
+ 883      20756E73 
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccpj2M44.s 			page 19
+
+
+ 883      69676E65 
+ 883      6420696E 
+ 883      7400
+ 884              	.LASF5:
+ 885 014d 73686F72 		.ascii	"short unsigned int\000"
+ 885      7420756E 
+ 885      7369676E 
+ 885      65642069 
+ 885      6E7400
+ 886              	.LASF26:
+ 887 0160 49544D5F 		.ascii	"ITM_RxBuffer\000"
+ 887      52784275 
+ 887      66666572 
+ 887      00
+ 888              	.LASF4:
+ 889 016d 5F5F7569 		.ascii	"__uint16_t\000"
+ 889      6E743136 
+ 889      5F7400
+ 890              	.LASF16:
+ 891 0178 646F7562 		.ascii	"double\000"
+ 891      6C6500
+ 892              	.LASF30:
+ 893 017f 50574D5F 		.ascii	"PWM_WriteCompare\000"
+ 893      57726974 
+ 893      65436F6D 
+ 893      70617265 
+ 893      00
+ 894              	.LASF40:
+ 895 0190 6D61696E 		.ascii	"main\000"
+ 895      00
+ 896              	.LASF11:
+ 897 0195 756E7369 		.ascii	"unsigned int\000"
+ 897      676E6564 
+ 897      20696E74 
+ 897      00
+ 898              	.LASF21:
+ 899 01a2 70776D5F 		.ascii	"pwm_cycle_isr\000"
+ 899      6379636C 
+ 899      655F6973 
+ 899      7200
+ 900              	.LASF10:
+ 901 01b0 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 901      206C6F6E 
+ 901      6720756E 
+ 901      7369676E 
+ 901      65642069 
+ 902              	.LASF12:
+ 903 01c7 75696E74 		.ascii	"uint8_t\000"
+ 903      385F7400 
+ 904              	.LASF29:
+ 905 01cf 42757474 		.ascii	"Button_ClearInterrupt\000"
+ 905      6F6E5F43 
+ 905      6C656172 
+ 905      496E7465 
+ 905      72727570 
+ 906              	.LASF36:
+ 907 01e5 50574D5F 		.ascii	"PWM_ctrl_StartEx\000"
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccpj2M44.s 			page 20
+
+
+ 907      6374726C 
+ 907      5F537461 
+ 907      72744578 
+ 907      00
+ 908              	.LASF14:
+ 909 01f6 696E7433 		.ascii	"int32_t\000"
+ 909      325F7400 
+ 910              	.LASF20:
+ 911 01fe 62757474 		.ascii	"button_press_isr\000"
+ 911      6F6E5F70 
+ 911      72657373 
+ 911      5F697372 
+ 911      00
+ 912              	.LASF19:
+ 913 020f 73697A65 		.ascii	"sizetype\000"
+ 913      74797065 
+ 913      00
+ 914              	.LASF9:
+ 915 0218 6C6F6E67 		.ascii	"long long int\000"
+ 915      206C6F6E 
+ 915      6720696E 
+ 915      7400
+ 916              	.LASF38:
+ 917 0226 6D61696E 		.ascii	"main.c\000"
+ 917      2E6300
+ 918              	.LASF17:
+ 919 022d 63686172 		.ascii	"char\000"
+ 919      00
+ 920              	.LASF13:
+ 921 0232 75696E74 		.ascii	"uint16_t\000"
+ 921      31365F74 
+ 921      00
+ 922              	.LASF2:
+ 923 023b 73686F72 		.ascii	"short int\000"
+ 923      7420696E 
+ 923      7400
+ 924              	.LASF28:
+ 925 0245 73706565 		.ascii	"speed_values\000"
+ 925      645F7661 
+ 925      6C756573 
+ 925      00
+ 926              	.LASF35:
+ 927 0252 50574D5F 		.ascii	"PWM_Start\000"
+ 927      53746172 
+ 927      7400
+ 928              	.LASF22:
+ 929 025c 69734375 		.ascii	"isCurrentSpeedLess\000"
+ 929      7272656E 
+ 929      74537065 
+ 929      65644C65 
+ 929      737300
+ 930              	.LASF7:
+ 931 026f 6C6F6E67 		.ascii	"long int\000"
+ 931      20696E74 
+ 931      00
+ 932              	.LASF23:
+ 933 0278 69734375 		.ascii	"isCurrentSpeedMore\000"
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccpj2M44.s 			page 21
+
+
+ 933      7272656E 
+ 933      74537065 
+ 933      65644D6F 
+ 933      726500
+ 934              	.LASF18:
+ 935 028b 6C6F6E67 		.ascii	"long double\000"
+ 935      20646F75 
+ 935      626C6500 
+ 936              	.LASF0:
+ 937 0297 7369676E 		.ascii	"signed char\000"
+ 937      65642063 
+ 937      68617200 
+ 938              	.LASF31:
+ 939 02a3 50574D5F 		.ascii	"PWM_ReadStatusRegister\000"
+ 939      52656164 
+ 939      53746174 
+ 939      75735265 
+ 939      67697374 
+ 940              	.LASF24:
+ 941 02ba 5F426F6F 		.ascii	"_Bool\000"
+ 941      6C00
+ 942              	.LASF33:
+ 943 02c0 42757474 		.ascii	"Button_isr_StartEx\000"
+ 943      6F6E5F69 
+ 943      73725F53 
+ 943      74617274 
+ 943      457800
+ 944              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran
