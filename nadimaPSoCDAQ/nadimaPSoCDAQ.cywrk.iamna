@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CyXmlSerializer>
+<!--This file is machine generated and read. It is not intended to be edited by hand.-->
+<!--Due to this, there is no schema for this file.-->
+<CyGuid_843a90a4-0c4b-4e44-991d-05e7fb117a21 type_name="CyDesigner.Common.ProjMgmt.Model.CyPrjMgmtWrkspcCustomData" version="4">
+<CyGuid_fdba8dfd-b15b-4469-9bbb-9e40c3e70997 type_name="CyDesigner.Common.Base.CyCustomData" version="2">
+<userData>
+<dataGuid v="1b906a0f-a7b6-4e4d-a428-82f98b53cb35">
+<CyGuid_1b906a0f-a7b6-4e4d-a428-82f98b53cb35 type_name="CyDesigner.Common.ProjMgmt.GUI.CyExplorerWindow+CyExplorerWindowState" version="3" SelectedTab="Source">
+<TreeKeys>
+<v>Source</v>
+<v>Components</v>
+<v>Output</v>
+</TreeKeys>
+<TreeStates>
+<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="nadimaPSoCDAQ\nadimaPSoCDAQ\Generated_Source\PSoC5\Timer\Timer.c">
+<ExpandedNodeIds>
+<v>nadimaPSoCDAQ</v>
+<v>nadimaPSoCDAQ\nadimaPSoCDAQ</v>
+<v>nadimaPSoCDAQ\nadimaPSoCDAQ\TopDesign</v>
+<v>nadimaPSoCDAQ\nadimaPSoCDAQ\nadimaPSoCDAQ.cydwr</v>
+<v>nadimaPSoCDAQ\nadimaPSoCDAQ\nadimaPSoCDAQ.cydwr\Pins</v>
+<v>nadimaPSoCDAQ\nadimaPSoCDAQ\nadimaPSoCDAQ.cydwr\Analog</v>
+<v>nadimaPSoCDAQ\nadimaPSoCDAQ\nadimaPSoCDAQ.cydwr\Clocks</v>
+<v>nadimaPSoCDAQ\nadimaPSoCDAQ\nadimaPSoCDAQ.cydwr\Interrupts</v>
+<v>nadimaPSoCDAQ\nadimaPSoCDAQ\nadimaPSoCDAQ.cydwr\DMA</v>
+<v>nadimaPSoCDAQ\nadimaPSoCDAQ\nadimaPSoCDAQ.cydwr\System</v>
+<v>nadimaPSoCDAQ\nadimaPSoCDAQ\nadimaPSoCDAQ.cydwr\Directives</v>
+<v>nadimaPSoCDAQ\nadimaPSoCDAQ\nadimaPSoCDAQ.cydwr\Flash Security</v>
+<v>nadimaPSoCDAQ\nadimaPSoCDAQ\nadimaPSoCDAQ.cydwr\EEPROM</v>
+<v>nadimaPSoCDAQ\nadimaPSoCDAQ\Header Files</v>
+<v>nadimaPSoCDAQ\nadimaPSoCDAQ\Header Files\cyapicallbacks.h</v>
+<v>nadimaPSoCDAQ\nadimaPSoCDAQ\Source Files</v>
+<v>nadimaPSoCDAQ\nadimaPSoCDAQ\Source Files\main.c</v>
+<v>nadimaPSoCDAQ\nadimaPSoCDAQ\Generated_Source</v>
+<v>nadimaPSoCDAQ\nadimaPSoCDAQ\Generated_Source\PSoC5</v>
+<v>nadimaPSoCDAQ\nadimaPSoCDAQ\Generated_Source\PSoC5\Timer</v>
+<v>nadimaPSoCDAQ\nadimaPSoCDAQ\Generated_Source\PSoC5\Timer_isr</v>
+<v>nadimaPSoCDAQ\CE195277_ADC_and_UART.pdf</v>
+</ExpandedNodeIds>
+<VisibleNodeIds>
+<v>nadimaPSoCDAQ\nadimaPSoCDAQ\Generated_Source\PSoC5\ADC_DelSig_1_theACLK</v>
+</VisibleNodeIds>
+</CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
+<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="">
+<ExpandedNodeIds>
+<v>nadimaPSoCDAQ</v>
+<v>nadimaPSoCDAQ\nadimaPSoCDAQ</v>
+<v>nadimaPSoCDAQ\nadimaPSoCDAQ\TopDesign</v>
+<v>nadimaPSoCDAQ\nadimaPSoCDAQ\TopDesign\TopDesign.cysch</v>
+</ExpandedNodeIds>
+<VisibleNodeIds />
+</CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
+<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="">
+<ExpandedNodeIds>
+<v>nadimaPSoCDAQ</v>
+<v>nadimaPSoCDAQ\nadimaPSoCDAQ</v>
+<v>nadimaPSoCDAQ\nadimaPSoCDAQ\CortexM3</v>
+<v>nadimaPSoCDAQ\nadimaPSoCDAQ\CortexM3\ARM_GCC_541</v>
+<v>nadimaPSoCDAQ\nadimaPSoCDAQ\CortexM3\ARM_GCC_541\Debug</v>
+<v>nadimaPSoCDAQ\nadimaPSoCDAQ\CortexM3\ARM_GCC_541\Debug\Listing Files</v>
+<v>nadimaPSoCDAQ\nadimaPSoCDAQ\CortexM3\ARM_GCC_541\Debug\Listing Files\ADC_DelSig_1.lst</v>
+<v>nadimaPSoCDAQ\nadimaPSoCDAQ\CortexM3\ARM_GCC_541\Debug\Listing Files\ADC_DelSig_1_AMux.lst</v>
+<v>nadimaPSoCDAQ\nadimaPSoCDAQ\CortexM3\ARM_GCC_541\Debug\Listing Files\ADC_DelSig_1_Ext_CP_Clk.lst</v>
+<v>nadimaPSoCDAQ\nadimaPSoCDAQ\CortexM3\ARM_GCC_541\Debug\Listing Files\ADC_DelSig_1_INT.lst</v>
+<v>nadimaPSoCDAQ\nadimaPSoCDAQ\CortexM3\ARM_GCC_541\Debug\Listing Files\ADC_DelSig_1_IRQ.lst</v>
+<v>nadimaPSoCDAQ\nadimaPSoCDAQ\CortexM3\ARM_GCC_541\Debug\Listing Files\ADC_DelSig_1_PM.lst</v>
+<v>nadimaPSoCDAQ\nadimaPSoCDAQ\CortexM3\ARM_GCC_541\Debug\Listing Files\ADC_DelSig_1_theACLK.lst</v>
+<v>nadimaPSoCDAQ\nadimaPSoCDAQ\CortexM3\ARM_GCC_541\Debug\Listing Files\ADC_isr.lst</v>
+<v>nadimaPSoCDAQ\nadimaPSoCDAQ\CortexM3\ARM_GCC_541\Debug\Listing Files\Cm3Start.lst</v>
+<v>nadimaPSoCDAQ\nadimaPSoCDAQ\CortexM3\ARM_GCC_541\Debug\Listing Files\cy_em_eeprom.lst</v>
+<v>nadimaPSoCDAQ\nadimaPSoCDAQ\CortexM3\ARM_GCC_541\Debug\Listing Files\CyBootAsmGnu.lst</v>
+<v>nadimaPSoCDAQ\nadimaPSoCDAQ\CortexM3\ARM_GCC_541\Debug\Listing Files\CyDmac.lst</v>
+<v>nadimaPSoCDAQ\nadimaPSoCDAQ\CortexM3\ARM_GCC_541\Debug\Listing Files\cyfitter_cfg.lst</v>
+<v>nadimaPSoCDAQ\nadimaPSoCDAQ\CortexM3\ARM_GCC_541\Debug\Listing Files\CyFlash.lst</v>
+<v>nadimaPSoCDAQ\nadimaPSoCDAQ\CortexM3\ARM_GCC_541\Debug\Listing Files\CyLib.lst</v>
+<v>nadimaPSoCDAQ\nadimaPSoCDAQ\CortexM3\ARM_GCC_541\Debug\Listing Files\cymetadata.lst</v>
+<v>nadimaPSoCDAQ\nadimaPSoCDAQ\CortexM3\ARM_GCC_541\Debug\Listing Files\cyPm.lst</v>
+<v>nadimaPSoCDAQ\nadimaPSoCDAQ\CortexM3\ARM_GCC_541\Debug\Listing Files\CySpc.lst</v>
+<v>nadimaPSoCDAQ\nadimaPSoCDAQ\CortexM3\ARM_GCC_541\Debug\Listing Files\cyutils.lst</v>
+<v>nadimaPSoCDAQ\nadimaPSoCDAQ\CortexM3\ARM_GCC_541\Debug\Listing Files\main.lst</v>
+<v>nadimaPSoCDAQ\nadimaPSoCDAQ\CortexM3\ARM_GCC_541\Debug\Listing Files\Timer.lst</v>
+<v>nadimaPSoCDAQ\nadimaPSoCDAQ\CortexM3\ARM_GCC_541\Debug\Listing Files\Timer_isr.lst</v>
+<v>nadimaPSoCDAQ\nadimaPSoCDAQ\CortexM3\ARM_GCC_541\Debug\Listing Files\Timer_PM.lst</v>
+<v>nadimaPSoCDAQ\nadimaPSoCDAQ\CortexM3\ARM_GCC_541\Debug\Listing Files\UART_1.lst</v>
+<v>nadimaPSoCDAQ\nadimaPSoCDAQ\CortexM3\ARM_GCC_541\Debug\Listing Files\UART_1_BOOT.lst</v>
+<v>nadimaPSoCDAQ\nadimaPSoCDAQ\CortexM3\ARM_GCC_541\Debug\Listing Files\UART_1_INT.lst</v>
+<v>nadimaPSoCDAQ\nadimaPSoCDAQ\CortexM3\ARM_GCC_541\Debug\Listing Files\UART_1_IntClock.lst</v>
+<v>nadimaPSoCDAQ\nadimaPSoCDAQ\CortexM3\ARM_GCC_541\Debug\Listing Files\UART_1_PM.lst</v>
+<v>nadimaPSoCDAQ\nadimaPSoCDAQ\CortexM3\ARM_GCC_541\Debug\Listing Files\Vin.lst</v>
+<v>nadimaPSoCDAQ\nadimaPSoCDAQ\CortexM3\ARM_GCC_541\Debug\nadimaPSoCDAQ.elf</v>
+<v>nadimaPSoCDAQ\nadimaPSoCDAQ\CortexM3\ARM_GCC_541\Debug\nadimaPSoCDAQ.hex</v>
+<v>nadimaPSoCDAQ\nadimaPSoCDAQ\CortexM3\ARM_GCC_541\Debug\nadimaPSoCDAQ.map</v>
+<v>nadimaPSoCDAQ\nadimaPSoCDAQ\nadimaPSoCDAQ.gpdsc</v>
+<v>nadimaPSoCDAQ\nadimaPSoCDAQ\nadimaPSoCDAQ.rpt</v>
+<v>nadimaPSoCDAQ\nadimaPSoCDAQ\nadimaPSoCDAQ_timing.html</v>
+</ExpandedNodeIds>
+<VisibleNodeIds />
+</CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
+</TreeStates>
+<TreeKeysV2>
+<v>Datasheet</v>
+</TreeKeysV2>
+<TreeStatesV2>
+<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="">
+<ExpandedNodeIds>
+<v>nadimaPSoCDAQ</v>
+<v>nadimaPSoCDAQ\nadimaPSoCDAQ</v>
+<v>nadimaPSoCDAQ\nadimaPSoCDAQ\PSoC 5LP Architecture TRM</v>
+<v>nadimaPSoCDAQ\nadimaPSoCDAQ\CY8C58LP Family Datasheet</v>
+<v>nadimaPSoCDAQ\nadimaPSoCDAQ\System Reference Guides</v>
+<v>nadimaPSoCDAQ\nadimaPSoCDAQ\System Reference Guides\cy_boot_v6_0</v>
+<v>nadimaPSoCDAQ\nadimaPSoCDAQ\ADC_DelSig_v3_30.pdf</v>
+<v>nadimaPSoCDAQ\nadimaPSoCDAQ\cy_clock_v2_20.pdf</v>
+<v>nadimaPSoCDAQ\nadimaPSoCDAQ\cy_isr_v1_70</v>
+<v>nadimaPSoCDAQ\nadimaPSoCDAQ\cy_isr_v1_70\cy_isr_v1_70.pdf</v>
+<v>nadimaPSoCDAQ\nadimaPSoCDAQ\cy_pins_v2_20</v>
+<v>nadimaPSoCDAQ\nadimaPSoCDAQ\cy_pins_v2_20\cy_pins_v2_20.pdf</v>
+<v>nadimaPSoCDAQ\nadimaPSoCDAQ\Timer_v2_80.pdf</v>
+<v>nadimaPSoCDAQ\nadimaPSoCDAQ\UART_v2_50.pdf</v>
+<v>nadimaPSoCDAQ\nadimaPSoCDAQ\ZeroTerminal.pdf</v>
+</ExpandedNodeIds>
+<VisibleNodeIds />
+</CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
+</TreeStatesV2>
+</CyGuid_1b906a0f-a7b6-4e4d-a428-82f98b53cb35>
+</dataGuid>
+</userData>
+</CyGuid_fdba8dfd-b15b-4469-9bbb-9e40c3e70997>
+<Unloaded />
+<OpenDocs>
+<name v=".\nadimaPSoCDAQ.cydsn\TopDesign\TopDesign.cysch" />
+<name v=".\nadimaPSoCDAQ.cydsn\nadimaPSoCDAQ.cydwr" />
+<name v=".\nadimaPSoCDAQ.cydsn\main.c" />
+<name v=".\nadimaPSoCDAQ.cydsn\Generated_Source\PSoC5\ADC_isr.c" />
+</OpenDocs>
+<OpenDocsLayout><![CDATA[<?xml version="1.0"?><!--
+
+  Actipro Docking/MDI for WinForms
+  Copyright (c) 2001-2016 Actipro Software LLC.  All rights reserved.
+  http://www.actiprosoftware.com
+
+--><DocumentLayout Version="1.0"><LayoutData><TabbedMdiRootContainer Orientation="Horizontal"><TabbedMdiContainer Size="1041, 419" SelectedTabbedMdiWindow="02aefe1f-5cce-44b8-8bc0-7ed58e743dac"><ToolWindow Key="Start Page:bd4649ab-da6b-4d04-a663-c722b8bf99db:Start Page" Guid="a9e84e9f-d579-40b7-9b8e-e3812d665b5e" /><DocumentWindow Key="C:\Users\iamna\Documents\PSoC Creator\nadimaPSoCDAQ\nadimaPSoCDAQ.cydsn\TopDesign\TopDesign.cysch" Guid="ae09cad3-ff94-4414-8ef2-9fdf658bb13a" /><DocumentWindow Key="C:\Users\iamna\Documents\PSoC Creator\nadimaPSoCDAQ\nadimaPSoCDAQ.cydsn\nadimaPSoCDAQ.cydwr" Guid="6df2a55b-e4c0-49a9-9f79-9f530b37094d" /><DocumentWindow Key="C:\Users\iamna\Documents\PSoC Creator\nadimaPSoCDAQ\nadimaPSoCDAQ.cydsn\main.c" Guid="02aefe1f-5cce-44b8-8bc0-7ed58e743dac" /><DocumentWindow Key="C:\Users\iamna\Documents\PSoC Creator\nadimaPSoCDAQ\nadimaPSoCDAQ.cydsn\Generated_Source\PSoC5\ADC_isr.c" Guid="a818c669-f77e-438b-99cf-7a53bf037734" /></TabbedMdiContainer></TabbedMdiRootContainer><FloatingContainers /></LayoutData></DocumentLayout>]]></OpenDocsLayout>
+<config v="" />
+<AutoUpdate v="true" />
+</CyGuid_843a90a4-0c4b-4e44-991d-05e7fb117a21>
+</CyXmlSerializer>

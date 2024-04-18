@@ -1,0 +1,1009 @@
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccKvKjOH.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 6
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"main.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.global	sum_of_voltage
+  20              		.bss
+  21              		.align	2
+  22              		.type	sum_of_voltage, %object
+  23              		.size	sum_of_voltage, 4
+  24              	sum_of_voltage:
+  25 0000 00000000 		.space	4
+  26              		.global	count
+  27              		.align	2
+  28              		.type	count, %object
+  29              		.size	count, 4
+  30              	count:
+  31 0004 00000000 		.space	4
+  32              		.comm	voltage,4,4
+  33              		.comm	current_tempreture,4,4
+  34              		.global	send_data
+  35              		.type	send_data, %object
+  36              		.size	send_data, 1
+  37              	send_data:
+  38 0008 00       		.space	1
+  39              		.comm	TransmitBuffer,30,4
+  40              		.section	.rodata
+  41              		.align	2
+  42              	.LC0:
+  43 0000 434F4D20 		.ascii	"COM Port Open\000"
+  43      506F7274 
+  43      204F7065 
+  43      6E00
+  44              		.global	__aeabi_fdiv
+  45              		.global	__aeabi_f2d
+  46 000e 0000     		.align	2
+  47              	.LC1:
+  48 0010 7B202241 		.ascii	"{ \"ADC\": %f ,\"LM35\": %.1f}\015\012\000"
+  48      4443223A 
+  48      20256620 
+  48      2C224C4D 
+  48      3335223A 
+  49              		.section	.text.main,"ax",%progbits
+  50              		.align	2
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccKvKjOH.s 			page 2
+
+
+  51              		.global	main
+  52              		.thumb
+  53              		.thumb_func
+  54              		.type	main, %function
+  55              	main:
+  56              	.LFB64:
+  57              		.file 1 "main.c"
+   1:main.c        **** /******************************************************************************
+   2:main.c        **** 
+   3:main.c        **** *******************************************************************************/
+   4:main.c        **** 
+   5:main.c        **** #include <project.h>
+   6:main.c        **** #include "stdio.h"
+   7:main.c        **** #include "stdbool.h"
+   8:main.c        **** 
+   9:main.c        **** /* Project Defines */
+  10:main.c        **** #define TRANSMIT_BUFFER_SIZE  30
+  11:main.c        **** 
+  12:main.c        **** CY_ISR_PROTO(ADC_ISR_Function);
+  13:main.c        **** CY_ISR(Timer_ISR_Function);
+  14:main.c        **** 
+  15:main.c        **** void send_Data_to_Uart();
+  16:main.c        **** void tempcalc();
+  17:main.c        **** 
+  18:main.c        **** uint32 sum_of_voltage = 0 ;
+  19:main.c        **** uint32 count = 0;
+  20:main.c        **** 
+  21:main.c        **** float32 voltage;
+  22:main.c        **** float32 current_tempreture;
+  23:main.c        **** bool send_data = false;
+  24:main.c        **** char TransmitBuffer[TRANSMIT_BUFFER_SIZE];
+  25:main.c        **** 
+  26:main.c        **** int main()
+  27:main.c        **** {
+  58              		.loc 1 27 0
+  59              		.cfi_startproc
+  60              		@ args = 0, pretend = 0, frame = 0
+  61              		@ frame_needed = 1, uses_anonymous_args = 0
+  62 0000 90B5     		push	{r4, r7, lr}
+  63              		.cfi_def_cfa_offset 12
+  64              		.cfi_offset 4, -12
+  65              		.cfi_offset 7, -8
+  66              		.cfi_offset 14, -4
+  67 0002 83B0     		sub	sp, sp, #12
+  68              		.cfi_def_cfa_offset 24
+  69 0004 02AF     		add	r7, sp, #8
+  70              		.cfi_def_cfa 7, 16
+  28:main.c        ****    CyGlobalIntEnable;
+  71              		.loc 1 28 0
+  72              		.syntax unified
+  73              	@ 28 "main.c" 1
+  74 0006 62B6     		CPSIE   i
+  75              	@ 0 "" 2
+  29:main.c        ****     /* Start the components */
+  30:main.c        ****     ADC_DelSig_1_Start();
+  76              		.loc 1 30 0
+  77              		.thumb
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccKvKjOH.s 			page 3
+
+
+  78              		.syntax unified
+  79 0008 FFF7FEFF 		bl	ADC_DelSig_1_Start
+  31:main.c        ****     UART_1_Start();
+  80              		.loc 1 31 0
+  81 000c FFF7FEFF 		bl	UART_1_Start
+  32:main.c        ****     Timer_Start();
+  82              		.loc 1 32 0
+  83 0010 FFF7FEFF 		bl	Timer_Start
+  33:main.c        ****   
+  34:main.c        ****     /* Start interrupt */
+  35:main.c        ****     ADC_isr_StartEx(ADC_ISR_Function);
+  84              		.loc 1 35 0
+  85 0014 1548     		ldr	r0, .L4
+  86 0016 FFF7FEFF 		bl	ADC_isr_StartEx
+  36:main.c        ****     Timer_isr_StartEx(Timer_ISR_Function);
+  87              		.loc 1 36 0
+  88 001a 1548     		ldr	r0, .L4+4
+  89 001c FFF7FEFF 		bl	Timer_isr_StartEx
+  37:main.c        ****     
+  38:main.c        ****     /* Start the ADC conversion */
+  39:main.c        ****     ADC_DelSig_1_StartConvert();
+  90              		.loc 1 39 0
+  91 0020 FFF7FEFF 		bl	ADC_DelSig_1_StartConvert
+  40:main.c        ****     
+  41:main.c        ****     /* Send message to verify COM port is connected properly */
+  42:main.c        ****     UART_1_PutString("COM Port Open");
+  92              		.loc 1 42 0
+  93 0024 1348     		ldr	r0, .L4+8
+  94 0026 FFF7FEFF 		bl	UART_1_PutString
+  95              	.L3:
+  43:main.c        ****     
+  44:main.c        ****     for(;;)
+  45:main.c        ****     {    
+  46:main.c        ****        /* Send data through UART */ 
+  47:main.c        ****        if(send_data){
+  96              		.loc 1 47 0
+  97 002a 134B     		ldr	r3, .L4+12
+  98 002c 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+  99 002e 002B     		cmp	r3, #0
+ 100 0030 FBD0     		beq	.L3
+  48:main.c        ****         sprintf(TransmitBuffer, "{ \"ADC\": %f ,\"LM35\": %.1f}\r\n", 0.5, (voltage/10));
+ 101              		.loc 1 48 0
+ 102 0032 124B     		ldr	r3, .L4+16
+ 103 0034 1B68     		ldr	r3, [r3]	@ float
+ 104 0036 1249     		ldr	r1, .L4+20
+ 105 0038 1846     		mov	r0, r3
+ 106 003a FFF7FEFF 		bl	__aeabi_fdiv
+ 107 003e 0346     		mov	r3, r0
+ 108 0040 1846     		mov	r0, r3
+ 109 0042 FFF7FEFF 		bl	__aeabi_f2d
+ 110 0046 0346     		mov	r3, r0
+ 111 0048 0C46     		mov	r4, r1
+ 112 004a CDE90034 		strd	r3, [sp]
+ 113 004e 4FF00002 		mov	r2, #0
+ 114 0052 0C4B     		ldr	r3, .L4+24
+ 115 0054 0C49     		ldr	r1, .L4+28
+ 116 0056 0D48     		ldr	r0, .L4+32
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccKvKjOH.s 			page 4
+
+
+ 117 0058 FFF7FEFF 		bl	sprintf
+  49:main.c        ****         UART_1_PutString(TransmitBuffer);
+ 118              		.loc 1 49 0
+ 119 005c 0B48     		ldr	r0, .L4+32
+ 120 005e FFF7FEFF 		bl	UART_1_PutString
+  50:main.c        ****         send_data = false;
+ 121              		.loc 1 50 0
+ 122 0062 054B     		ldr	r3, .L4+12
+ 123 0064 0022     		movs	r2, #0
+ 124 0066 1A70     		strb	r2, [r3]
+  51:main.c        ****     }
+  52:main.c        ****          
+  53:main.c        ****     }
+ 125              		.loc 1 53 0
+ 126 0068 DFE7     		b	.L3
+ 127              	.L5:
+ 128 006a 00BF     		.align	2
+ 129              	.L4:
+ 130 006c 00000000 		.word	ADC_ISR_Function
+ 131 0070 00000000 		.word	Timer_ISR_Function
+ 132 0074 00000000 		.word	.LC0
+ 133 0078 00000000 		.word	send_data
+ 134 007c 00000000 		.word	voltage
+ 135 0080 00002041 		.word	1092616192
+ 136 0084 0000E03F 		.word	1071644672
+ 137 0088 10000000 		.word	.LC1
+ 138 008c 00000000 		.word	TransmitBuffer
+ 139              		.cfi_endproc
+ 140              	.LFE64:
+ 141              		.size	main, .-main
+ 142              		.section	.text.ADC_ISR_Function,"ax",%progbits
+ 143              		.align	2
+ 144              		.global	ADC_ISR_Function
+ 145              		.thumb
+ 146              		.thumb_func
+ 147              		.type	ADC_ISR_Function, %function
+ 148              	ADC_ISR_Function:
+ 149              	.LFB65:
+  54:main.c        **** }
+  55:main.c        **** /* ADC ISR */
+  56:main.c        **** CY_ISR(ADC_ISR_Function){
+ 150              		.loc 1 56 0
+ 151              		.cfi_startproc
+ 152              		@ args = 0, pretend = 0, frame = 8
+ 153              		@ frame_needed = 1, uses_anonymous_args = 0
+ 154 0000 80B5     		push	{r7, lr}
+ 155              		.cfi_def_cfa_offset 8
+ 156              		.cfi_offset 7, -8
+ 157              		.cfi_offset 14, -4
+ 158 0002 82B0     		sub	sp, sp, #8
+ 159              		.cfi_def_cfa_offset 16
+ 160 0004 00AF     		add	r7, sp, #0
+ 161              		.cfi_def_cfa_register 7
+  57:main.c        ****    uint32 current_voltage =  ADC_DelSig_1_CountsTo_mVolts(ADC_DelSig_1_GetResult16());
+ 162              		.loc 1 57 0
+ 163 0006 FFF7FEFF 		bl	ADC_DelSig_1_GetResult16
+ 164 000a 0346     		mov	r3, r0
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccKvKjOH.s 			page 5
+
+
+ 165 000c 1846     		mov	r0, r3
+ 166 000e FFF7FEFF 		bl	ADC_DelSig_1_CountsTo_mVolts
+ 167 0012 0346     		mov	r3, r0
+ 168 0014 7B60     		str	r3, [r7, #4]
+  58:main.c        ****    sum_of_voltage += current_voltage;
+ 169              		.loc 1 58 0
+ 170 0016 074B     		ldr	r3, .L7
+ 171 0018 1A68     		ldr	r2, [r3]
+ 172 001a 7B68     		ldr	r3, [r7, #4]
+ 173 001c 1344     		add	r3, r3, r2
+ 174 001e 054A     		ldr	r2, .L7
+ 175 0020 1360     		str	r3, [r2]
+  59:main.c        ****    count++;
+ 176              		.loc 1 59 0
+ 177 0022 054B     		ldr	r3, .L7+4
+ 178 0024 1B68     		ldr	r3, [r3]
+ 179 0026 0133     		adds	r3, r3, #1
+ 180 0028 034A     		ldr	r2, .L7+4
+ 181 002a 1360     		str	r3, [r2]
+  60:main.c        **** }
+ 182              		.loc 1 60 0
+ 183 002c 00BF     		nop
+ 184 002e 0837     		adds	r7, r7, #8
+ 185              		.cfi_def_cfa_offset 8
+ 186 0030 BD46     		mov	sp, r7
+ 187              		.cfi_def_cfa_register 13
+ 188              		@ sp needed
+ 189 0032 80BD     		pop	{r7, pc}
+ 190              	.L8:
+ 191              		.align	2
+ 192              	.L7:
+ 193 0034 00000000 		.word	sum_of_voltage
+ 194 0038 00000000 		.word	count
+ 195              		.cfi_endproc
+ 196              	.LFE65:
+ 197              		.size	ADC_ISR_Function, .-ADC_ISR_Function
+ 198              		.global	__aeabi_ui2f
+ 199              		.section	.text.Timer_ISR_Function,"ax",%progbits
+ 200              		.align	2
+ 201              		.global	Timer_ISR_Function
+ 202              		.thumb
+ 203              		.thumb_func
+ 204              		.type	Timer_ISR_Function, %function
+ 205              	Timer_ISR_Function:
+ 206              	.LFB66:
+  61:main.c        **** /* Timer ISR */
+  62:main.c        **** CY_ISR(Timer_ISR_Function){
+ 207              		.loc 1 62 0
+ 208              		.cfi_startproc
+ 209              		@ args = 0, pretend = 0, frame = 0
+ 210              		@ frame_needed = 1, uses_anonymous_args = 0
+ 211 0000 80B5     		push	{r7, lr}
+ 212              		.cfi_def_cfa_offset 8
+ 213              		.cfi_offset 7, -8
+ 214              		.cfi_offset 14, -4
+ 215 0002 00AF     		add	r7, sp, #0
+ 216              		.cfi_def_cfa_register 7
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccKvKjOH.s 			page 6
+
+
+  63:main.c        ****     Timer_ReadStatusRegister();
+ 217              		.loc 1 63 0
+ 218 0004 FFF7FEFF 		bl	Timer_ReadStatusRegister
+  64:main.c        ****     ADC_isr_Disable();
+ 219              		.loc 1 64 0
+ 220 0008 FFF7FEFF 		bl	ADC_isr_Disable
+  65:main.c        ****     voltage = sum_of_voltage / count;
+ 221              		.loc 1 65 0
+ 222 000c 114B     		ldr	r3, .L10
+ 223 000e 1A68     		ldr	r2, [r3]
+ 224 0010 114B     		ldr	r3, .L10+4
+ 225 0012 1B68     		ldr	r3, [r3]
+ 226 0014 B2FBF3F3 		udiv	r3, r2, r3
+ 227 0018 1846     		mov	r0, r3
+ 228 001a FFF7FEFF 		bl	__aeabi_ui2f
+ 229 001e 0246     		mov	r2, r0
+ 230 0020 0E4B     		ldr	r3, .L10+8
+ 231 0022 1A60     		str	r2, [r3]	@ float
+  66:main.c        ****     current_tempreture = voltage / 10.0f;
+ 232              		.loc 1 66 0
+ 233 0024 0D4B     		ldr	r3, .L10+8
+ 234 0026 1B68     		ldr	r3, [r3]	@ float
+ 235 0028 0D49     		ldr	r1, .L10+12
+ 236 002a 1846     		mov	r0, r3
+ 237 002c FFF7FEFF 		bl	__aeabi_fdiv
+ 238 0030 0346     		mov	r3, r0
+ 239 0032 1A46     		mov	r2, r3
+ 240 0034 0B4B     		ldr	r3, .L10+16
+ 241 0036 1A60     		str	r2, [r3]	@ float
+  67:main.c        ****     sum_of_voltage = 0;
+ 242              		.loc 1 67 0
+ 243 0038 064B     		ldr	r3, .L10
+ 244 003a 0022     		movs	r2, #0
+ 245 003c 1A60     		str	r2, [r3]
+  68:main.c        ****     count = 0;
+ 246              		.loc 1 68 0
+ 247 003e 064B     		ldr	r3, .L10+4
+ 248 0040 0022     		movs	r2, #0
+ 249 0042 1A60     		str	r2, [r3]
+  69:main.c        ****     ADC_isr_Enable();
+ 250              		.loc 1 69 0
+ 251 0044 FFF7FEFF 		bl	ADC_isr_Enable
+  70:main.c        ****     send_data = true;
+ 252              		.loc 1 70 0
+ 253 0048 074B     		ldr	r3, .L10+20
+ 254 004a 0122     		movs	r2, #1
+ 255 004c 1A70     		strb	r2, [r3]
+  71:main.c        **** }
+ 256              		.loc 1 71 0
+ 257 004e 00BF     		nop
+ 258 0050 80BD     		pop	{r7, pc}
+ 259              	.L11:
+ 260 0052 00BF     		.align	2
+ 261              	.L10:
+ 262 0054 00000000 		.word	sum_of_voltage
+ 263 0058 00000000 		.word	count
+ 264 005c 00000000 		.word	voltage
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccKvKjOH.s 			page 7
+
+
+ 265 0060 00002041 		.word	1092616192
+ 266 0064 00000000 		.word	current_tempreture
+ 267 0068 00000000 		.word	send_data
+ 268              		.cfi_endproc
+ 269              	.LFE66:
+ 270              		.size	Timer_ISR_Function, .-Timer_ISR_Function
+ 271              		.text
+ 272              	.Letext0:
+ 273              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.
+ 274              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.
+ 275              		.file 4 "Generated_Source\\PSoC5/cytypes.h"
+ 276              		.file 5 "Generated_Source\\PSoC5/core_cm3.h"
+ 277              		.section	.debug_info,"",%progbits
+ 278              	.Ldebug_info0:
+ 279 0000 91010000 		.4byte	0x191
+ 280 0004 0400     		.2byte	0x4
+ 281 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 282 000a 04       		.byte	0x4
+ 283 000b 01       		.uleb128 0x1
+ 284 000c 00000000 		.4byte	.LASF28
+ 285 0010 0C       		.byte	0xc
+ 286 0011 D9010000 		.4byte	.LASF29
+ 287 0015 56010000 		.4byte	.LASF30
+ 288 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 289 001d 00000000 		.4byte	0
+ 290 0021 00000000 		.4byte	.Ldebug_line0
+ 291 0025 02       		.uleb128 0x2
+ 292 0026 01       		.byte	0x1
+ 293 0027 06       		.byte	0x6
+ 294 0028 2C020000 		.4byte	.LASF0
+ 295 002c 02       		.uleb128 0x2
+ 296 002d 01       		.byte	0x1
+ 297 002e 08       		.byte	0x8
+ 298 002f AE000000 		.4byte	.LASF1
+ 299 0033 02       		.uleb128 0x2
+ 300 0034 02       		.byte	0x2
+ 301 0035 05       		.byte	0x5
+ 302 0036 FE010000 		.4byte	.LASF2
+ 303 003a 02       		.uleb128 0x2
+ 304 003b 02       		.byte	0x2
+ 305 003c 07       		.byte	0x7
+ 306 003d E1000000 		.4byte	.LASF3
+ 307 0041 03       		.uleb128 0x3
+ 308 0042 8E000000 		.4byte	.LASF9
+ 309 0046 02       		.byte	0x2
+ 310 0047 3F       		.byte	0x3f
+ 311 0048 4C000000 		.4byte	0x4c
+ 312 004c 02       		.uleb128 0x2
+ 313 004d 04       		.byte	0x4
+ 314 004e 05       		.byte	0x5
+ 315 004f 17020000 		.4byte	.LASF4
+ 316 0053 02       		.uleb128 0x2
+ 317 0054 04       		.byte	0x4
+ 318 0055 07       		.byte	0x7
+ 319 0056 CF000000 		.4byte	.LASF5
+ 320 005a 02       		.uleb128 0x2
+ 321 005b 08       		.byte	0x8
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccKvKjOH.s 			page 8
+
+
+ 322 005c 05       		.byte	0x5
+ 323 005d CB010000 		.4byte	.LASF6
+ 324 0061 02       		.uleb128 0x2
+ 325 0062 08       		.byte	0x8
+ 326 0063 07       		.byte	0x7
+ 327 0064 3F010000 		.4byte	.LASF7
+ 328 0068 04       		.uleb128 0x4
+ 329 0069 04       		.byte	0x4
+ 330 006a 05       		.byte	0x5
+ 331 006b 696E7400 		.ascii	"int\000"
+ 332 006f 02       		.uleb128 0x2
+ 333 0070 04       		.byte	0x4
+ 334 0071 07       		.byte	0x7
+ 335 0072 32010000 		.4byte	.LASF8
+ 336 0076 03       		.uleb128 0x3
+ 337 0077 AB010000 		.4byte	.LASF10
+ 338 007b 03       		.byte	0x3
+ 339 007c 2C       		.byte	0x2c
+ 340 007d 41000000 		.4byte	0x41
+ 341 0081 05       		.uleb128 0x5
+ 342 0082 2B010000 		.4byte	.LASF11
+ 343 0086 04       		.byte	0x4
+ 344 0087 EA01     		.2byte	0x1ea
+ 345 0089 53000000 		.4byte	0x53
+ 346 008d 05       		.uleb128 0x5
+ 347 008e 23010000 		.4byte	.LASF12
+ 348 0092 04       		.byte	0x4
+ 349 0093 EE01     		.2byte	0x1ee
+ 350 0095 99000000 		.4byte	0x99
+ 351 0099 02       		.uleb128 0x2
+ 352 009a 04       		.byte	0x4
+ 353 009b 04       		.byte	0x4
+ 354 009c A8000000 		.4byte	.LASF13
+ 355 00a0 02       		.uleb128 0x2
+ 356 00a1 08       		.byte	0x8
+ 357 00a2 04       		.byte	0x4
+ 358 00a3 0D010000 		.4byte	.LASF14
+ 359 00a7 02       		.uleb128 0x2
+ 360 00a8 01       		.byte	0x1
+ 361 00a9 08       		.byte	0x8
+ 362 00aa E0010000 		.4byte	.LASF15
+ 363 00ae 02       		.uleb128 0x2
+ 364 00af 08       		.byte	0x8
+ 365 00b0 04       		.byte	0x4
+ 366 00b1 20020000 		.4byte	.LASF16
+ 367 00b5 02       		.uleb128 0x2
+ 368 00b6 04       		.byte	0x4
+ 369 00b7 07       		.byte	0x7
+ 370 00b8 C2010000 		.4byte	.LASF17
+ 371 00bc 06       		.uleb128 0x6
+ 372 00bd 1E010000 		.4byte	.LASF18
+ 373 00c1 01       		.byte	0x1
+ 374 00c2 1A       		.byte	0x1a
+ 375 00c3 68000000 		.4byte	0x68
+ 376 00c7 00000000 		.4byte	.LFB64
+ 377 00cb 90000000 		.4byte	.LFE64-.LFB64
+ 378 00cf 01       		.uleb128 0x1
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccKvKjOH.s 			page 9
+
+
+ 379 00d0 9C       		.byte	0x9c
+ 380 00d1 07       		.uleb128 0x7
+ 381 00d2 FC000000 		.4byte	.LASF31
+ 382 00d6 01       		.byte	0x1
+ 383 00d7 38       		.byte	0x38
+ 384 00d8 00000000 		.4byte	.LFB65
+ 385 00dc 3C000000 		.4byte	.LFE65-.LFB65
+ 386 00e0 01       		.uleb128 0x1
+ 387 00e1 9C       		.byte	0x9c
+ 388 00e2 F5000000 		.4byte	0xf5
+ 389 00e6 08       		.uleb128 0x8
+ 390 00e7 98000000 		.4byte	.LASF32
+ 391 00eb 01       		.byte	0x1
+ 392 00ec 39       		.byte	0x39
+ 393 00ed 81000000 		.4byte	0x81
+ 394 00f1 02       		.uleb128 0x2
+ 395 00f2 91       		.byte	0x91
+ 396 00f3 74       		.sleb128 -12
+ 397 00f4 00       		.byte	0
+ 398 00f5 09       		.uleb128 0x9
+ 399 00f6 BC000000 		.4byte	.LASF19
+ 400 00fa 01       		.byte	0x1
+ 401 00fb 3E       		.byte	0x3e
+ 402 00fc 00000000 		.4byte	.LFB66
+ 403 0100 6C000000 		.4byte	.LFE66-.LFB66
+ 404 0104 01       		.uleb128 0x1
+ 405 0105 9C       		.byte	0x9c
+ 406 0106 0A       		.uleb128 0xa
+ 407 0107 9E010000 		.4byte	.LASF20
+ 408 010b 05       		.byte	0x5
+ 409 010c 1207     		.2byte	0x712
+ 410 010e 12010000 		.4byte	0x112
+ 411 0112 0B       		.uleb128 0xb
+ 412 0113 76000000 		.4byte	0x76
+ 413 0117 0C       		.uleb128 0xc
+ 414 0118 B3010000 		.4byte	.LASF21
+ 415 011c 01       		.byte	0x1
+ 416 011d 12       		.byte	0x12
+ 417 011e 81000000 		.4byte	0x81
+ 418 0122 05       		.uleb128 0x5
+ 419 0123 03       		.byte	0x3
+ 420 0124 00000000 		.4byte	sum_of_voltage
+ 421 0128 0C       		.uleb128 0xc
+ 422 0129 F8010000 		.4byte	.LASF22
+ 423 012d 01       		.byte	0x1
+ 424 012e 13       		.byte	0x13
+ 425 012f 81000000 		.4byte	0x81
+ 426 0133 05       		.uleb128 0x5
+ 427 0134 03       		.byte	0x3
+ 428 0135 00000000 		.4byte	count
+ 429 0139 0C       		.uleb128 0xc
+ 430 013a F4000000 		.4byte	.LASF23
+ 431 013e 01       		.byte	0x1
+ 432 013f 15       		.byte	0x15
+ 433 0140 8D000000 		.4byte	0x8d
+ 434 0144 05       		.uleb128 0x5
+ 435 0145 03       		.byte	0x3
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccKvKjOH.s 			page 10
+
+
+ 436 0146 00000000 		.4byte	voltage
+ 437 014a 0C       		.uleb128 0xc
+ 438 014b E5010000 		.4byte	.LASF24
+ 439 014f 01       		.byte	0x1
+ 440 0150 16       		.byte	0x16
+ 441 0151 8D000000 		.4byte	0x8d
+ 442 0155 05       		.uleb128 0x5
+ 443 0156 03       		.byte	0x3
+ 444 0157 00000000 		.4byte	current_tempreture
+ 445 015b 0C       		.uleb128 0xc
+ 446 015c 14010000 		.4byte	.LASF25
+ 447 0160 01       		.byte	0x1
+ 448 0161 17       		.byte	0x17
+ 449 0162 6C010000 		.4byte	0x16c
+ 450 0166 05       		.uleb128 0x5
+ 451 0167 03       		.byte	0x3
+ 452 0168 00000000 		.4byte	send_data
+ 453 016c 02       		.uleb128 0x2
+ 454 016d 01       		.byte	0x1
+ 455 016e 02       		.byte	0x2
+ 456 016f 38020000 		.4byte	.LASF26
+ 457 0173 0D       		.uleb128 0xd
+ 458 0174 A7000000 		.4byte	0xa7
+ 459 0178 83010000 		.4byte	0x183
+ 460 017c 0E       		.uleb128 0xe
+ 461 017d B5000000 		.4byte	0xb5
+ 462 0181 1D       		.byte	0x1d
+ 463 0182 00       		.byte	0
+ 464 0183 0C       		.uleb128 0xc
+ 465 0184 08020000 		.4byte	.LASF27
+ 466 0188 01       		.byte	0x1
+ 467 0189 18       		.byte	0x18
+ 468 018a 73010000 		.4byte	0x173
+ 469 018e 05       		.uleb128 0x5
+ 470 018f 03       		.byte	0x3
+ 471 0190 00000000 		.4byte	TransmitBuffer
+ 472 0194 00       		.byte	0
+ 473              		.section	.debug_abbrev,"",%progbits
+ 474              	.Ldebug_abbrev0:
+ 475 0000 01       		.uleb128 0x1
+ 476 0001 11       		.uleb128 0x11
+ 477 0002 01       		.byte	0x1
+ 478 0003 25       		.uleb128 0x25
+ 479 0004 0E       		.uleb128 0xe
+ 480 0005 13       		.uleb128 0x13
+ 481 0006 0B       		.uleb128 0xb
+ 482 0007 03       		.uleb128 0x3
+ 483 0008 0E       		.uleb128 0xe
+ 484 0009 1B       		.uleb128 0x1b
+ 485 000a 0E       		.uleb128 0xe
+ 486 000b 55       		.uleb128 0x55
+ 487 000c 17       		.uleb128 0x17
+ 488 000d 11       		.uleb128 0x11
+ 489 000e 01       		.uleb128 0x1
+ 490 000f 10       		.uleb128 0x10
+ 491 0010 17       		.uleb128 0x17
+ 492 0011 00       		.byte	0
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccKvKjOH.s 			page 11
+
+
+ 493 0012 00       		.byte	0
+ 494 0013 02       		.uleb128 0x2
+ 495 0014 24       		.uleb128 0x24
+ 496 0015 00       		.byte	0
+ 497 0016 0B       		.uleb128 0xb
+ 498 0017 0B       		.uleb128 0xb
+ 499 0018 3E       		.uleb128 0x3e
+ 500 0019 0B       		.uleb128 0xb
+ 501 001a 03       		.uleb128 0x3
+ 502 001b 0E       		.uleb128 0xe
+ 503 001c 00       		.byte	0
+ 504 001d 00       		.byte	0
+ 505 001e 03       		.uleb128 0x3
+ 506 001f 16       		.uleb128 0x16
+ 507 0020 00       		.byte	0
+ 508 0021 03       		.uleb128 0x3
+ 509 0022 0E       		.uleb128 0xe
+ 510 0023 3A       		.uleb128 0x3a
+ 511 0024 0B       		.uleb128 0xb
+ 512 0025 3B       		.uleb128 0x3b
+ 513 0026 0B       		.uleb128 0xb
+ 514 0027 49       		.uleb128 0x49
+ 515 0028 13       		.uleb128 0x13
+ 516 0029 00       		.byte	0
+ 517 002a 00       		.byte	0
+ 518 002b 04       		.uleb128 0x4
+ 519 002c 24       		.uleb128 0x24
+ 520 002d 00       		.byte	0
+ 521 002e 0B       		.uleb128 0xb
+ 522 002f 0B       		.uleb128 0xb
+ 523 0030 3E       		.uleb128 0x3e
+ 524 0031 0B       		.uleb128 0xb
+ 525 0032 03       		.uleb128 0x3
+ 526 0033 08       		.uleb128 0x8
+ 527 0034 00       		.byte	0
+ 528 0035 00       		.byte	0
+ 529 0036 05       		.uleb128 0x5
+ 530 0037 16       		.uleb128 0x16
+ 531 0038 00       		.byte	0
+ 532 0039 03       		.uleb128 0x3
+ 533 003a 0E       		.uleb128 0xe
+ 534 003b 3A       		.uleb128 0x3a
+ 535 003c 0B       		.uleb128 0xb
+ 536 003d 3B       		.uleb128 0x3b
+ 537 003e 05       		.uleb128 0x5
+ 538 003f 49       		.uleb128 0x49
+ 539 0040 13       		.uleb128 0x13
+ 540 0041 00       		.byte	0
+ 541 0042 00       		.byte	0
+ 542 0043 06       		.uleb128 0x6
+ 543 0044 2E       		.uleb128 0x2e
+ 544 0045 00       		.byte	0
+ 545 0046 3F       		.uleb128 0x3f
+ 546 0047 19       		.uleb128 0x19
+ 547 0048 03       		.uleb128 0x3
+ 548 0049 0E       		.uleb128 0xe
+ 549 004a 3A       		.uleb128 0x3a
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccKvKjOH.s 			page 12
+
+
+ 550 004b 0B       		.uleb128 0xb
+ 551 004c 3B       		.uleb128 0x3b
+ 552 004d 0B       		.uleb128 0xb
+ 553 004e 49       		.uleb128 0x49
+ 554 004f 13       		.uleb128 0x13
+ 555 0050 11       		.uleb128 0x11
+ 556 0051 01       		.uleb128 0x1
+ 557 0052 12       		.uleb128 0x12
+ 558 0053 06       		.uleb128 0x6
+ 559 0054 40       		.uleb128 0x40
+ 560 0055 18       		.uleb128 0x18
+ 561 0056 9642     		.uleb128 0x2116
+ 562 0058 19       		.uleb128 0x19
+ 563 0059 00       		.byte	0
+ 564 005a 00       		.byte	0
+ 565 005b 07       		.uleb128 0x7
+ 566 005c 2E       		.uleb128 0x2e
+ 567 005d 01       		.byte	0x1
+ 568 005e 3F       		.uleb128 0x3f
+ 569 005f 19       		.uleb128 0x19
+ 570 0060 03       		.uleb128 0x3
+ 571 0061 0E       		.uleb128 0xe
+ 572 0062 3A       		.uleb128 0x3a
+ 573 0063 0B       		.uleb128 0xb
+ 574 0064 3B       		.uleb128 0x3b
+ 575 0065 0B       		.uleb128 0xb
+ 576 0066 27       		.uleb128 0x27
+ 577 0067 19       		.uleb128 0x19
+ 578 0068 11       		.uleb128 0x11
+ 579 0069 01       		.uleb128 0x1
+ 580 006a 12       		.uleb128 0x12
+ 581 006b 06       		.uleb128 0x6
+ 582 006c 40       		.uleb128 0x40
+ 583 006d 18       		.uleb128 0x18
+ 584 006e 9642     		.uleb128 0x2116
+ 585 0070 19       		.uleb128 0x19
+ 586 0071 01       		.uleb128 0x1
+ 587 0072 13       		.uleb128 0x13
+ 588 0073 00       		.byte	0
+ 589 0074 00       		.byte	0
+ 590 0075 08       		.uleb128 0x8
+ 591 0076 34       		.uleb128 0x34
+ 592 0077 00       		.byte	0
+ 593 0078 03       		.uleb128 0x3
+ 594 0079 0E       		.uleb128 0xe
+ 595 007a 3A       		.uleb128 0x3a
+ 596 007b 0B       		.uleb128 0xb
+ 597 007c 3B       		.uleb128 0x3b
+ 598 007d 0B       		.uleb128 0xb
+ 599 007e 49       		.uleb128 0x49
+ 600 007f 13       		.uleb128 0x13
+ 601 0080 02       		.uleb128 0x2
+ 602 0081 18       		.uleb128 0x18
+ 603 0082 00       		.byte	0
+ 604 0083 00       		.byte	0
+ 605 0084 09       		.uleb128 0x9
+ 606 0085 2E       		.uleb128 0x2e
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccKvKjOH.s 			page 13
+
+
+ 607 0086 00       		.byte	0
+ 608 0087 3F       		.uleb128 0x3f
+ 609 0088 19       		.uleb128 0x19
+ 610 0089 03       		.uleb128 0x3
+ 611 008a 0E       		.uleb128 0xe
+ 612 008b 3A       		.uleb128 0x3a
+ 613 008c 0B       		.uleb128 0xb
+ 614 008d 3B       		.uleb128 0x3b
+ 615 008e 0B       		.uleb128 0xb
+ 616 008f 27       		.uleb128 0x27
+ 617 0090 19       		.uleb128 0x19
+ 618 0091 11       		.uleb128 0x11
+ 619 0092 01       		.uleb128 0x1
+ 620 0093 12       		.uleb128 0x12
+ 621 0094 06       		.uleb128 0x6
+ 622 0095 40       		.uleb128 0x40
+ 623 0096 18       		.uleb128 0x18
+ 624 0097 9642     		.uleb128 0x2116
+ 625 0099 19       		.uleb128 0x19
+ 626 009a 00       		.byte	0
+ 627 009b 00       		.byte	0
+ 628 009c 0A       		.uleb128 0xa
+ 629 009d 34       		.uleb128 0x34
+ 630 009e 00       		.byte	0
+ 631 009f 03       		.uleb128 0x3
+ 632 00a0 0E       		.uleb128 0xe
+ 633 00a1 3A       		.uleb128 0x3a
+ 634 00a2 0B       		.uleb128 0xb
+ 635 00a3 3B       		.uleb128 0x3b
+ 636 00a4 05       		.uleb128 0x5
+ 637 00a5 49       		.uleb128 0x49
+ 638 00a6 13       		.uleb128 0x13
+ 639 00a7 3F       		.uleb128 0x3f
+ 640 00a8 19       		.uleb128 0x19
+ 641 00a9 3C       		.uleb128 0x3c
+ 642 00aa 19       		.uleb128 0x19
+ 643 00ab 00       		.byte	0
+ 644 00ac 00       		.byte	0
+ 645 00ad 0B       		.uleb128 0xb
+ 646 00ae 35       		.uleb128 0x35
+ 647 00af 00       		.byte	0
+ 648 00b0 49       		.uleb128 0x49
+ 649 00b1 13       		.uleb128 0x13
+ 650 00b2 00       		.byte	0
+ 651 00b3 00       		.byte	0
+ 652 00b4 0C       		.uleb128 0xc
+ 653 00b5 34       		.uleb128 0x34
+ 654 00b6 00       		.byte	0
+ 655 00b7 03       		.uleb128 0x3
+ 656 00b8 0E       		.uleb128 0xe
+ 657 00b9 3A       		.uleb128 0x3a
+ 658 00ba 0B       		.uleb128 0xb
+ 659 00bb 3B       		.uleb128 0x3b
+ 660 00bc 0B       		.uleb128 0xb
+ 661 00bd 49       		.uleb128 0x49
+ 662 00be 13       		.uleb128 0x13
+ 663 00bf 3F       		.uleb128 0x3f
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccKvKjOH.s 			page 14
+
+
+ 664 00c0 19       		.uleb128 0x19
+ 665 00c1 02       		.uleb128 0x2
+ 666 00c2 18       		.uleb128 0x18
+ 667 00c3 00       		.byte	0
+ 668 00c4 00       		.byte	0
+ 669 00c5 0D       		.uleb128 0xd
+ 670 00c6 01       		.uleb128 0x1
+ 671 00c7 01       		.byte	0x1
+ 672 00c8 49       		.uleb128 0x49
+ 673 00c9 13       		.uleb128 0x13
+ 674 00ca 01       		.uleb128 0x1
+ 675 00cb 13       		.uleb128 0x13
+ 676 00cc 00       		.byte	0
+ 677 00cd 00       		.byte	0
+ 678 00ce 0E       		.uleb128 0xe
+ 679 00cf 21       		.uleb128 0x21
+ 680 00d0 00       		.byte	0
+ 681 00d1 49       		.uleb128 0x49
+ 682 00d2 13       		.uleb128 0x13
+ 683 00d3 2F       		.uleb128 0x2f
+ 684 00d4 0B       		.uleb128 0xb
+ 685 00d5 00       		.byte	0
+ 686 00d6 00       		.byte	0
+ 687 00d7 00       		.byte	0
+ 688              		.section	.debug_aranges,"",%progbits
+ 689 0000 2C000000 		.4byte	0x2c
+ 690 0004 0200     		.2byte	0x2
+ 691 0006 00000000 		.4byte	.Ldebug_info0
+ 692 000a 04       		.byte	0x4
+ 693 000b 00       		.byte	0
+ 694 000c 0000     		.2byte	0
+ 695 000e 0000     		.2byte	0
+ 696 0010 00000000 		.4byte	.LFB64
+ 697 0014 90000000 		.4byte	.LFE64-.LFB64
+ 698 0018 00000000 		.4byte	.LFB65
+ 699 001c 3C000000 		.4byte	.LFE65-.LFB65
+ 700 0020 00000000 		.4byte	.LFB66
+ 701 0024 6C000000 		.4byte	.LFE66-.LFB66
+ 702 0028 00000000 		.4byte	0
+ 703 002c 00000000 		.4byte	0
+ 704              		.section	.debug_ranges,"",%progbits
+ 705              	.Ldebug_ranges0:
+ 706 0000 00000000 		.4byte	.LFB64
+ 707 0004 90000000 		.4byte	.LFE64
+ 708 0008 00000000 		.4byte	.LFB65
+ 709 000c 3C000000 		.4byte	.LFE65
+ 710 0010 00000000 		.4byte	.LFB66
+ 711 0014 6C000000 		.4byte	.LFE66
+ 712 0018 00000000 		.4byte	0
+ 713 001c 00000000 		.4byte	0
+ 714              		.section	.debug_line,"",%progbits
+ 715              	.Ldebug_line0:
+ 716 0000 9A010000 		.section	.debug_str,"MS",%progbits,1
+ 716      02004C01 
+ 716      00000201 
+ 716      FB0E0D00 
+ 716      01010101 
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccKvKjOH.s 			page 15
+
+
+ 717              	.LASF28:
+ 718 0000 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 718      43313120 
+ 718      352E342E 
+ 718      31203230 
+ 718      31363036 
+ 719 0033 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m3 -mthumb -g -O"
+ 719      20726576 
+ 719      6973696F 
+ 719      6E203233 
+ 719      37373135 
+ 720 0066 30202D66 		.ascii	"0 -ffunction-sections -ffat-lto-objects\000"
+ 720      66756E63 
+ 720      74696F6E 
+ 720      2D736563 
+ 720      74696F6E 
+ 721              	.LASF9:
+ 722 008e 5F5F696E 		.ascii	"__int32_t\000"
+ 722      7433325F 
+ 722      7400
+ 723              	.LASF32:
+ 724 0098 63757272 		.ascii	"current_voltage\000"
+ 724      656E745F 
+ 724      766F6C74 
+ 724      61676500 
+ 725              	.LASF13:
+ 726 00a8 666C6F61 		.ascii	"float\000"
+ 726      7400
+ 727              	.LASF1:
+ 728 00ae 756E7369 		.ascii	"unsigned char\000"
+ 728      676E6564 
+ 728      20636861 
+ 728      7200
+ 729              	.LASF19:
+ 730 00bc 54696D65 		.ascii	"Timer_ISR_Function\000"
+ 730      725F4953 
+ 730      525F4675 
+ 730      6E637469 
+ 730      6F6E00
+ 731              	.LASF5:
+ 732 00cf 6C6F6E67 		.ascii	"long unsigned int\000"
+ 732      20756E73 
+ 732      69676E65 
+ 732      6420696E 
+ 732      7400
+ 733              	.LASF3:
+ 734 00e1 73686F72 		.ascii	"short unsigned int\000"
+ 734      7420756E 
+ 734      7369676E 
+ 734      65642069 
+ 734      6E7400
+ 735              	.LASF23:
+ 736 00f4 766F6C74 		.ascii	"voltage\000"
+ 736      61676500 
+ 737              	.LASF31:
+ 738 00fc 4144435F 		.ascii	"ADC_ISR_Function\000"
+ 738      4953525F 
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccKvKjOH.s 			page 16
+
+
+ 738      46756E63 
+ 738      74696F6E 
+ 738      00
+ 739              	.LASF14:
+ 740 010d 646F7562 		.ascii	"double\000"
+ 740      6C6500
+ 741              	.LASF25:
+ 742 0114 73656E64 		.ascii	"send_data\000"
+ 742      5F646174 
+ 742      6100
+ 743              	.LASF18:
+ 744 011e 6D61696E 		.ascii	"main\000"
+ 744      00
+ 745              	.LASF12:
+ 746 0123 666C6F61 		.ascii	"float32\000"
+ 746      74333200 
+ 747              	.LASF11:
+ 748 012b 75696E74 		.ascii	"uint32\000"
+ 748      333200
+ 749              	.LASF8:
+ 750 0132 756E7369 		.ascii	"unsigned int\000"
+ 750      676E6564 
+ 750      20696E74 
+ 750      00
+ 751              	.LASF7:
+ 752 013f 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 752      206C6F6E 
+ 752      6720756E 
+ 752      7369676E 
+ 752      65642069 
+ 753              	.LASF30:
+ 754 0156 433A5C55 		.ascii	"C:\\Users\\iamna\\Documents\\PSoC Creator\\nadimaPS"
+ 754      73657273 
+ 754      5C69616D 
+ 754      6E615C44 
+ 754      6F63756D 
+ 755 0184 6F434441 		.ascii	"oCDAQ\\nadimaPSoCDAQ.cydsn\000"
+ 755      515C6E61 
+ 755      64696D61 
+ 755      50536F43 
+ 755      4441512E 
+ 756              	.LASF20:
+ 757 019e 49544D5F 		.ascii	"ITM_RxBuffer\000"
+ 757      52784275 
+ 757      66666572 
+ 757      00
+ 758              	.LASF10:
+ 759 01ab 696E7433 		.ascii	"int32_t\000"
+ 759      325F7400 
+ 760              	.LASF21:
+ 761 01b3 73756D5F 		.ascii	"sum_of_voltage\000"
+ 761      6F665F76 
+ 761      6F6C7461 
+ 761      676500
+ 762              	.LASF17:
+ 763 01c2 73697A65 		.ascii	"sizetype\000"
+ 763      74797065 
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccKvKjOH.s 			page 17
+
+
+ 763      00
+ 764              	.LASF6:
+ 765 01cb 6C6F6E67 		.ascii	"long long int\000"
+ 765      206C6F6E 
+ 765      6720696E 
+ 765      7400
+ 766              	.LASF29:
+ 767 01d9 6D61696E 		.ascii	"main.c\000"
+ 767      2E6300
+ 768              	.LASF15:
+ 769 01e0 63686172 		.ascii	"char\000"
+ 769      00
+ 770              	.LASF24:
+ 771 01e5 63757272 		.ascii	"current_tempreture\000"
+ 771      656E745F 
+ 771      74656D70 
+ 771      72657475 
+ 771      726500
+ 772              	.LASF22:
+ 773 01f8 636F756E 		.ascii	"count\000"
+ 773      7400
+ 774              	.LASF2:
+ 775 01fe 73686F72 		.ascii	"short int\000"
+ 775      7420696E 
+ 775      7400
+ 776              	.LASF27:
+ 777 0208 5472616E 		.ascii	"TransmitBuffer\000"
+ 777      736D6974 
+ 777      42756666 
+ 777      657200
+ 778              	.LASF4:
+ 779 0217 6C6F6E67 		.ascii	"long int\000"
+ 779      20696E74 
+ 779      00
+ 780              	.LASF16:
+ 781 0220 6C6F6E67 		.ascii	"long double\000"
+ 781      20646F75 
+ 781      626C6500 
+ 782              	.LASF0:
+ 783 022c 7369676E 		.ascii	"signed char\000"
+ 783      65642063 
+ 783      68617200 
+ 784              	.LASF26:
+ 785 0238 5F426F6F 		.ascii	"_Bool\000"
+ 785      6C00
+ 786              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

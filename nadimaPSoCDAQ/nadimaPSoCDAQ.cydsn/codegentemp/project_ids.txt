@@ -1,0 +1,8 @@
+C:\Users\iamna\Documents\PSoC Creator\nadimaPSoCDAQ\nadimaPSoCDAQ.cydsn\nadimaPSoCDAQ.cyprj|116f7516-8078-4e27-95f7-03a4b4d45e42
+C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\psoc\content\default\CyAnnotationLibrary\CyAnnotationLibrary.cylib\CyAnnotationLibrary.cyprj|087c7fea-6374-4f57-9c93-d0ea6eb2fb88
+C:\Users\iamna\Documents\PSoC Creator\4.4\Downloads ( 4.4).cylib\Downloads ( 4.4).cyprj|53f02fbc-bcdb-42c4-8b86-314cd677d517
+C:\Users\iamna\Documents\PSoC Creator\4.2\Downloads ( 4.2).cylib\Downloads ( 4.2).cyprj|7b9e3e9f-795e-4235-8890-1c5124ba9e95
+C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\psoc\content\cycomponentlibraryupdates\CyComponentLibraryUpdates.cylib\CyComponentLibraryUpdates.cyprj|27756b2c-98e2-49de-88d8-4fa813a1d62b
+C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\CyComponentLibrary.cyprj|39b299c9-fe44-471f-b72a-ddeca22272c2
+C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\psoc\content\cyprimitives\CyPrimitives.cylib\CyPrimitives.cyprj|d941dd9b-4d37-4c35-9f58-cf3a2ae06fe9
+C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\psoc\content\default\CyReferenceLibrary\CyReferenceLibrary.cylib\CyReferenceLibrary.cyprj|6425023f-d8ff-4326-9603-94e8bcb1df45
