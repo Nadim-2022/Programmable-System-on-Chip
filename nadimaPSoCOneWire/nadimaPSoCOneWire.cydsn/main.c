@@ -6,7 +6,7 @@
  *
  * PSoC Design Course 2024: Exercise 5, OneWire
  *
- * One Wire protocol implementation and Tempreture reading
+ * One Wire protocol implementation and Temperature reading
  * 
  * CC-NA-SA 4.0
  *
@@ -98,7 +98,7 @@ int main()
             
             TEMP = Temp_byte2 << 8 | Temp_byte1;
             Tempreture = (float)TEMP /16;
-            sprintf(TransmitBuffer, "{ \"ADC\": %d ,\"LM35\": %d, \"DS18B20\": %0.1f}\r\n", (int) voltage, (int)current_tempreture,(float) Tempreture);
+            sprintf(TransmitBuffer, "{ \"ADC\": %d ,\"LM35\": %d, \"DS18B20\": %d}\r\n", (int) voltage, (int)current_tempreture,(int) Tempreture);
             UART_1_PutString(TransmitBuffer);
             send_data = false;
             CyGlobalIntEnable;

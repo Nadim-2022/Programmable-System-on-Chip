@@ -36,43 +36,7 @@
 <v>nadimaPSoCOneWire\nadimaPSoCOneWire\Generated_Source\PSoC5</v>
 <v>nadimaPSoCOneWire\nadimaPSoCOneWire\Generated_Source\PSoC5\OneWire</v>
 </ExpandedNodeIds>
-<VisibleNodeIds>
-<v>nadimaPSoCOneWire</v>
-<v>nadimaPSoCOneWire\nadimaPSoCOneWire</v>
-<v>nadimaPSoCOneWire\nadimaPSoCOneWire\TopDesign</v>
-<v>nadimaPSoCOneWire\nadimaPSoCOneWire\nadimaPSoCOneWire.cydwr</v>
-<v>nadimaPSoCOneWire\nadimaPSoCOneWire\nadimaPSoCOneWire.cydwr\Pins</v>
-<v>nadimaPSoCOneWire\nadimaPSoCOneWire\nadimaPSoCOneWire.cydwr\Analog</v>
-<v>nadimaPSoCOneWire\nadimaPSoCOneWire\nadimaPSoCOneWire.cydwr\Clocks</v>
-<v>nadimaPSoCOneWire\nadimaPSoCOneWire\nadimaPSoCOneWire.cydwr\Interrupts</v>
-<v>nadimaPSoCOneWire\nadimaPSoCOneWire\nadimaPSoCOneWire.cydwr\DMA</v>
-<v>nadimaPSoCOneWire\nadimaPSoCOneWire\nadimaPSoCOneWire.cydwr\System</v>
-<v>nadimaPSoCOneWire\nadimaPSoCOneWire\nadimaPSoCOneWire.cydwr\Directives</v>
-<v>nadimaPSoCOneWire\nadimaPSoCOneWire\nadimaPSoCOneWire.cydwr\Flash Security</v>
-<v>nadimaPSoCOneWire\nadimaPSoCOneWire\nadimaPSoCOneWire.cydwr\EEPROM</v>
-<v>nadimaPSoCOneWire\nadimaPSoCOneWire\Header Files</v>
-<v>nadimaPSoCOneWire\nadimaPSoCOneWire\Header Files\cyapicallbacks.h</v>
-<v>nadimaPSoCOneWire\nadimaPSoCOneWire\Source Files</v>
-<v>nadimaPSoCOneWire\nadimaPSoCOneWire\Source Files\main.c</v>
-<v>nadimaPSoCOneWire\nadimaPSoCOneWire\Generated_Source</v>
-<v>nadimaPSoCOneWire\nadimaPSoCOneWire\Generated_Source\PSoC5</v>
-<v>nadimaPSoCOneWire\nadimaPSoCOneWire\Generated_Source\PSoC5\ADC_DelSig_1</v>
-<v>nadimaPSoCOneWire\nadimaPSoCOneWire\Generated_Source\PSoC5\ADC_DelSig_1_AMux</v>
-<v>nadimaPSoCOneWire\nadimaPSoCOneWire\Generated_Source\PSoC5\ADC_DelSig_1_Ext_CP_Clk</v>
-<v>nadimaPSoCOneWire\nadimaPSoCOneWire\Generated_Source\PSoC5\ADC_DelSig_1_IRQ</v>
-<v>nadimaPSoCOneWire\nadimaPSoCOneWire\Generated_Source\PSoC5\ADC_DelSig_1_theACLK</v>
-<v>nadimaPSoCOneWire\nadimaPSoCOneWire\Generated_Source\PSoC5\ADC_isr</v>
-<v>nadimaPSoCOneWire\nadimaPSoCOneWire\Generated_Source\PSoC5\cy_boot</v>
-<v>nadimaPSoCOneWire\nadimaPSoCOneWire\Generated_Source\PSoC5\Em_EEPROM_Dynamic</v>
-<v>nadimaPSoCOneWire\nadimaPSoCOneWire\Generated_Source\PSoC5\OneWire</v>
-<v>nadimaPSoCOneWire\nadimaPSoCOneWire\Generated_Source\PSoC5\OneWire\OneWire.c</v>
-<v>nadimaPSoCOneWire\nadimaPSoCOneWire\Generated_Source\PSoC5\OneWire\OneWire.h</v>
-<v>nadimaPSoCOneWire\nadimaPSoCOneWire\Generated_Source\PSoC5\OneWire\OneWire_aliases.h</v>
-<v>nadimaPSoCOneWire\nadimaPSoCOneWire\Generated_Source\PSoC5\Timer</v>
-<v>nadimaPSoCOneWire\nadimaPSoCOneWire\Generated_Source\PSoC5\Timer_isr</v>
-<v>nadimaPSoCOneWire\nadimaPSoCOneWire\Generated_Source\PSoC5\UART_1</v>
-<v>nadimaPSoCOneWire\nadimaPSoCOneWire\Generated_Source\PSoC5\UART_1_IntClock</v>
-</VisibleNodeIds>
+<VisibleNodeIds />
 </CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
 <CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="">
 <ExpandedNodeIds>
@@ -81,12 +45,7 @@
 <v>nadimaPSoCOneWire\nadimaPSoCOneWire\TopDesign</v>
 <v>nadimaPSoCOneWire\nadimaPSoCOneWire\TopDesign\TopDesign.cysch</v>
 </ExpandedNodeIds>
-<VisibleNodeIds>
-<v>nadimaPSoCOneWire</v>
-<v>nadimaPSoCOneWire\nadimaPSoCOneWire</v>
-<v>nadimaPSoCOneWire\nadimaPSoCOneWire\TopDesign</v>
-<v>nadimaPSoCOneWire\nadimaPSoCOneWire\TopDesign\TopDesign.cysch</v>
-</VisibleNodeIds>
+<VisibleNodeIds />
 </CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
 <CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="">
 <ExpandedNodeIds>
@@ -133,43 +92,7 @@
 <v>nadimaPSoCOneWire\nadimaPSoCOneWire\nadimaPSoCOneWire.rpt</v>
 <v>nadimaPSoCOneWire\nadimaPSoCOneWire\nadimaPSoCOneWire_timing.html</v>
 </ExpandedNodeIds>
-<VisibleNodeIds>
-<v>nadimaPSoCOneWire</v>
-<v>nadimaPSoCOneWire\nadimaPSoCOneWire</v>
-<v>nadimaPSoCOneWire\nadimaPSoCOneWire\CortexM3</v>
-<v>nadimaPSoCOneWire\nadimaPSoCOneWire\CortexM3\ARM_GCC_541</v>
-<v>nadimaPSoCOneWire\nadimaPSoCOneWire\CortexM3\ARM_GCC_541\Debug</v>
-<v>nadimaPSoCOneWire\nadimaPSoCOneWire\CortexM3\ARM_GCC_541\Debug\Listing Files</v>
-<v>nadimaPSoCOneWire\nadimaPSoCOneWire\CortexM3\ARM_GCC_541\Debug\Listing Files\ADC_DelSig_1.lst</v>
-<v>nadimaPSoCOneWire\nadimaPSoCOneWire\CortexM3\ARM_GCC_541\Debug\Listing Files\ADC_DelSig_1_AMux.lst</v>
-<v>nadimaPSoCOneWire\nadimaPSoCOneWire\CortexM3\ARM_GCC_541\Debug\Listing Files\ADC_DelSig_1_Ext_CP_Clk.lst</v>
-<v>nadimaPSoCOneWire\nadimaPSoCOneWire\CortexM3\ARM_GCC_541\Debug\Listing Files\ADC_DelSig_1_INT.lst</v>
-<v>nadimaPSoCOneWire\nadimaPSoCOneWire\CortexM3\ARM_GCC_541\Debug\Listing Files\ADC_DelSig_1_IRQ.lst</v>
-<v>nadimaPSoCOneWire\nadimaPSoCOneWire\CortexM3\ARM_GCC_541\Debug\Listing Files\ADC_DelSig_1_PM.lst</v>
-<v>nadimaPSoCOneWire\nadimaPSoCOneWire\CortexM3\ARM_GCC_541\Debug\Listing Files\ADC_DelSig_1_theACLK.lst</v>
-<v>nadimaPSoCOneWire\nadimaPSoCOneWire\CortexM3\ARM_GCC_541\Debug\Listing Files\ADC_isr.lst</v>
-<v>nadimaPSoCOneWire\nadimaPSoCOneWire\CortexM3\ARM_GCC_541\Debug\Listing Files\Cm3Start.lst</v>
-<v>nadimaPSoCOneWire\nadimaPSoCOneWire\CortexM3\ARM_GCC_541\Debug\Listing Files\cy_em_eeprom.lst</v>
-<v>nadimaPSoCOneWire\nadimaPSoCOneWire\CortexM3\ARM_GCC_541\Debug\Listing Files\CyBootAsmGnu.lst</v>
-<v>nadimaPSoCOneWire\nadimaPSoCOneWire\CortexM3\ARM_GCC_541\Debug\Listing Files\CyDmac.lst</v>
-<v>nadimaPSoCOneWire\nadimaPSoCOneWire\CortexM3\ARM_GCC_541\Debug\Listing Files\cyfitter_cfg.lst</v>
-<v>nadimaPSoCOneWire\nadimaPSoCOneWire\CortexM3\ARM_GCC_541\Debug\Listing Files\CyFlash.lst</v>
-<v>nadimaPSoCOneWire\nadimaPSoCOneWire\CortexM3\ARM_GCC_541\Debug\Listing Files\CyLib.lst</v>
-<v>nadimaPSoCOneWire\nadimaPSoCOneWire\CortexM3\ARM_GCC_541\Debug\Listing Files\cymetadata.lst</v>
-<v>nadimaPSoCOneWire\nadimaPSoCOneWire\CortexM3\ARM_GCC_541\Debug\Listing Files\cyPm.lst</v>
-<v>nadimaPSoCOneWire\nadimaPSoCOneWire\CortexM3\ARM_GCC_541\Debug\Listing Files\CySpc.lst</v>
-<v>nadimaPSoCOneWire\nadimaPSoCOneWire\CortexM3\ARM_GCC_541\Debug\Listing Files\cyutils.lst</v>
-<v>nadimaPSoCOneWire\nadimaPSoCOneWire\CortexM3\ARM_GCC_541\Debug\Listing Files\main.lst</v>
-<v>nadimaPSoCOneWire\nadimaPSoCOneWire\CortexM3\ARM_GCC_541\Debug\Listing Files\OneWire.lst</v>
-<v>nadimaPSoCOneWire\nadimaPSoCOneWire\CortexM3\ARM_GCC_541\Debug\Listing Files\Timer.lst</v>
-<v>nadimaPSoCOneWire\nadimaPSoCOneWire\CortexM3\ARM_GCC_541\Debug\Listing Files\Timer_isr.lst</v>
-<v>nadimaPSoCOneWire\nadimaPSoCOneWire\CortexM3\ARM_GCC_541\Debug\Listing Files\Timer_PM.lst</v>
-<v>nadimaPSoCOneWire\nadimaPSoCOneWire\CortexM3\ARM_GCC_541\Debug\Listing Files\UART_1.lst</v>
-<v>nadimaPSoCOneWire\nadimaPSoCOneWire\CortexM3\ARM_GCC_541\Debug\Listing Files\UART_1_BOOT.lst</v>
-<v>nadimaPSoCOneWire\nadimaPSoCOneWire\CortexM3\ARM_GCC_541\Debug\Listing Files\UART_1_INT.lst</v>
-<v>nadimaPSoCOneWire\nadimaPSoCOneWire\CortexM3\ARM_GCC_541\Debug\Listing Files\UART_1_IntClock.lst</v>
-<v>nadimaPSoCOneWire\nadimaPSoCOneWire\CortexM3\ARM_GCC_541\Debug\Listing Files\UART_1_PM.lst</v>
-</VisibleNodeIds>
+<VisibleNodeIds />
 </CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
 </TreeStates>
 <TreeKeysV2>
@@ -194,23 +117,7 @@
 <v>nadimaPSoCOneWire\nadimaPSoCOneWire\UART_v2_50.pdf</v>
 <v>nadimaPSoCOneWire\nadimaPSoCOneWire\ZeroTerminal.pdf</v>
 </ExpandedNodeIds>
-<VisibleNodeIds>
-<v>nadimaPSoCOneWire</v>
-<v>nadimaPSoCOneWire\nadimaPSoCOneWire</v>
-<v>nadimaPSoCOneWire\nadimaPSoCOneWire\PSoC 5LP Architecture TRM</v>
-<v>nadimaPSoCOneWire\nadimaPSoCOneWire\CY8C58LP Family Datasheet</v>
-<v>nadimaPSoCOneWire\nadimaPSoCOneWire\System Reference Guides</v>
-<v>nadimaPSoCOneWire\nadimaPSoCOneWire\System Reference Guides\cy_boot_v6_0</v>
-<v>nadimaPSoCOneWire\nadimaPSoCOneWire\ADC_DelSig_v3_30.pdf</v>
-<v>nadimaPSoCOneWire\nadimaPSoCOneWire\cy_clock_v2_20.pdf</v>
-<v>nadimaPSoCOneWire\nadimaPSoCOneWire\cy_isr_v1_70</v>
-<v>nadimaPSoCOneWire\nadimaPSoCOneWire\cy_isr_v1_70\cy_isr_v1_70.pdf</v>
-<v>nadimaPSoCOneWire\nadimaPSoCOneWire\cy_pins_v2_20</v>
-<v>nadimaPSoCOneWire\nadimaPSoCOneWire\cy_pins_v2_20\cy_pins_v2_20.pdf</v>
-<v>nadimaPSoCOneWire\nadimaPSoCOneWire\Timer_v2_80.pdf</v>
-<v>nadimaPSoCOneWire\nadimaPSoCOneWire\UART_v2_50.pdf</v>
-<v>nadimaPSoCOneWire\nadimaPSoCOneWire\ZeroTerminal.pdf</v>
-</VisibleNodeIds>
+<VisibleNodeIds />
 </CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
 </TreeStatesV2>
 </CyGuid_1b906a0f-a7b6-4e4d-a428-82f98b53cb35>
