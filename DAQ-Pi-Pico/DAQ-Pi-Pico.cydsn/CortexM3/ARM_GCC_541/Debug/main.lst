@@ -1,0 +1,2054 @@
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccyFJAeR.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"main.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.ADCInterruptHandler,"ax",%progbits
+  20              		.align	2
+  21              		.global	ADCInterruptHandler
+  22              		.thumb
+  23              		.thumb_func
+  24              		.type	ADCInterruptHandler, %function
+  25              	ADCInterruptHandler:
+  26              	.LFB66:
+  27              		.file 1 "main.c"
+   1:main.c        **** /* ========================================
+   2:main.c        ****  *
+   3:main.c        ****  * Copyright: Nadim Ahmed, Metropolia University of Applied Science, Finland, 2024
+   4:main.c        ****  * 
+   5:main.c        ****  * May 26, 2024
+   6:main.c        ****  *
+   7:main.c        ****  * PSoC Design Course 2024: Data Acquisition add-on for Raspberry Pi Pico W
+   8:main.c        ****  *
+   9:main.c        ****  * PSoC device acts as an I2C slave to acquire analog sensor data and convert it to temperature rea
+  10:main.c        ****  *
+  11:main.c        ****  * The temperature readings are transmitted to the I2C master.
+  12:main.c        ****  * 
+  13:main.c        ****  * CC-NA-SA 4.0
+  14:main.c        ****  *
+  15:main.c        ****  * ========================================
+  16:main.c        **** */
+  17:main.c        **** 
+  18:main.c        **** 
+  19:main.c        **** #include "project.h"
+  20:main.c        **** #include "stdio.h"
+  21:main.c        **** #include "stdbool.h"
+  22:main.c        **** 
+  23:main.c        **** #define databuffer 10
+  24:main.c        **** #define debugebuffer 256
+  25:main.c        **** #define i2cbuffer 4
+  26:main.c        **** 
+  27:main.c        **** // Can be define only one of "send_last_reading" or "fullbuffer"
+  28:main.c        **** #define send_last_reading
+  29:main.c        **** //#define fullbuffer
+  30:main.c        **** 
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccyFJAeR.s 			page 2
+
+
+  31:main.c        **** bool isDataReady = false;
+  32:main.c        **** 
+  33:main.c        **** uint32 adc1;
+  34:main.c        **** uint32 adc2;
+  35:main.c        **** uint32 adc3;
+  36:main.c        **** uint32 adc4;
+  37:main.c        **** uint32 adcCount;
+  38:main.c        **** 
+  39:main.c        **** uint32 TotalADC1;
+  40:main.c        **** uint32 TotalADC2;
+  41:main.c        **** uint32 TotalADC3;
+  42:main.c        **** uint32 TotalADC4;
+  43:main.c        **** uint32 adcCount2;
+  44:main.c        **** 
+  45:main.c        **** uint8 temp1;
+  46:main.c        **** uint8 temp2;
+  47:main.c        **** uint8 temp3;
+  48:main.c        **** uint8 temp4;
+  49:main.c        **** 
+  50:main.c        **** 
+  51:main.c        ****     
+  52:main.c        **** CY_ISR_PROTO(ADCInterruptHandler);
+  53:main.c        **** CY_ISR(TimerInterruptHandler);
+  54:main.c        **** 
+  55:main.c        **** void calculateTemp();
+  56:main.c        **** 
+  57:main.c        **** // Can be send the complete buffer if want 4 x 10
+  58:main.c        **** struct
+  59:main.c        **** {
+  60:main.c        **** uint8 data0[databuffer];
+  61:main.c        **** uint8 data1[databuffer];
+  62:main.c        **** uint8 data2[databuffer];
+  63:main.c        **** uint8 data3[databuffer];
+  64:main.c        **** } __attribute__ ((packed)) ezi2cBuffer;
+  65:main.c        **** 
+  66:main.c        **** int main(void)
+  67:main.c        **** {
+  68:main.c        ****     CyGlobalIntEnable; /* Enable global interrupts. */
+  69:main.c        ****     char transmit_buffer[debugebuffer];
+  70:main.c        ****     uint8 i2cbuf[i2cbuffer] = {0,0,0,0};
+  71:main.c        ****     int count = 0;
+  72:main.c        ****     /* Place your initialization/startup code here (e.g. MyInst_Start()) */
+  73:main.c        ****     UART_1_Start();
+  74:main.c        ****     ADC_SAR_Seq_1_Start();
+  75:main.c        ****     Timer_Start();
+  76:main.c        ****     EZI2C_Start();
+  77:main.c        ****     memset(&ezi2cBuffer, 0, sizeof(ezi2cBuffer));
+  78:main.c        ****     
+  79:main.c        ****     //if want to send only last 4 data
+  80:main.c        **** #ifdef send_last_reading
+  81:main.c        ****     EZI2C_SetBuffer1(i2cbuffer,0,i2cbuf);
+  82:main.c        **** #endif
+  83:main.c        ****     
+  84:main.c        ****     // if want to send full buffer
+  85:main.c        **** #ifdef fullbuffer
+  86:main.c        ****     EZI2C_SetBuffer1(sizeof(ezi2cBuffer),0,(uint8 *)&ezi2cBuffer);
+  87:main.c        **** #endif
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccyFJAeR.s 			page 3
+
+
+  88:main.c        ****     
+  89:main.c        ****     ADC_SAR_Seq_1_StartConvert();
+  90:main.c        ****     ADC_ISR_StartEx(ADCInterruptHandler);
+  91:main.c        ****     Timer_ISR_StartEx(TimerInterruptHandler);
+  92:main.c        ****    
+  93:main.c        ****     UART_1_PutString("COM Port Open\r\n");
+  94:main.c        ****     for(;;)
+  95:main.c        ****     {   
+  96:main.c        ****         /* Place your application code here. */
+  97:main.c        ****         
+  98:main.c        ****         // send only last temperature value to I2C master for 4 sensors
+  99:main.c        **** #ifdef send_last_reading
+ 100:main.c        ****         if(isDataReady){
+ 101:main.c        ****             isDataReady = false;
+ 102:main.c        ****             calculateTemp();
+ 103:main.c        ****             sprintf(transmit_buffer,"Temp1: %d C Temp2: %d C Temp3: %d C Temp4: %d C\r\n", 
+ 104:main.c        ****                 temp1, temp2, temp3, temp4);
+ 105:main.c        ****             UART_1_PutString(transmit_buffer);
+ 106:main.c        ****           
+ 107:main.c        ****             ezi2cBuffer.data0[count]=temp1;
+ 108:main.c        ****             ezi2cBuffer.data1[count]=temp2;
+ 109:main.c        ****             ezi2cBuffer.data2[count]=temp3;
+ 110:main.c        ****             ezi2cBuffer.data3[count]=temp4;
+ 111:main.c        ****      
+ 112:main.c        ****             i2cbuf[0] = ezi2cBuffer.data0[count];
+ 113:main.c        ****             i2cbuf[1] = ezi2cBuffer.data1[count];
+ 114:main.c        ****             i2cbuf[2] = ezi2cBuffer.data2[count];
+ 115:main.c        ****             i2cbuf[3] = ezi2cBuffer.data3[count];
+ 116:main.c        ****             count++;
+ 117:main.c        ****             if ( count > 10) count = 0;
+ 118:main.c        **** #endif    
+ 119:main.c        ****         // send full buffer temperature value to I2C master for 4 sensors 4 x 10
+ 120:main.c        **** #ifdef fullbuffer
+ 121:main.c        ****         if(isDataReady){
+ 122:main.c        ****             isDataReady = false;
+ 123:main.c        ****             calculateTemp();
+ 124:main.c        ****             sprintf(transmit_buffer,"Temp1: %d C Temp2: %d C Temp3: %d C Temp4: %d C\r\n", 
+ 125:main.c        ****                 temp1, temp2, temp3, temp4);
+ 126:main.c        ****             UART_1_PutString(transmit_buffer);
+ 127:main.c        ****             
+ 128:main.c        ****             ezi2cBuffer.data0[count]=temp1;
+ 129:main.c        ****             ezi2cBuffer.data1[count]=temp2;
+ 130:main.c        ****             ezi2cBuffer.data2[count]=temp3;
+ 131:main.c        ****             ezi2cBuffer.data3[count]=temp4;
+ 132:main.c        ****             
+ 133:main.c        ****              if (count == 10){
+ 134:main.c        ****                 // Shift the buffer to remove the oldest value, send last 10 values
+ 135:main.c        ****                 memcpy(ezi2cBuffer.data0, &ezi2cBuffer.data0[1], (10 ) * sizeof(uint8_t));
+ 136:main.c        ****                 memcpy(ezi2cBuffer.data1, &ezi2cBuffer.data1[1], (10 ) * sizeof(uint8_t));
+ 137:main.c        ****                 memcpy(ezi2cBuffer.data2, &ezi2cBuffer.data2[1], (10 ) * sizeof(uint8_t));
+ 138:main.c        ****                 memcpy(ezi2cBuffer.data3, &ezi2cBuffer.data3[1], (10 ) * sizeof(uint8_t));
+ 139:main.c        ****             }
+ 140:main.c        ****             
+ 141:main.c        ****             count++;
+ 142:main.c        ****             if ( count > 10) count = 10;
+ 143:main.c        **** #endif
+ 144:main.c        ****             
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccyFJAeR.s 			page 4
+
+
+ 145:main.c        ****         }
+ 146:main.c        ****         
+ 147:main.c        ****     }
+ 148:main.c        **** }
+ 149:main.c        **** 
+ 150:main.c        **** // Calculates the tempreture for 4 sensor
+ 151:main.c        **** void calculateTemp(){
+ 152:main.c        ****     temp1 = (TotalADC1/adcCount2)/10;
+ 153:main.c        ****     temp2 = (TotalADC2/adcCount2)/10;
+ 154:main.c        ****     temp3 = (TotalADC3/adcCount2)/10;
+ 155:main.c        ****     temp4 = (TotalADC4/adcCount2)/10;
+ 156:main.c        **** }
+ 157:main.c        **** 
+ 158:main.c        **** // Collect the analog sensor data 25000 SPS ADC Interrupt Service Routine
+ 159:main.c        **** 
+ 160:main.c        **** CY_ISR(ADCInterruptHandler) {
+  28              		.loc 1 160 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32 0000 08B5     		push	{r3, lr}
+  33              		.cfi_def_cfa_offset 8
+  34              		.cfi_offset 3, -8
+  35              		.cfi_offset 14, -4
+ 161:main.c        ****     adc1 += ADC_SAR_Seq_1_CountsTo_mVolts(ADC_SAR_Seq_1_GetResult16(0));
+  36              		.loc 1 161 0
+  37 0002 0020     		movs	r0, #0
+  38 0004 FFF7FEFF 		bl	ADC_SAR_Seq_1_GetResult16
+  39              	.LVL0:
+  40 0008 FFF7FEFF 		bl	ADC_SAR_Seq_1_CountsTo_mVolts
+  41              	.LVL1:
+  42 000c 114A     		ldr	r2, .L3
+  43 000e 1368     		ldr	r3, [r2]
+  44 0010 1844     		add	r0, r0, r3
+  45 0012 1060     		str	r0, [r2]
+ 162:main.c        ****     adc2 += ADC_SAR_Seq_1_CountsTo_mVolts(ADC_SAR_Seq_1_GetResult16(1));
+  46              		.loc 1 162 0
+  47 0014 0120     		movs	r0, #1
+  48 0016 FFF7FEFF 		bl	ADC_SAR_Seq_1_GetResult16
+  49              	.LVL2:
+  50 001a FFF7FEFF 		bl	ADC_SAR_Seq_1_CountsTo_mVolts
+  51              	.LVL3:
+  52 001e 0E4A     		ldr	r2, .L3+4
+  53 0020 1368     		ldr	r3, [r2]
+  54 0022 1844     		add	r0, r0, r3
+  55 0024 1060     		str	r0, [r2]
+ 163:main.c        ****     adc3 += ADC_SAR_Seq_1_CountsTo_mVolts(ADC_SAR_Seq_1_GetResult16(2));
+  56              		.loc 1 163 0
+  57 0026 0220     		movs	r0, #2
+  58 0028 FFF7FEFF 		bl	ADC_SAR_Seq_1_GetResult16
+  59              	.LVL4:
+  60 002c FFF7FEFF 		bl	ADC_SAR_Seq_1_CountsTo_mVolts
+  61              	.LVL5:
+  62 0030 0A4A     		ldr	r2, .L3+8
+  63 0032 1368     		ldr	r3, [r2]
+  64 0034 1844     		add	r0, r0, r3
+  65 0036 1060     		str	r0, [r2]
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccyFJAeR.s 			page 5
+
+
+ 164:main.c        ****     adc4 += ADC_SAR_Seq_1_CountsTo_mVolts(ADC_SAR_Seq_1_GetResult16(3));
+  66              		.loc 1 164 0
+  67 0038 0320     		movs	r0, #3
+  68 003a FFF7FEFF 		bl	ADC_SAR_Seq_1_GetResult16
+  69              	.LVL6:
+  70 003e FFF7FEFF 		bl	ADC_SAR_Seq_1_CountsTo_mVolts
+  71              	.LVL7:
+  72 0042 074A     		ldr	r2, .L3+12
+  73 0044 1368     		ldr	r3, [r2]
+  74 0046 1844     		add	r0, r0, r3
+  75 0048 1060     		str	r0, [r2]
+ 165:main.c        ****     adcCount++;
+  76              		.loc 1 165 0
+  77 004a 064A     		ldr	r2, .L3+16
+  78 004c 1368     		ldr	r3, [r2]
+  79 004e 0133     		adds	r3, r3, #1
+  80 0050 1360     		str	r3, [r2]
+  81 0052 08BD     		pop	{r3, pc}
+  82              	.L4:
+  83              		.align	2
+  84              	.L3:
+  85 0054 00000000 		.word	adc1
+  86 0058 00000000 		.word	adc2
+  87 005c 00000000 		.word	adc3
+  88 0060 00000000 		.word	adc4
+  89 0064 00000000 		.word	adcCount
+  90              		.cfi_endproc
+  91              	.LFE66:
+  92              		.size	ADCInterruptHandler, .-ADCInterruptHandler
+  93              		.section	.text.TimerInterruptHandler,"ax",%progbits
+  94              		.align	2
+  95              		.global	TimerInterruptHandler
+  96              		.thumb
+  97              		.thumb_func
+  98              		.type	TimerInterruptHandler, %function
+  99              	TimerInterruptHandler:
+ 100              	.LFB67:
+ 166:main.c        ****     
+ 167:main.c        **** }
+ 168:main.c        **** 
+ 169:main.c        **** 
+ 170:main.c        **** // Timer Interrupt Service Routine Down sample 10 times in a second
+ 171:main.c        **** CY_ISR(TimerInterruptHandler) {
+ 101              		.loc 1 171 0
+ 102              		.cfi_startproc
+ 103              		@ args = 0, pretend = 0, frame = 0
+ 104              		@ frame_needed = 0, uses_anonymous_args = 0
+ 105 0000 70B5     		push	{r4, r5, r6, lr}
+ 106              		.cfi_def_cfa_offset 16
+ 107              		.cfi_offset 4, -16
+ 108              		.cfi_offset 5, -12
+ 109              		.cfi_offset 6, -8
+ 110              		.cfi_offset 14, -4
+ 172:main.c        ****     Timer_ReadStatusRegister();
+ 111              		.loc 1 172 0
+ 112 0002 FFF7FEFF 		bl	Timer_ReadStatusRegister
+ 113              	.LVL8:
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccyFJAeR.s 			page 6
+
+
+ 173:main.c        ****     ADC_ISR_Disable();
+ 114              		.loc 1 173 0
+ 115 0006 FFF7FEFF 		bl	ADC_ISR_Disable
+ 116              	.LVL9:
+ 174:main.c        ****     TotalADC1 = adc1;
+ 117              		.loc 1 174 0
+ 118 000a 104D     		ldr	r5, .L7
+ 119 000c 2A68     		ldr	r2, [r5]
+ 120 000e 104B     		ldr	r3, .L7+4
+ 121 0010 1A60     		str	r2, [r3]
+ 175:main.c        ****     TotalADC2 = adc2;
+ 122              		.loc 1 175 0
+ 123 0012 104C     		ldr	r4, .L7+8
+ 124 0014 2268     		ldr	r2, [r4]
+ 125 0016 104B     		ldr	r3, .L7+12
+ 126 0018 1A60     		str	r2, [r3]
+ 176:main.c        ****     TotalADC3 = adc3;
+ 127              		.loc 1 176 0
+ 128 001a 1048     		ldr	r0, .L7+16
+ 129 001c 0268     		ldr	r2, [r0]
+ 130 001e 104B     		ldr	r3, .L7+20
+ 131 0020 1A60     		str	r2, [r3]
+ 177:main.c        ****     TotalADC4 = adc4;
+ 132              		.loc 1 177 0
+ 133 0022 1049     		ldr	r1, .L7+24
+ 134 0024 0A68     		ldr	r2, [r1]
+ 135 0026 104B     		ldr	r3, .L7+28
+ 136 0028 1A60     		str	r2, [r3]
+ 178:main.c        ****     adcCount2 = adcCount;
+ 137              		.loc 1 178 0
+ 138 002a 104A     		ldr	r2, .L7+32
+ 139 002c 1668     		ldr	r6, [r2]
+ 140 002e 104B     		ldr	r3, .L7+36
+ 141 0030 1E60     		str	r6, [r3]
+ 179:main.c        ****     adc1 = 0;
+ 142              		.loc 1 179 0
+ 143 0032 0023     		movs	r3, #0
+ 144 0034 2B60     		str	r3, [r5]
+ 180:main.c        ****     adc2 = 0;
+ 145              		.loc 1 180 0
+ 146 0036 2360     		str	r3, [r4]
+ 181:main.c        ****     adc3 = 0;
+ 147              		.loc 1 181 0
+ 148 0038 0360     		str	r3, [r0]
+ 182:main.c        ****     adc4 = 0;
+ 149              		.loc 1 182 0
+ 150 003a 0B60     		str	r3, [r1]
+ 183:main.c        ****     adcCount = 0;
+ 151              		.loc 1 183 0
+ 152 003c 1360     		str	r3, [r2]
+ 184:main.c        ****     ADC_ISR_Enable();
+ 153              		.loc 1 184 0
+ 154 003e FFF7FEFF 		bl	ADC_ISR_Enable
+ 155              	.LVL10:
+ 185:main.c        ****     isDataReady = true;
+ 156              		.loc 1 185 0
+ 157 0042 0122     		movs	r2, #1
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccyFJAeR.s 			page 7
+
+
+ 158 0044 0B4B     		ldr	r3, .L7+40
+ 159 0046 1A70     		strb	r2, [r3]
+ 160 0048 70BD     		pop	{r4, r5, r6, pc}
+ 161              	.L8:
+ 162 004a 00BF     		.align	2
+ 163              	.L7:
+ 164 004c 00000000 		.word	adc1
+ 165 0050 00000000 		.word	TotalADC1
+ 166 0054 00000000 		.word	adc2
+ 167 0058 00000000 		.word	TotalADC2
+ 168 005c 00000000 		.word	adc3
+ 169 0060 00000000 		.word	TotalADC3
+ 170 0064 00000000 		.word	adc4
+ 171 0068 00000000 		.word	TotalADC4
+ 172 006c 00000000 		.word	adcCount
+ 173 0070 00000000 		.word	adcCount2
+ 174 0074 00000000 		.word	.LANCHOR0
+ 175              		.cfi_endproc
+ 176              	.LFE67:
+ 177              		.size	TimerInterruptHandler, .-TimerInterruptHandler
+ 178              		.section	.text.calculateTemp,"ax",%progbits
+ 179              		.align	2
+ 180              		.global	calculateTemp
+ 181              		.thumb
+ 182              		.thumb_func
+ 183              		.type	calculateTemp, %function
+ 184              	calculateTemp:
+ 185              	.LFB65:
+ 151:main.c        ****     temp1 = (TotalADC1/adcCount2)/10;
+ 186              		.loc 1 151 0
+ 187              		.cfi_startproc
+ 188              		@ args = 0, pretend = 0, frame = 0
+ 189              		@ frame_needed = 0, uses_anonymous_args = 0
+ 190              		@ link register save eliminated.
+ 152:main.c        ****     temp2 = (TotalADC2/adcCount2)/10;
+ 191              		.loc 1 152 0
+ 192 0000 134B     		ldr	r3, .L10
+ 193 0002 1B68     		ldr	r3, [r3]
+ 194 0004 134A     		ldr	r2, .L10+4
+ 195 0006 1268     		ldr	r2, [r2]
+ 196 0008 B2FBF3F2 		udiv	r2, r2, r3
+ 197 000c 1249     		ldr	r1, .L10+8
+ 198 000e A1FB0202 		umull	r0, r2, r1, r2
+ 199 0012 D208     		lsrs	r2, r2, #3
+ 200 0014 1148     		ldr	r0, .L10+12
+ 201 0016 0270     		strb	r2, [r0]
+ 153:main.c        ****     temp3 = (TotalADC3/adcCount2)/10;
+ 202              		.loc 1 153 0
+ 203 0018 114A     		ldr	r2, .L10+16
+ 204 001a 1268     		ldr	r2, [r2]
+ 205 001c B2FBF3F2 		udiv	r2, r2, r3
+ 206 0020 A1FB0202 		umull	r0, r2, r1, r2
+ 207 0024 D208     		lsrs	r2, r2, #3
+ 208 0026 0F48     		ldr	r0, .L10+20
+ 209 0028 0270     		strb	r2, [r0]
+ 154:main.c        ****     temp4 = (TotalADC4/adcCount2)/10;
+ 210              		.loc 1 154 0
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccyFJAeR.s 			page 8
+
+
+ 211 002a 0F4A     		ldr	r2, .L10+24
+ 212 002c 1268     		ldr	r2, [r2]
+ 213 002e B2FBF3F2 		udiv	r2, r2, r3
+ 214 0032 A1FB0202 		umull	r0, r2, r1, r2
+ 215 0036 D208     		lsrs	r2, r2, #3
+ 216 0038 0C48     		ldr	r0, .L10+28
+ 217 003a 0270     		strb	r2, [r0]
+ 155:main.c        **** }
+ 218              		.loc 1 155 0
+ 219 003c 0C4A     		ldr	r2, .L10+32
+ 220 003e 1268     		ldr	r2, [r2]
+ 221 0040 B2FBF3F3 		udiv	r3, r2, r3
+ 222 0044 A1FB0323 		umull	r2, r3, r1, r3
+ 223 0048 DB08     		lsrs	r3, r3, #3
+ 224 004a 0A4A     		ldr	r2, .L10+36
+ 225 004c 1370     		strb	r3, [r2]
+ 226 004e 7047     		bx	lr
+ 227              	.L11:
+ 228              		.align	2
+ 229              	.L10:
+ 230 0050 00000000 		.word	adcCount2
+ 231 0054 00000000 		.word	TotalADC1
+ 232 0058 CDCCCCCC 		.word	-858993459
+ 233 005c 00000000 		.word	temp1
+ 234 0060 00000000 		.word	TotalADC2
+ 235 0064 00000000 		.word	temp2
+ 236 0068 00000000 		.word	TotalADC3
+ 237 006c 00000000 		.word	temp3
+ 238 0070 00000000 		.word	TotalADC4
+ 239 0074 00000000 		.word	temp4
+ 240              		.cfi_endproc
+ 241              	.LFE65:
+ 242              		.size	calculateTemp, .-calculateTemp
+ 243              		.section	.text.main,"ax",%progbits
+ 244              		.align	2
+ 245              		.global	main
+ 246              		.thumb
+ 247              		.thumb_func
+ 248              		.type	main, %function
+ 249              	main:
+ 250              	.LFB64:
+  67:main.c        ****     CyGlobalIntEnable; /* Enable global interrupts. */
+ 251              		.loc 1 67 0
+ 252              		.cfi_startproc
+ 253              		@ args = 0, pretend = 0, frame = 264
+ 254              		@ frame_needed = 0, uses_anonymous_args = 0
+ 255 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 256              		.cfi_def_cfa_offset 24
+ 257              		.cfi_offset 4, -24
+ 258              		.cfi_offset 5, -20
+ 259              		.cfi_offset 6, -16
+ 260              		.cfi_offset 7, -12
+ 261              		.cfi_offset 8, -8
+ 262              		.cfi_offset 14, -4
+ 263 0004 C4B0     		sub	sp, sp, #272
+ 264              		.cfi_def_cfa_offset 296
+  68:main.c        ****     char transmit_buffer[debugebuffer];
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccyFJAeR.s 			page 9
+
+
+ 265              		.loc 1 68 0
+ 266              		.syntax unified
+ 267              	@ 68 "main.c" 1
+ 268 0006 62B6     		CPSIE   i
+ 269              	@ 0 "" 2
+  70:main.c        ****     int count = 0;
+ 270              		.loc 1 70 0
+ 271              		.thumb
+ 272              		.syntax unified
+ 273 0008 0024     		movs	r4, #0
+ 274 000a 0394     		str	r4, [sp, #12]
+ 275              	.LVL11:
+  73:main.c        ****     ADC_SAR_Seq_1_Start();
+ 276              		.loc 1 73 0
+ 277 000c FFF7FEFF 		bl	UART_1_Start
+ 278              	.LVL12:
+  74:main.c        ****     Timer_Start();
+ 279              		.loc 1 74 0
+ 280 0010 FFF7FEFF 		bl	ADC_SAR_Seq_1_Start
+ 281              	.LVL13:
+  75:main.c        ****     EZI2C_Start();
+ 282              		.loc 1 75 0
+ 283 0014 FFF7FEFF 		bl	Timer_Start
+ 284              	.LVL14:
+  76:main.c        ****     memset(&ezi2cBuffer, 0, sizeof(ezi2cBuffer));
+ 285              		.loc 1 76 0
+ 286 0018 FFF7FEFF 		bl	EZI2C_Start
+ 287              	.LVL15:
+  77:main.c        ****     
+ 288              		.loc 1 77 0
+ 289 001c 2822     		movs	r2, #40
+ 290 001e 2146     		mov	r1, r4
+ 291 0020 2348     		ldr	r0, .L19
+ 292 0022 FFF7FEFF 		bl	memset
+ 293              	.LVL16:
+  81:main.c        **** #endif
+ 294              		.loc 1 81 0
+ 295 0026 03AA     		add	r2, sp, #12
+ 296 0028 2146     		mov	r1, r4
+ 297 002a 0420     		movs	r0, #4
+ 298 002c FFF7FEFF 		bl	EZI2C_SetBuffer1
+ 299              	.LVL17:
+  89:main.c        ****     ADC_ISR_StartEx(ADCInterruptHandler);
+ 300              		.loc 1 89 0
+ 301 0030 FFF7FEFF 		bl	ADC_SAR_Seq_1_StartConvert
+ 302              	.LVL18:
+  90:main.c        ****     Timer_ISR_StartEx(TimerInterruptHandler);
+ 303              		.loc 1 90 0
+ 304 0034 1F48     		ldr	r0, .L19+4
+ 305 0036 FFF7FEFF 		bl	ADC_ISR_StartEx
+ 306              	.LVL19:
+  91:main.c        ****    
+ 307              		.loc 1 91 0
+ 308 003a 1F48     		ldr	r0, .L19+8
+ 309 003c FFF7FEFF 		bl	Timer_ISR_StartEx
+ 310              	.LVL20:
+  93:main.c        ****     for(;;)
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccyFJAeR.s 			page 10
+
+
+ 311              		.loc 1 93 0
+ 312 0040 1E48     		ldr	r0, .L19+12
+ 313 0042 FFF7FEFF 		bl	UART_1_PutString
+ 314              	.LVL21:
+ 315 0046 00E0     		b	.L14
+ 316              	.LVL22:
+ 317              	.L17:
+ 117:main.c        **** #endif    
+ 318              		.loc 1 117 0
+ 319 0048 0024     		movs	r4, #0
+ 320              	.LVL23:
+ 321              	.L14:
+ 100:main.c        ****             isDataReady = false;
+ 322              		.loc 1 100 0
+ 323 004a 1D4B     		ldr	r3, .L19+16
+ 324 004c 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 325 004e 002B     		cmp	r3, #0
+ 326 0050 FBD0     		beq	.L14
+ 101:main.c        ****             calculateTemp();
+ 327              		.loc 1 101 0
+ 328 0052 0022     		movs	r2, #0
+ 329 0054 1A4B     		ldr	r3, .L19+16
+ 330 0056 1A70     		strb	r2, [r3]
+ 102:main.c        ****             sprintf(transmit_buffer,"Temp1: %d C Temp2: %d C Temp3: %d C Temp4: %d C\r\n", 
+ 331              		.loc 1 102 0
+ 332 0058 FFF7FEFF 		bl	calculateTemp
+ 333              	.LVL24:
+ 103:main.c        ****                 temp1, temp2, temp3, temp4);
+ 334              		.loc 1 103 0
+ 335 005c DFF87480 		ldr	r8, .L19+36
+ 336 0060 98F80030 		ldrb	r3, [r8]	@ zero_extendqisi2
+ 337 0064 174D     		ldr	r5, .L19+20
+ 338 0066 2A78     		ldrb	r2, [r5]	@ zero_extendqisi2
+ 339 0068 174E     		ldr	r6, .L19+24
+ 340 006a 3178     		ldrb	r1, [r6]	@ zero_extendqisi2
+ 341 006c 0191     		str	r1, [sp, #4]
+ 342 006e 174F     		ldr	r7, .L19+28
+ 343 0070 3978     		ldrb	r1, [r7]	@ zero_extendqisi2
+ 344 0072 0091     		str	r1, [sp]
+ 345 0074 1649     		ldr	r1, .L19+32
+ 346 0076 04A8     		add	r0, sp, #16
+ 347 0078 FFF7FEFF 		bl	sprintf
+ 348              	.LVL25:
+ 105:main.c        ****           
+ 349              		.loc 1 105 0
+ 350 007c 04A8     		add	r0, sp, #16
+ 351 007e FFF7FEFF 		bl	UART_1_PutString
+ 352              	.LVL26:
+ 107:main.c        ****             ezi2cBuffer.data1[count]=temp2;
+ 353              		.loc 1 107 0
+ 354 0082 2D78     		ldrb	r5, [r5]	@ zero_extendqisi2
+ 355 0084 0A4B     		ldr	r3, .L19
+ 356 0086 1D55     		strb	r5, [r3, r4]
+ 108:main.c        ****             ezi2cBuffer.data2[count]=temp3;
+ 357              		.loc 1 108 0
+ 358 0088 98F80000 		ldrb	r0, [r8]	@ zero_extendqisi2
+ 359 008c 2344     		add	r3, r3, r4
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccyFJAeR.s 			page 11
+
+
+ 360 008e 9872     		strb	r0, [r3, #10]
+ 109:main.c        ****             ezi2cBuffer.data3[count]=temp4;
+ 361              		.loc 1 109 0
+ 362 0090 3978     		ldrb	r1, [r7]	@ zero_extendqisi2
+ 363 0092 1975     		strb	r1, [r3, #20]
+ 110:main.c        ****      
+ 364              		.loc 1 110 0
+ 365 0094 3278     		ldrb	r2, [r6]	@ zero_extendqisi2
+ 366 0096 9A77     		strb	r2, [r3, #30]
+ 112:main.c        ****             i2cbuf[1] = ezi2cBuffer.data1[count];
+ 367              		.loc 1 112 0
+ 368 0098 8DF80C50 		strb	r5, [sp, #12]
+ 113:main.c        ****             i2cbuf[2] = ezi2cBuffer.data2[count];
+ 369              		.loc 1 113 0
+ 370 009c 8DF80D00 		strb	r0, [sp, #13]
+ 114:main.c        ****             i2cbuf[3] = ezi2cBuffer.data3[count];
+ 371              		.loc 1 114 0
+ 372 00a0 8DF80E10 		strb	r1, [sp, #14]
+ 115:main.c        ****             count++;
+ 373              		.loc 1 115 0
+ 374 00a4 8DF80F20 		strb	r2, [sp, #15]
+ 116:main.c        ****             if ( count > 10) count = 0;
+ 375              		.loc 1 116 0
+ 376 00a8 0134     		adds	r4, r4, #1
+ 377              	.LVL27:
+ 117:main.c        **** #endif    
+ 378              		.loc 1 117 0
+ 379 00aa 0A2C     		cmp	r4, #10
+ 380 00ac CCDC     		bgt	.L17
+ 381 00ae CCE7     		b	.L14
+ 382              	.L20:
+ 383              		.align	2
+ 384              	.L19:
+ 385 00b0 00000000 		.word	ezi2cBuffer
+ 386 00b4 00000000 		.word	ADCInterruptHandler
+ 387 00b8 00000000 		.word	TimerInterruptHandler
+ 388 00bc 00000000 		.word	.LC0
+ 389 00c0 00000000 		.word	.LANCHOR0
+ 390 00c4 00000000 		.word	temp1
+ 391 00c8 00000000 		.word	temp4
+ 392 00cc 00000000 		.word	temp3
+ 393 00d0 10000000 		.word	.LC1
+ 394 00d4 00000000 		.word	temp2
+ 395              		.cfi_endproc
+ 396              	.LFE64:
+ 397              		.size	main, .-main
+ 398              		.comm	ezi2cBuffer,40,4
+ 399              		.comm	temp4,1,1
+ 400              		.comm	temp3,1,1
+ 401              		.comm	temp2,1,1
+ 402              		.comm	temp1,1,1
+ 403              		.comm	adcCount2,4,4
+ 404              		.comm	TotalADC4,4,4
+ 405              		.comm	TotalADC3,4,4
+ 406              		.comm	TotalADC2,4,4
+ 407              		.comm	TotalADC1,4,4
+ 408              		.comm	adcCount,4,4
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccyFJAeR.s 			page 12
+
+
+ 409              		.comm	adc4,4,4
+ 410              		.comm	adc3,4,4
+ 411              		.comm	adc2,4,4
+ 412              		.comm	adc1,4,4
+ 413              		.global	isDataReady
+ 414              		.section	.rodata.str1.4,"aMS",%progbits,1
+ 415              		.align	2
+ 416              	.LC0:
+ 417 0000 434F4D20 		.ascii	"COM Port Open\015\012\000"
+ 417      506F7274 
+ 417      204F7065 
+ 417      6E0D0A00 
+ 418              	.LC1:
+ 419 0010 54656D70 		.ascii	"Temp1: %d C Temp2: %d C Temp3: %d C Temp4: %d C\015"
+ 419      313A2025 
+ 419      64204320 
+ 419      54656D70 
+ 419      323A2025 
+ 420 0040 0A00     		.ascii	"\012\000"
+ 421              		.bss
+ 422              		.set	.LANCHOR0,. + 0
+ 423              		.type	isDataReady, %object
+ 424              		.size	isDataReady, 1
+ 425              	isDataReady:
+ 426 0000 00       		.space	1
+ 427              		.text
+ 428              	.Letext0:
+ 429              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.
+ 430              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.
+ 431              		.file 4 "Generated_Source\\PSoC5/cytypes.h"
+ 432              		.file 5 "Generated_Source\\PSoC5/core_cm3.h"
+ 433              		.file 6 "Generated_Source\\PSoC5/ADC_SAR_Seq_1.h"
+ 434              		.file 7 "Generated_Source\\PSoC5/Timer.h"
+ 435              		.file 8 "Generated_Source\\PSoC5/ADC_ISR.h"
+ 436              		.file 9 "Generated_Source\\PSoC5/UART_1.h"
+ 437              		.file 10 "Generated_Source\\PSoC5/EZI2C.h"
+ 438              		.file 11 "Generated_Source\\PSoC5/Timer_ISR.h"
+ 439              		.file 12 "c:\\program files (x86)\\cypress\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4
+ 440              		.section	.debug_info,"",%progbits
+ 441              	.Ldebug_info0:
+ 442 0000 F4040000 		.4byte	0x4f4
+ 443 0004 0400     		.2byte	0x4
+ 444 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 445 000a 04       		.byte	0x4
+ 446 000b 01       		.uleb128 0x1
+ 447 000c 0C030000 		.4byte	.LASF60
+ 448 0010 0C       		.byte	0xc
+ 449 0011 4C020000 		.4byte	.LASF61
+ 450 0015 89000000 		.4byte	.LASF62
+ 451 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 452 001d 00000000 		.4byte	0
+ 453 0021 00000000 		.4byte	.Ldebug_line0
+ 454 0025 02       		.uleb128 0x2
+ 455 0026 01       		.byte	0x1
+ 456 0027 06       		.byte	0x6
+ 457 0028 B1010000 		.4byte	.LASF0
+ 458 002c 02       		.uleb128 0x2
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccyFJAeR.s 			page 13
+
+
+ 459 002d 01       		.byte	0x1
+ 460 002e 08       		.byte	0x8
+ 461 002f 5B010000 		.4byte	.LASF1
+ 462 0033 02       		.uleb128 0x2
+ 463 0034 02       		.byte	0x2
+ 464 0035 05       		.byte	0x5
+ 465 0036 61000000 		.4byte	.LASF2
+ 466 003a 02       		.uleb128 0x2
+ 467 003b 02       		.byte	0x2
+ 468 003c 07       		.byte	0x7
+ 469 003d 13020000 		.4byte	.LASF3
+ 470 0041 03       		.uleb128 0x3
+ 471 0042 97020000 		.4byte	.LASF9
+ 472 0046 02       		.byte	0x2
+ 473 0047 3F       		.byte	0x3f
+ 474 0048 4C000000 		.4byte	0x4c
+ 475 004c 02       		.uleb128 0x2
+ 476 004d 04       		.byte	0x4
+ 477 004e 05       		.byte	0x5
+ 478 004f 32010000 		.4byte	.LASF4
+ 479 0053 02       		.uleb128 0x2
+ 480 0054 04       		.byte	0x4
+ 481 0055 07       		.byte	0x7
+ 482 0056 53020000 		.4byte	.LASF5
+ 483 005a 02       		.uleb128 0x2
+ 484 005b 08       		.byte	0x8
+ 485 005c 05       		.byte	0x5
+ 486 005d 11010000 		.4byte	.LASF6
+ 487 0061 02       		.uleb128 0x2
+ 488 0062 08       		.byte	0x8
+ 489 0063 07       		.byte	0x7
+ 490 0064 BD010000 		.4byte	.LASF7
+ 491 0068 04       		.uleb128 0x4
+ 492 0069 04       		.byte	0x4
+ 493 006a 05       		.byte	0x5
+ 494 006b 696E7400 		.ascii	"int\000"
+ 495 006f 02       		.uleb128 0x2
+ 496 0070 04       		.byte	0x4
+ 497 0071 07       		.byte	0x7
+ 498 0072 D4010000 		.4byte	.LASF8
+ 499 0076 03       		.uleb128 0x3
+ 500 0077 2B020000 		.4byte	.LASF10
+ 501 007b 03       		.byte	0x3
+ 502 007c 2C       		.byte	0x2c
+ 503 007d 41000000 		.4byte	0x41
+ 504 0081 05       		.uleb128 0x5
+ 505 0082 F8000000 		.4byte	.LASF11
+ 506 0086 04       		.byte	0x4
+ 507 0087 E801     		.2byte	0x1e8
+ 508 0089 2C000000 		.4byte	0x2c
+ 509 008d 05       		.uleb128 0x5
+ 510 008e 45020000 		.4byte	.LASF12
+ 511 0092 04       		.byte	0x4
+ 512 0093 EA01     		.2byte	0x1ea
+ 513 0095 53000000 		.4byte	0x53
+ 514 0099 02       		.uleb128 0x2
+ 515 009a 04       		.byte	0x4
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccyFJAeR.s 			page 14
+
+
+ 516 009b 04       		.byte	0x4
+ 517 009c 0B010000 		.4byte	.LASF13
+ 518 00a0 02       		.uleb128 0x2
+ 519 00a1 08       		.byte	0x8
+ 520 00a2 04       		.byte	0x4
+ 521 00a3 65020000 		.4byte	.LASF14
+ 522 00a7 02       		.uleb128 0x2
+ 523 00a8 01       		.byte	0x1
+ 524 00a9 08       		.byte	0x8
+ 525 00aa 26020000 		.4byte	.LASF15
+ 526 00ae 02       		.uleb128 0x2
+ 527 00af 08       		.byte	0x8
+ 528 00b0 04       		.byte	0x4
+ 529 00b1 69010000 		.4byte	.LASF16
+ 530 00b5 02       		.uleb128 0x2
+ 531 00b6 04       		.byte	0x4
+ 532 00b7 07       		.byte	0x7
+ 533 00b8 6B000000 		.4byte	.LASF17
+ 534 00bc 06       		.uleb128 0x6
+ 535 00bd 28       		.byte	0x28
+ 536 00be 01       		.byte	0x1
+ 537 00bf 3A       		.byte	0x3a
+ 538 00c0 F5000000 		.4byte	0xf5
+ 539 00c4 07       		.uleb128 0x7
+ 540 00c5 E7020000 		.4byte	.LASF18
+ 541 00c9 01       		.byte	0x1
+ 542 00ca 3C       		.byte	0x3c
+ 543 00cb F5000000 		.4byte	0xf5
+ 544 00cf 00       		.byte	0
+ 545 00d0 07       		.uleb128 0x7
+ 546 00d1 ED020000 		.4byte	.LASF19
+ 547 00d5 01       		.byte	0x1
+ 548 00d6 3D       		.byte	0x3d
+ 549 00d7 F5000000 		.4byte	0xf5
+ 550 00db 0A       		.byte	0xa
+ 551 00dc 07       		.uleb128 0x7
+ 552 00dd F3020000 		.4byte	.LASF20
+ 553 00e1 01       		.byte	0x1
+ 554 00e2 3E       		.byte	0x3e
+ 555 00e3 F5000000 		.4byte	0xf5
+ 556 00e7 14       		.byte	0x14
+ 557 00e8 07       		.uleb128 0x7
+ 558 00e9 F9020000 		.4byte	.LASF21
+ 559 00ed 01       		.byte	0x1
+ 560 00ee 3F       		.byte	0x3f
+ 561 00ef F5000000 		.4byte	0xf5
+ 562 00f3 1E       		.byte	0x1e
+ 563 00f4 00       		.byte	0
+ 564 00f5 08       		.uleb128 0x8
+ 565 00f6 81000000 		.4byte	0x81
+ 566 00fa 05010000 		.4byte	0x105
+ 567 00fe 09       		.uleb128 0x9
+ 568 00ff B5000000 		.4byte	0xb5
+ 569 0103 09       		.byte	0x9
+ 570 0104 00       		.byte	0
+ 571 0105 0A       		.uleb128 0xa
+ 572 0106 7D020000 		.4byte	.LASF22
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccyFJAeR.s 			page 15
+
+
+ 573 010a 01       		.byte	0x1
+ 574 010b A0       		.byte	0xa0
+ 575 010c 00000000 		.4byte	.LFB66
+ 576 0110 68000000 		.4byte	.LFE66-.LFB66
+ 577 0114 01       		.uleb128 0x1
+ 578 0115 9C       		.byte	0x9c
+ 579 0116 8B010000 		.4byte	0x18b
+ 580 011a 0B       		.uleb128 0xb
+ 581 011b 08000000 		.4byte	.LVL0
+ 582 011f 49040000 		.4byte	0x449
+ 583 0123 2D010000 		.4byte	0x12d
+ 584 0127 0C       		.uleb128 0xc
+ 585 0128 01       		.uleb128 0x1
+ 586 0129 50       		.byte	0x50
+ 587 012a 01       		.uleb128 0x1
+ 588 012b 30       		.byte	0x30
+ 589 012c 00       		.byte	0
+ 590 012d 0D       		.uleb128 0xd
+ 591 012e 0C000000 		.4byte	.LVL1
+ 592 0132 54040000 		.4byte	0x454
+ 593 0136 0B       		.uleb128 0xb
+ 594 0137 1A000000 		.4byte	.LVL2
+ 595 013b 49040000 		.4byte	0x449
+ 596 013f 49010000 		.4byte	0x149
+ 597 0143 0C       		.uleb128 0xc
+ 598 0144 01       		.uleb128 0x1
+ 599 0145 50       		.byte	0x50
+ 600 0146 01       		.uleb128 0x1
+ 601 0147 31       		.byte	0x31
+ 602 0148 00       		.byte	0
+ 603 0149 0D       		.uleb128 0xd
+ 604 014a 1E000000 		.4byte	.LVL3
+ 605 014e 54040000 		.4byte	0x454
+ 606 0152 0B       		.uleb128 0xb
+ 607 0153 2C000000 		.4byte	.LVL4
+ 608 0157 49040000 		.4byte	0x449
+ 609 015b 65010000 		.4byte	0x165
+ 610 015f 0C       		.uleb128 0xc
+ 611 0160 01       		.uleb128 0x1
+ 612 0161 50       		.byte	0x50
+ 613 0162 01       		.uleb128 0x1
+ 614 0163 32       		.byte	0x32
+ 615 0164 00       		.byte	0
+ 616 0165 0D       		.uleb128 0xd
+ 617 0166 30000000 		.4byte	.LVL5
+ 618 016a 54040000 		.4byte	0x454
+ 619 016e 0B       		.uleb128 0xb
+ 620 016f 3E000000 		.4byte	.LVL6
+ 621 0173 49040000 		.4byte	0x449
+ 622 0177 81010000 		.4byte	0x181
+ 623 017b 0C       		.uleb128 0xc
+ 624 017c 01       		.uleb128 0x1
+ 625 017d 50       		.byte	0x50
+ 626 017e 01       		.uleb128 0x1
+ 627 017f 33       		.byte	0x33
+ 628 0180 00       		.byte	0
+ 629 0181 0D       		.uleb128 0xd
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccyFJAeR.s 			page 16
+
+
+ 630 0182 42000000 		.4byte	.LVL7
+ 631 0186 54040000 		.4byte	0x454
+ 632 018a 00       		.byte	0
+ 633 018b 0A       		.uleb128 0xa
+ 634 018c 45010000 		.4byte	.LASF23
+ 635 0190 01       		.byte	0x1
+ 636 0191 AB       		.byte	0xab
+ 637 0192 00000000 		.4byte	.LFB67
+ 638 0196 78000000 		.4byte	.LFE67-.LFB67
+ 639 019a 01       		.uleb128 0x1
+ 640 019b 9C       		.byte	0x9c
+ 641 019c BC010000 		.4byte	0x1bc
+ 642 01a0 0D       		.uleb128 0xd
+ 643 01a1 06000000 		.4byte	.LVL8
+ 644 01a5 5F040000 		.4byte	0x45f
+ 645 01a9 0D       		.uleb128 0xd
+ 646 01aa 0A000000 		.4byte	.LVL9
+ 647 01ae 6A040000 		.4byte	0x46a
+ 648 01b2 0D       		.uleb128 0xd
+ 649 01b3 42000000 		.4byte	.LVL10
+ 650 01b7 75040000 		.4byte	0x475
+ 651 01bb 00       		.byte	0
+ 652 01bc 0E       		.uleb128 0xe
+ 653 01bd D9020000 		.4byte	.LASF63
+ 654 01c1 01       		.byte	0x1
+ 655 01c2 97       		.byte	0x97
+ 656 01c3 00000000 		.4byte	.LFB65
+ 657 01c7 78000000 		.4byte	.LFE65-.LFB65
+ 658 01cb 01       		.uleb128 0x1
+ 659 01cc 9C       		.byte	0x9c
+ 660 01cd 0F       		.uleb128 0xf
+ 661 01ce 74000000 		.4byte	.LASF64
+ 662 01d2 01       		.byte	0x1
+ 663 01d3 42       		.byte	0x42
+ 664 01d4 68000000 		.4byte	0x68
+ 665 01d8 00000000 		.4byte	.LFB64
+ 666 01dc D8000000 		.4byte	.LFE64-.LFB64
+ 667 01e0 01       		.uleb128 0x1
+ 668 01e1 9C       		.byte	0x9c
+ 669 01e2 01030000 		.4byte	0x301
+ 670 01e6 10       		.uleb128 0x10
+ 671 01e7 79000000 		.4byte	.LASF24
+ 672 01eb 01       		.byte	0x1
+ 673 01ec 45       		.byte	0x45
+ 674 01ed 01030000 		.4byte	0x301
+ 675 01f1 03       		.uleb128 0x3
+ 676 01f2 91       		.byte	0x91
+ 677 01f3 E87D     		.sleb128 -280
+ 678 01f5 10       		.uleb128 0x10
+ 679 01f6 FB010000 		.4byte	.LASF25
+ 680 01fa 01       		.byte	0x1
+ 681 01fb 46       		.byte	0x46
+ 682 01fc 11030000 		.4byte	0x311
+ 683 0200 03       		.uleb128 0x3
+ 684 0201 91       		.byte	0x91
+ 685 0202 E47D     		.sleb128 -284
+ 686 0204 11       		.uleb128 0x11
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccyFJAeR.s 			page 17
+
+
+ 687 0205 91020000 		.4byte	.LASF26
+ 688 0209 01       		.byte	0x1
+ 689 020a 47       		.byte	0x47
+ 690 020b 68000000 		.4byte	0x68
+ 691 020f 00000000 		.4byte	.LLST0
+ 692 0213 0D       		.uleb128 0xd
+ 693 0214 10000000 		.4byte	.LVL12
+ 694 0218 80040000 		.4byte	0x480
+ 695 021c 0D       		.uleb128 0xd
+ 696 021d 14000000 		.4byte	.LVL13
+ 697 0221 8B040000 		.4byte	0x48b
+ 698 0225 0D       		.uleb128 0xd
+ 699 0226 18000000 		.4byte	.LVL14
+ 700 022a 96040000 		.4byte	0x496
+ 701 022e 0D       		.uleb128 0xd
+ 702 022f 1C000000 		.4byte	.LVL15
+ 703 0233 A1040000 		.4byte	0x4a1
+ 704 0237 0B       		.uleb128 0xb
+ 705 0238 26000000 		.4byte	.LVL16
+ 706 023c AC040000 		.4byte	0x4ac
+ 707 0240 5A020000 		.4byte	0x25a
+ 708 0244 0C       		.uleb128 0xc
+ 709 0245 01       		.uleb128 0x1
+ 710 0246 50       		.byte	0x50
+ 711 0247 05       		.uleb128 0x5
+ 712 0248 03       		.byte	0x3
+ 713 0249 00000000 		.4byte	ezi2cBuffer
+ 714 024d 0C       		.uleb128 0xc
+ 715 024e 01       		.uleb128 0x1
+ 716 024f 51       		.byte	0x51
+ 717 0250 02       		.uleb128 0x2
+ 718 0251 74       		.byte	0x74
+ 719 0252 00       		.sleb128 0
+ 720 0253 0C       		.uleb128 0xc
+ 721 0254 01       		.uleb128 0x1
+ 722 0255 52       		.byte	0x52
+ 723 0256 02       		.uleb128 0x2
+ 724 0257 08       		.byte	0x8
+ 725 0258 28       		.byte	0x28
+ 726 0259 00       		.byte	0
+ 727 025a 0B       		.uleb128 0xb
+ 728 025b 30000000 		.4byte	.LVL17
+ 729 025f B5040000 		.4byte	0x4b5
+ 730 0263 7A020000 		.4byte	0x27a
+ 731 0267 0C       		.uleb128 0xc
+ 732 0268 01       		.uleb128 0x1
+ 733 0269 50       		.byte	0x50
+ 734 026a 01       		.uleb128 0x1
+ 735 026b 34       		.byte	0x34
+ 736 026c 0C       		.uleb128 0xc
+ 737 026d 01       		.uleb128 0x1
+ 738 026e 51       		.byte	0x51
+ 739 026f 02       		.uleb128 0x2
+ 740 0270 74       		.byte	0x74
+ 741 0271 00       		.sleb128 0
+ 742 0272 0C       		.uleb128 0xc
+ 743 0273 01       		.uleb128 0x1
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccyFJAeR.s 			page 18
+
+
+ 744 0274 52       		.byte	0x52
+ 745 0275 03       		.uleb128 0x3
+ 746 0276 91       		.byte	0x91
+ 747 0277 E47D     		.sleb128 -284
+ 748 0279 00       		.byte	0
+ 749 027a 0D       		.uleb128 0xd
+ 750 027b 34000000 		.4byte	.LVL18
+ 751 027f C0040000 		.4byte	0x4c0
+ 752 0283 0B       		.uleb128 0xb
+ 753 0284 3A000000 		.4byte	.LVL19
+ 754 0288 CB040000 		.4byte	0x4cb
+ 755 028c 9A020000 		.4byte	0x29a
+ 756 0290 0C       		.uleb128 0xc
+ 757 0291 01       		.uleb128 0x1
+ 758 0292 50       		.byte	0x50
+ 759 0293 05       		.uleb128 0x5
+ 760 0294 03       		.byte	0x3
+ 761 0295 00000000 		.4byte	ADCInterruptHandler
+ 762 0299 00       		.byte	0
+ 763 029a 0B       		.uleb128 0xb
+ 764 029b 40000000 		.4byte	.LVL20
+ 765 029f D6040000 		.4byte	0x4d6
+ 766 02a3 B1020000 		.4byte	0x2b1
+ 767 02a7 0C       		.uleb128 0xc
+ 768 02a8 01       		.uleb128 0x1
+ 769 02a9 50       		.byte	0x50
+ 770 02aa 05       		.uleb128 0x5
+ 771 02ab 03       		.byte	0x3
+ 772 02ac 00000000 		.4byte	TimerInterruptHandler
+ 773 02b0 00       		.byte	0
+ 774 02b1 0B       		.uleb128 0xb
+ 775 02b2 46000000 		.4byte	.LVL21
+ 776 02b6 E1040000 		.4byte	0x4e1
+ 777 02ba C8020000 		.4byte	0x2c8
+ 778 02be 0C       		.uleb128 0xc
+ 779 02bf 01       		.uleb128 0x1
+ 780 02c0 50       		.byte	0x50
+ 781 02c1 05       		.uleb128 0x5
+ 782 02c2 03       		.byte	0x3
+ 783 02c3 00000000 		.4byte	.LC0
+ 784 02c7 00       		.byte	0
+ 785 02c8 0D       		.uleb128 0xd
+ 786 02c9 5C000000 		.4byte	.LVL24
+ 787 02cd BC010000 		.4byte	0x1bc
+ 788 02d1 0B       		.uleb128 0xb
+ 789 02d2 7C000000 		.4byte	.LVL25
+ 790 02d6 EC040000 		.4byte	0x4ec
+ 791 02da EF020000 		.4byte	0x2ef
+ 792 02de 0C       		.uleb128 0xc
+ 793 02df 01       		.uleb128 0x1
+ 794 02e0 50       		.byte	0x50
+ 795 02e1 03       		.uleb128 0x3
+ 796 02e2 91       		.byte	0x91
+ 797 02e3 E87D     		.sleb128 -280
+ 798 02e5 0C       		.uleb128 0xc
+ 799 02e6 01       		.uleb128 0x1
+ 800 02e7 51       		.byte	0x51
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccyFJAeR.s 			page 19
+
+
+ 801 02e8 05       		.uleb128 0x5
+ 802 02e9 03       		.byte	0x3
+ 803 02ea 10000000 		.4byte	.LC1
+ 804 02ee 00       		.byte	0
+ 805 02ef 12       		.uleb128 0x12
+ 806 02f0 82000000 		.4byte	.LVL26
+ 807 02f4 E1040000 		.4byte	0x4e1
+ 808 02f8 0C       		.uleb128 0xc
+ 809 02f9 01       		.uleb128 0x1
+ 810 02fa 50       		.byte	0x50
+ 811 02fb 03       		.uleb128 0x3
+ 812 02fc 91       		.byte	0x91
+ 813 02fd E87D     		.sleb128 -280
+ 814 02ff 00       		.byte	0
+ 815 0300 00       		.byte	0
+ 816 0301 08       		.uleb128 0x8
+ 817 0302 A7000000 		.4byte	0xa7
+ 818 0306 11030000 		.4byte	0x311
+ 819 030a 09       		.uleb128 0x9
+ 820 030b B5000000 		.4byte	0xb5
+ 821 030f FF       		.byte	0xff
+ 822 0310 00       		.byte	0
+ 823 0311 08       		.uleb128 0x8
+ 824 0312 81000000 		.4byte	0x81
+ 825 0316 21030000 		.4byte	0x321
+ 826 031a 09       		.uleb128 0x9
+ 827 031b B5000000 		.4byte	0xb5
+ 828 031f 03       		.byte	0x3
+ 829 0320 00       		.byte	0
+ 830 0321 13       		.uleb128 0x13
+ 831 0322 FF020000 		.4byte	.LASF27
+ 832 0326 05       		.byte	0x5
+ 833 0327 1207     		.2byte	0x712
+ 834 0329 2D030000 		.4byte	0x32d
+ 835 032d 14       		.uleb128 0x14
+ 836 032e 76000000 		.4byte	0x76
+ 837 0332 15       		.uleb128 0x15
+ 838 0333 A1020000 		.4byte	.LASF28
+ 839 0337 01       		.byte	0x1
+ 840 0338 1F       		.byte	0x1f
+ 841 0339 43030000 		.4byte	0x343
+ 842 033d 05       		.uleb128 0x5
+ 843 033e 03       		.byte	0x3
+ 844 033f 00000000 		.4byte	isDataReady
+ 845 0343 02       		.uleb128 0x2
+ 846 0344 01       		.byte	0x1
+ 847 0345 02       		.byte	0x2
+ 848 0346 3F020000 		.4byte	.LASF29
+ 849 034a 15       		.uleb128 0x15
+ 850 034b AD020000 		.4byte	.LASF30
+ 851 034f 01       		.byte	0x1
+ 852 0350 21       		.byte	0x21
+ 853 0351 8D000000 		.4byte	0x8d
+ 854 0355 05       		.uleb128 0x5
+ 855 0356 03       		.byte	0x3
+ 856 0357 00000000 		.4byte	adc1
+ 857 035b 15       		.uleb128 0x15
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccyFJAeR.s 			page 20
+
+
+ 858 035c B2020000 		.4byte	.LASF31
+ 859 0360 01       		.byte	0x1
+ 860 0361 22       		.byte	0x22
+ 861 0362 8D000000 		.4byte	0x8d
+ 862 0366 05       		.uleb128 0x5
+ 863 0367 03       		.byte	0x3
+ 864 0368 00000000 		.4byte	adc2
+ 865 036c 15       		.uleb128 0x15
+ 866 036d B7020000 		.4byte	.LASF32
+ 867 0371 01       		.byte	0x1
+ 868 0372 23       		.byte	0x23
+ 869 0373 8D000000 		.4byte	0x8d
+ 870 0377 05       		.uleb128 0x5
+ 871 0378 03       		.byte	0x3
+ 872 0379 00000000 		.4byte	adc3
+ 873 037d 15       		.uleb128 0x15
+ 874 037e BC020000 		.4byte	.LASF33
+ 875 0382 01       		.byte	0x1
+ 876 0383 24       		.byte	0x24
+ 877 0384 8D000000 		.4byte	0x8d
+ 878 0388 05       		.uleb128 0x5
+ 879 0389 03       		.byte	0x3
+ 880 038a 00000000 		.4byte	adc4
+ 881 038e 15       		.uleb128 0x15
+ 882 038f CD000000 		.4byte	.LASF34
+ 883 0393 01       		.byte	0x1
+ 884 0394 25       		.byte	0x25
+ 885 0395 8D000000 		.4byte	0x8d
+ 886 0399 05       		.uleb128 0x5
+ 887 039a 03       		.byte	0x3
+ 888 039b 00000000 		.4byte	adcCount
+ 889 039f 15       		.uleb128 0x15
+ 890 03a0 81010000 		.4byte	.LASF35
+ 891 03a4 01       		.byte	0x1
+ 892 03a5 27       		.byte	0x27
+ 893 03a6 8D000000 		.4byte	0x8d
+ 894 03aa 05       		.uleb128 0x5
+ 895 03ab 03       		.byte	0x3
+ 896 03ac 00000000 		.4byte	TotalADC1
+ 897 03b0 15       		.uleb128 0x15
+ 898 03b1 8B010000 		.4byte	.LASF36
+ 899 03b5 01       		.byte	0x1
+ 900 03b6 28       		.byte	0x28
+ 901 03b7 8D000000 		.4byte	0x8d
+ 902 03bb 05       		.uleb128 0x5
+ 903 03bc 03       		.byte	0x3
+ 904 03bd 00000000 		.4byte	TotalADC2
+ 905 03c1 15       		.uleb128 0x15
+ 906 03c2 95010000 		.4byte	.LASF37
+ 907 03c6 01       		.byte	0x1
+ 908 03c7 29       		.byte	0x29
+ 909 03c8 8D000000 		.4byte	0x8d
+ 910 03cc 05       		.uleb128 0x5
+ 911 03cd 03       		.byte	0x3
+ 912 03ce 00000000 		.4byte	TotalADC3
+ 913 03d2 15       		.uleb128 0x15
+ 914 03d3 9F010000 		.4byte	.LASF38
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccyFJAeR.s 			page 21
+
+
+ 915 03d7 01       		.byte	0x1
+ 916 03d8 2A       		.byte	0x2a
+ 917 03d9 8D000000 		.4byte	0x8d
+ 918 03dd 05       		.uleb128 0x5
+ 919 03de 03       		.byte	0x3
+ 920 03df 00000000 		.4byte	TotalADC4
+ 921 03e3 15       		.uleb128 0x15
+ 922 03e4 3B010000 		.4byte	.LASF39
+ 923 03e8 01       		.byte	0x1
+ 924 03e9 2B       		.byte	0x2b
+ 925 03ea 8D000000 		.4byte	0x8d
+ 926 03ee 05       		.uleb128 0x5
+ 927 03ef 03       		.byte	0x3
+ 928 03f0 00000000 		.4byte	adcCount2
+ 929 03f4 15       		.uleb128 0x15
+ 930 03f5 C1020000 		.4byte	.LASF40
+ 931 03f9 01       		.byte	0x1
+ 932 03fa 2D       		.byte	0x2d
+ 933 03fb 81000000 		.4byte	0x81
+ 934 03ff 05       		.uleb128 0x5
+ 935 0400 03       		.byte	0x3
+ 936 0401 00000000 		.4byte	temp1
+ 937 0405 15       		.uleb128 0x15
+ 938 0406 C7020000 		.4byte	.LASF41
+ 939 040a 01       		.byte	0x1
+ 940 040b 2E       		.byte	0x2e
+ 941 040c 81000000 		.4byte	0x81
+ 942 0410 05       		.uleb128 0x5
+ 943 0411 03       		.byte	0x3
+ 944 0412 00000000 		.4byte	temp2
+ 945 0416 15       		.uleb128 0x15
+ 946 0417 CD020000 		.4byte	.LASF42
+ 947 041b 01       		.byte	0x1
+ 948 041c 2F       		.byte	0x2f
+ 949 041d 81000000 		.4byte	0x81
+ 950 0421 05       		.uleb128 0x5
+ 951 0422 03       		.byte	0x3
+ 952 0423 00000000 		.4byte	temp3
+ 953 0427 15       		.uleb128 0x15
+ 954 0428 D3020000 		.4byte	.LASF43
+ 955 042c 01       		.byte	0x1
+ 956 042d 30       		.byte	0x30
+ 957 042e 81000000 		.4byte	0x81
+ 958 0432 05       		.uleb128 0x5
+ 959 0433 03       		.byte	0x3
+ 960 0434 00000000 		.4byte	temp4
+ 961 0438 15       		.uleb128 0x15
+ 962 0439 33020000 		.4byte	.LASF44
+ 963 043d 01       		.byte	0x1
+ 964 043e 40       		.byte	0x40
+ 965 043f BC000000 		.4byte	0xbc
+ 966 0443 05       		.uleb128 0x5
+ 967 0444 03       		.byte	0x3
+ 968 0445 00000000 		.4byte	ezi2cBuffer
+ 969 0449 16       		.uleb128 0x16
+ 970 044a E1010000 		.4byte	.LASF45
+ 971 044e E1010000 		.4byte	.LASF45
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccyFJAeR.s 			page 22
+
+
+ 972 0452 06       		.byte	0x6
+ 973 0453 35       		.byte	0x35
+ 974 0454 16       		.uleb128 0x16
+ 975 0455 34000000 		.4byte	.LASF46
+ 976 0459 34000000 		.4byte	.LASF46
+ 977 045d 06       		.byte	0x6
+ 978 045e 3A       		.byte	0x3a
+ 979 045f 16       		.uleb128 0x16
+ 980 0460 1B000000 		.4byte	.LASF47
+ 981 0464 1B000000 		.4byte	.LASF47
+ 982 0468 07       		.byte	0x7
+ 983 0469 5E       		.byte	0x5e
+ 984 046a 16       		.uleb128 0x16
+ 985 046b AE030000 		.4byte	.LASF48
+ 986 046f AE030000 		.4byte	.LASF48
+ 987 0473 08       		.byte	0x8
+ 988 0474 25       		.byte	0x25
+ 989 0475 16       		.uleb128 0x16
+ 990 0476 52000000 		.4byte	.LASF49
+ 991 047a 52000000 		.4byte	.LASF49
+ 992 047e 08       		.byte	0x8
+ 993 047f 23       		.byte	0x23
+ 994 0480 16       		.uleb128 0x16
+ 995 0481 FE000000 		.4byte	.LASF50
+ 996 0485 FE000000 		.4byte	.LASF50
+ 997 0489 09       		.byte	0x9
+ 998 048a 54       		.byte	0x54
+ 999 048b 16       		.uleb128 0x16
+ 1000 048c 9A030000 		.4byte	.LASF51
+ 1001 0490 9A030000 		.4byte	.LASF51
+ 1002 0494 06       		.byte	0x6
+ 1003 0495 31       		.byte	0x31
+ 1004 0496 16       		.uleb128 0x16
+ 1005 0497 26010000 		.4byte	.LASF52
+ 1006 049b 26010000 		.4byte	.LASF52
+ 1007 049f 07       		.byte	0x7
+ 1008 04a0 5A       		.byte	0x5a
+ 1009 04a1 16       		.uleb128 0x16
+ 1010 04a2 75010000 		.4byte	.LASF53
+ 1011 04a6 75010000 		.4byte	.LASF53
+ 1012 04aa 0A       		.byte	0xa
+ 1013 04ab 54       		.byte	0x54
+ 1014 04ac 17       		.uleb128 0x17
+ 1015 04ad 1F010000 		.4byte	.LASF65
+ 1016 04b1 1F010000 		.4byte	.LASF65
+ 1017 04b5 16       		.uleb128 0x16
+ 1018 04b6 02020000 		.4byte	.LASF54
+ 1019 04ba 02020000 		.4byte	.LASF54
+ 1020 04be 0A       		.byte	0xa
+ 1021 04bf 63       		.byte	0x63
+ 1022 04c0 16       		.uleb128 0x16
+ 1023 04c1 00000000 		.4byte	.LASF55
+ 1024 04c5 00000000 		.4byte	.LASF55
+ 1025 04c9 06       		.byte	0x6
+ 1026 04ca A1       		.byte	0xa1
+ 1027 04cb 16       		.uleb128 0x16
+ 1028 04cc E8000000 		.4byte	.LASF56
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccyFJAeR.s 			page 23
+
+
+ 1029 04d0 E8000000 		.4byte	.LASF56
+ 1030 04d4 08       		.byte	0x8
+ 1031 04d5 18       		.byte	0x18
+ 1032 04d6 16       		.uleb128 0x16
+ 1033 04d7 D6000000 		.4byte	.LASF57
+ 1034 04db D6000000 		.4byte	.LASF57
+ 1035 04df 0B       		.byte	0xb
+ 1036 04e0 18       		.byte	0x18
+ 1037 04e1 16       		.uleb128 0x16
+ 1038 04e2 6C020000 		.4byte	.LASF58
+ 1039 04e6 6C020000 		.4byte	.LASF58
+ 1040 04ea 09       		.byte	0x9
+ 1041 04eb 8B       		.byte	0x8b
+ 1042 04ec 16       		.uleb128 0x16
+ 1043 04ed A9010000 		.4byte	.LASF59
+ 1044 04f1 A9010000 		.4byte	.LASF59
+ 1045 04f5 0C       		.byte	0xc
+ 1046 04f6 E7       		.byte	0xe7
+ 1047 04f7 00       		.byte	0
+ 1048              		.section	.debug_abbrev,"",%progbits
+ 1049              	.Ldebug_abbrev0:
+ 1050 0000 01       		.uleb128 0x1
+ 1051 0001 11       		.uleb128 0x11
+ 1052 0002 01       		.byte	0x1
+ 1053 0003 25       		.uleb128 0x25
+ 1054 0004 0E       		.uleb128 0xe
+ 1055 0005 13       		.uleb128 0x13
+ 1056 0006 0B       		.uleb128 0xb
+ 1057 0007 03       		.uleb128 0x3
+ 1058 0008 0E       		.uleb128 0xe
+ 1059 0009 1B       		.uleb128 0x1b
+ 1060 000a 0E       		.uleb128 0xe
+ 1061 000b 55       		.uleb128 0x55
+ 1062 000c 17       		.uleb128 0x17
+ 1063 000d 11       		.uleb128 0x11
+ 1064 000e 01       		.uleb128 0x1
+ 1065 000f 10       		.uleb128 0x10
+ 1066 0010 17       		.uleb128 0x17
+ 1067 0011 00       		.byte	0
+ 1068 0012 00       		.byte	0
+ 1069 0013 02       		.uleb128 0x2
+ 1070 0014 24       		.uleb128 0x24
+ 1071 0015 00       		.byte	0
+ 1072 0016 0B       		.uleb128 0xb
+ 1073 0017 0B       		.uleb128 0xb
+ 1074 0018 3E       		.uleb128 0x3e
+ 1075 0019 0B       		.uleb128 0xb
+ 1076 001a 03       		.uleb128 0x3
+ 1077 001b 0E       		.uleb128 0xe
+ 1078 001c 00       		.byte	0
+ 1079 001d 00       		.byte	0
+ 1080 001e 03       		.uleb128 0x3
+ 1081 001f 16       		.uleb128 0x16
+ 1082 0020 00       		.byte	0
+ 1083 0021 03       		.uleb128 0x3
+ 1084 0022 0E       		.uleb128 0xe
+ 1085 0023 3A       		.uleb128 0x3a
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccyFJAeR.s 			page 24
+
+
+ 1086 0024 0B       		.uleb128 0xb
+ 1087 0025 3B       		.uleb128 0x3b
+ 1088 0026 0B       		.uleb128 0xb
+ 1089 0027 49       		.uleb128 0x49
+ 1090 0028 13       		.uleb128 0x13
+ 1091 0029 00       		.byte	0
+ 1092 002a 00       		.byte	0
+ 1093 002b 04       		.uleb128 0x4
+ 1094 002c 24       		.uleb128 0x24
+ 1095 002d 00       		.byte	0
+ 1096 002e 0B       		.uleb128 0xb
+ 1097 002f 0B       		.uleb128 0xb
+ 1098 0030 3E       		.uleb128 0x3e
+ 1099 0031 0B       		.uleb128 0xb
+ 1100 0032 03       		.uleb128 0x3
+ 1101 0033 08       		.uleb128 0x8
+ 1102 0034 00       		.byte	0
+ 1103 0035 00       		.byte	0
+ 1104 0036 05       		.uleb128 0x5
+ 1105 0037 16       		.uleb128 0x16
+ 1106 0038 00       		.byte	0
+ 1107 0039 03       		.uleb128 0x3
+ 1108 003a 0E       		.uleb128 0xe
+ 1109 003b 3A       		.uleb128 0x3a
+ 1110 003c 0B       		.uleb128 0xb
+ 1111 003d 3B       		.uleb128 0x3b
+ 1112 003e 05       		.uleb128 0x5
+ 1113 003f 49       		.uleb128 0x49
+ 1114 0040 13       		.uleb128 0x13
+ 1115 0041 00       		.byte	0
+ 1116 0042 00       		.byte	0
+ 1117 0043 06       		.uleb128 0x6
+ 1118 0044 13       		.uleb128 0x13
+ 1119 0045 01       		.byte	0x1
+ 1120 0046 0B       		.uleb128 0xb
+ 1121 0047 0B       		.uleb128 0xb
+ 1122 0048 3A       		.uleb128 0x3a
+ 1123 0049 0B       		.uleb128 0xb
+ 1124 004a 3B       		.uleb128 0x3b
+ 1125 004b 0B       		.uleb128 0xb
+ 1126 004c 01       		.uleb128 0x1
+ 1127 004d 13       		.uleb128 0x13
+ 1128 004e 00       		.byte	0
+ 1129 004f 00       		.byte	0
+ 1130 0050 07       		.uleb128 0x7
+ 1131 0051 0D       		.uleb128 0xd
+ 1132 0052 00       		.byte	0
+ 1133 0053 03       		.uleb128 0x3
+ 1134 0054 0E       		.uleb128 0xe
+ 1135 0055 3A       		.uleb128 0x3a
+ 1136 0056 0B       		.uleb128 0xb
+ 1137 0057 3B       		.uleb128 0x3b
+ 1138 0058 0B       		.uleb128 0xb
+ 1139 0059 49       		.uleb128 0x49
+ 1140 005a 13       		.uleb128 0x13
+ 1141 005b 38       		.uleb128 0x38
+ 1142 005c 0B       		.uleb128 0xb
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccyFJAeR.s 			page 25
+
+
+ 1143 005d 00       		.byte	0
+ 1144 005e 00       		.byte	0
+ 1145 005f 08       		.uleb128 0x8
+ 1146 0060 01       		.uleb128 0x1
+ 1147 0061 01       		.byte	0x1
+ 1148 0062 49       		.uleb128 0x49
+ 1149 0063 13       		.uleb128 0x13
+ 1150 0064 01       		.uleb128 0x1
+ 1151 0065 13       		.uleb128 0x13
+ 1152 0066 00       		.byte	0
+ 1153 0067 00       		.byte	0
+ 1154 0068 09       		.uleb128 0x9
+ 1155 0069 21       		.uleb128 0x21
+ 1156 006a 00       		.byte	0
+ 1157 006b 49       		.uleb128 0x49
+ 1158 006c 13       		.uleb128 0x13
+ 1159 006d 2F       		.uleb128 0x2f
+ 1160 006e 0B       		.uleb128 0xb
+ 1161 006f 00       		.byte	0
+ 1162 0070 00       		.byte	0
+ 1163 0071 0A       		.uleb128 0xa
+ 1164 0072 2E       		.uleb128 0x2e
+ 1165 0073 01       		.byte	0x1
+ 1166 0074 3F       		.uleb128 0x3f
+ 1167 0075 19       		.uleb128 0x19
+ 1168 0076 03       		.uleb128 0x3
+ 1169 0077 0E       		.uleb128 0xe
+ 1170 0078 3A       		.uleb128 0x3a
+ 1171 0079 0B       		.uleb128 0xb
+ 1172 007a 3B       		.uleb128 0x3b
+ 1173 007b 0B       		.uleb128 0xb
+ 1174 007c 27       		.uleb128 0x27
+ 1175 007d 19       		.uleb128 0x19
+ 1176 007e 11       		.uleb128 0x11
+ 1177 007f 01       		.uleb128 0x1
+ 1178 0080 12       		.uleb128 0x12
+ 1179 0081 06       		.uleb128 0x6
+ 1180 0082 40       		.uleb128 0x40
+ 1181 0083 18       		.uleb128 0x18
+ 1182 0084 9742     		.uleb128 0x2117
+ 1183 0086 19       		.uleb128 0x19
+ 1184 0087 01       		.uleb128 0x1
+ 1185 0088 13       		.uleb128 0x13
+ 1186 0089 00       		.byte	0
+ 1187 008a 00       		.byte	0
+ 1188 008b 0B       		.uleb128 0xb
+ 1189 008c 898201   		.uleb128 0x4109
+ 1190 008f 01       		.byte	0x1
+ 1191 0090 11       		.uleb128 0x11
+ 1192 0091 01       		.uleb128 0x1
+ 1193 0092 31       		.uleb128 0x31
+ 1194 0093 13       		.uleb128 0x13
+ 1195 0094 01       		.uleb128 0x1
+ 1196 0095 13       		.uleb128 0x13
+ 1197 0096 00       		.byte	0
+ 1198 0097 00       		.byte	0
+ 1199 0098 0C       		.uleb128 0xc
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccyFJAeR.s 			page 26
+
+
+ 1200 0099 8A8201   		.uleb128 0x410a
+ 1201 009c 00       		.byte	0
+ 1202 009d 02       		.uleb128 0x2
+ 1203 009e 18       		.uleb128 0x18
+ 1204 009f 9142     		.uleb128 0x2111
+ 1205 00a1 18       		.uleb128 0x18
+ 1206 00a2 00       		.byte	0
+ 1207 00a3 00       		.byte	0
+ 1208 00a4 0D       		.uleb128 0xd
+ 1209 00a5 898201   		.uleb128 0x4109
+ 1210 00a8 00       		.byte	0
+ 1211 00a9 11       		.uleb128 0x11
+ 1212 00aa 01       		.uleb128 0x1
+ 1213 00ab 31       		.uleb128 0x31
+ 1214 00ac 13       		.uleb128 0x13
+ 1215 00ad 00       		.byte	0
+ 1216 00ae 00       		.byte	0
+ 1217 00af 0E       		.uleb128 0xe
+ 1218 00b0 2E       		.uleb128 0x2e
+ 1219 00b1 00       		.byte	0
+ 1220 00b2 3F       		.uleb128 0x3f
+ 1221 00b3 19       		.uleb128 0x19
+ 1222 00b4 03       		.uleb128 0x3
+ 1223 00b5 0E       		.uleb128 0xe
+ 1224 00b6 3A       		.uleb128 0x3a
+ 1225 00b7 0B       		.uleb128 0xb
+ 1226 00b8 3B       		.uleb128 0x3b
+ 1227 00b9 0B       		.uleb128 0xb
+ 1228 00ba 11       		.uleb128 0x11
+ 1229 00bb 01       		.uleb128 0x1
+ 1230 00bc 12       		.uleb128 0x12
+ 1231 00bd 06       		.uleb128 0x6
+ 1232 00be 40       		.uleb128 0x40
+ 1233 00bf 18       		.uleb128 0x18
+ 1234 00c0 9742     		.uleb128 0x2117
+ 1235 00c2 19       		.uleb128 0x19
+ 1236 00c3 00       		.byte	0
+ 1237 00c4 00       		.byte	0
+ 1238 00c5 0F       		.uleb128 0xf
+ 1239 00c6 2E       		.uleb128 0x2e
+ 1240 00c7 01       		.byte	0x1
+ 1241 00c8 3F       		.uleb128 0x3f
+ 1242 00c9 19       		.uleb128 0x19
+ 1243 00ca 03       		.uleb128 0x3
+ 1244 00cb 0E       		.uleb128 0xe
+ 1245 00cc 3A       		.uleb128 0x3a
+ 1246 00cd 0B       		.uleb128 0xb
+ 1247 00ce 3B       		.uleb128 0x3b
+ 1248 00cf 0B       		.uleb128 0xb
+ 1249 00d0 27       		.uleb128 0x27
+ 1250 00d1 19       		.uleb128 0x19
+ 1251 00d2 49       		.uleb128 0x49
+ 1252 00d3 13       		.uleb128 0x13
+ 1253 00d4 8701     		.uleb128 0x87
+ 1254 00d6 19       		.uleb128 0x19
+ 1255 00d7 11       		.uleb128 0x11
+ 1256 00d8 01       		.uleb128 0x1
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccyFJAeR.s 			page 27
+
+
+ 1257 00d9 12       		.uleb128 0x12
+ 1258 00da 06       		.uleb128 0x6
+ 1259 00db 40       		.uleb128 0x40
+ 1260 00dc 18       		.uleb128 0x18
+ 1261 00dd 9742     		.uleb128 0x2117
+ 1262 00df 19       		.uleb128 0x19
+ 1263 00e0 01       		.uleb128 0x1
+ 1264 00e1 13       		.uleb128 0x13
+ 1265 00e2 00       		.byte	0
+ 1266 00e3 00       		.byte	0
+ 1267 00e4 10       		.uleb128 0x10
+ 1268 00e5 34       		.uleb128 0x34
+ 1269 00e6 00       		.byte	0
+ 1270 00e7 03       		.uleb128 0x3
+ 1271 00e8 0E       		.uleb128 0xe
+ 1272 00e9 3A       		.uleb128 0x3a
+ 1273 00ea 0B       		.uleb128 0xb
+ 1274 00eb 3B       		.uleb128 0x3b
+ 1275 00ec 0B       		.uleb128 0xb
+ 1276 00ed 49       		.uleb128 0x49
+ 1277 00ee 13       		.uleb128 0x13
+ 1278 00ef 02       		.uleb128 0x2
+ 1279 00f0 18       		.uleb128 0x18
+ 1280 00f1 00       		.byte	0
+ 1281 00f2 00       		.byte	0
+ 1282 00f3 11       		.uleb128 0x11
+ 1283 00f4 34       		.uleb128 0x34
+ 1284 00f5 00       		.byte	0
+ 1285 00f6 03       		.uleb128 0x3
+ 1286 00f7 0E       		.uleb128 0xe
+ 1287 00f8 3A       		.uleb128 0x3a
+ 1288 00f9 0B       		.uleb128 0xb
+ 1289 00fa 3B       		.uleb128 0x3b
+ 1290 00fb 0B       		.uleb128 0xb
+ 1291 00fc 49       		.uleb128 0x49
+ 1292 00fd 13       		.uleb128 0x13
+ 1293 00fe 02       		.uleb128 0x2
+ 1294 00ff 17       		.uleb128 0x17
+ 1295 0100 00       		.byte	0
+ 1296 0101 00       		.byte	0
+ 1297 0102 12       		.uleb128 0x12
+ 1298 0103 898201   		.uleb128 0x4109
+ 1299 0106 01       		.byte	0x1
+ 1300 0107 11       		.uleb128 0x11
+ 1301 0108 01       		.uleb128 0x1
+ 1302 0109 31       		.uleb128 0x31
+ 1303 010a 13       		.uleb128 0x13
+ 1304 010b 00       		.byte	0
+ 1305 010c 00       		.byte	0
+ 1306 010d 13       		.uleb128 0x13
+ 1307 010e 34       		.uleb128 0x34
+ 1308 010f 00       		.byte	0
+ 1309 0110 03       		.uleb128 0x3
+ 1310 0111 0E       		.uleb128 0xe
+ 1311 0112 3A       		.uleb128 0x3a
+ 1312 0113 0B       		.uleb128 0xb
+ 1313 0114 3B       		.uleb128 0x3b
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccyFJAeR.s 			page 28
+
+
+ 1314 0115 05       		.uleb128 0x5
+ 1315 0116 49       		.uleb128 0x49
+ 1316 0117 13       		.uleb128 0x13
+ 1317 0118 3F       		.uleb128 0x3f
+ 1318 0119 19       		.uleb128 0x19
+ 1319 011a 3C       		.uleb128 0x3c
+ 1320 011b 19       		.uleb128 0x19
+ 1321 011c 00       		.byte	0
+ 1322 011d 00       		.byte	0
+ 1323 011e 14       		.uleb128 0x14
+ 1324 011f 35       		.uleb128 0x35
+ 1325 0120 00       		.byte	0
+ 1326 0121 49       		.uleb128 0x49
+ 1327 0122 13       		.uleb128 0x13
+ 1328 0123 00       		.byte	0
+ 1329 0124 00       		.byte	0
+ 1330 0125 15       		.uleb128 0x15
+ 1331 0126 34       		.uleb128 0x34
+ 1332 0127 00       		.byte	0
+ 1333 0128 03       		.uleb128 0x3
+ 1334 0129 0E       		.uleb128 0xe
+ 1335 012a 3A       		.uleb128 0x3a
+ 1336 012b 0B       		.uleb128 0xb
+ 1337 012c 3B       		.uleb128 0x3b
+ 1338 012d 0B       		.uleb128 0xb
+ 1339 012e 49       		.uleb128 0x49
+ 1340 012f 13       		.uleb128 0x13
+ 1341 0130 3F       		.uleb128 0x3f
+ 1342 0131 19       		.uleb128 0x19
+ 1343 0132 02       		.uleb128 0x2
+ 1344 0133 18       		.uleb128 0x18
+ 1345 0134 00       		.byte	0
+ 1346 0135 00       		.byte	0
+ 1347 0136 16       		.uleb128 0x16
+ 1348 0137 2E       		.uleb128 0x2e
+ 1349 0138 00       		.byte	0
+ 1350 0139 3F       		.uleb128 0x3f
+ 1351 013a 19       		.uleb128 0x19
+ 1352 013b 3C       		.uleb128 0x3c
+ 1353 013c 19       		.uleb128 0x19
+ 1354 013d 6E       		.uleb128 0x6e
+ 1355 013e 0E       		.uleb128 0xe
+ 1356 013f 03       		.uleb128 0x3
+ 1357 0140 0E       		.uleb128 0xe
+ 1358 0141 3A       		.uleb128 0x3a
+ 1359 0142 0B       		.uleb128 0xb
+ 1360 0143 3B       		.uleb128 0x3b
+ 1361 0144 0B       		.uleb128 0xb
+ 1362 0145 00       		.byte	0
+ 1363 0146 00       		.byte	0
+ 1364 0147 17       		.uleb128 0x17
+ 1365 0148 2E       		.uleb128 0x2e
+ 1366 0149 00       		.byte	0
+ 1367 014a 3F       		.uleb128 0x3f
+ 1368 014b 19       		.uleb128 0x19
+ 1369 014c 3C       		.uleb128 0x3c
+ 1370 014d 19       		.uleb128 0x19
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccyFJAeR.s 			page 29
+
+
+ 1371 014e 6E       		.uleb128 0x6e
+ 1372 014f 0E       		.uleb128 0xe
+ 1373 0150 03       		.uleb128 0x3
+ 1374 0151 0E       		.uleb128 0xe
+ 1375 0152 00       		.byte	0
+ 1376 0153 00       		.byte	0
+ 1377 0154 00       		.byte	0
+ 1378              		.section	.debug_loc,"",%progbits
+ 1379              	.Ldebug_loc0:
+ 1380              	.LLST0:
+ 1381 0000 0C000000 		.4byte	.LVL11
+ 1382 0004 48000000 		.4byte	.LVL22
+ 1383 0008 0200     		.2byte	0x2
+ 1384 000a 30       		.byte	0x30
+ 1385 000b 9F       		.byte	0x9f
+ 1386 000c 48000000 		.4byte	.LVL22
+ 1387 0010 D8000000 		.4byte	.LFE64
+ 1388 0014 0100     		.2byte	0x1
+ 1389 0016 54       		.byte	0x54
+ 1390 0017 00000000 		.4byte	0
+ 1391 001b 00000000 		.4byte	0
+ 1392              		.section	.debug_aranges,"",%progbits
+ 1393 0000 34000000 		.4byte	0x34
+ 1394 0004 0200     		.2byte	0x2
+ 1395 0006 00000000 		.4byte	.Ldebug_info0
+ 1396 000a 04       		.byte	0x4
+ 1397 000b 00       		.byte	0
+ 1398 000c 0000     		.2byte	0
+ 1399 000e 0000     		.2byte	0
+ 1400 0010 00000000 		.4byte	.LFB66
+ 1401 0014 68000000 		.4byte	.LFE66-.LFB66
+ 1402 0018 00000000 		.4byte	.LFB67
+ 1403 001c 78000000 		.4byte	.LFE67-.LFB67
+ 1404 0020 00000000 		.4byte	.LFB65
+ 1405 0024 78000000 		.4byte	.LFE65-.LFB65
+ 1406 0028 00000000 		.4byte	.LFB64
+ 1407 002c D8000000 		.4byte	.LFE64-.LFB64
+ 1408 0030 00000000 		.4byte	0
+ 1409 0034 00000000 		.4byte	0
+ 1410              		.section	.debug_ranges,"",%progbits
+ 1411              	.Ldebug_ranges0:
+ 1412 0000 00000000 		.4byte	.LFB66
+ 1413 0004 68000000 		.4byte	.LFE66
+ 1414 0008 00000000 		.4byte	.LFB67
+ 1415 000c 78000000 		.4byte	.LFE67
+ 1416 0010 00000000 		.4byte	.LFB65
+ 1417 0014 78000000 		.4byte	.LFE65
+ 1418 0018 00000000 		.4byte	.LFB64
+ 1419 001c D8000000 		.4byte	.LFE64
+ 1420 0020 00000000 		.4byte	0
+ 1421 0024 00000000 		.4byte	0
+ 1422              		.section	.debug_line,"",%progbits
+ 1423              	.Ldebug_line0:
+ 1424 0000 8D020000 		.section	.debug_str,"MS",%progbits,1
+ 1424      02001002 
+ 1424      00000201 
+ 1424      FB0E0D00 
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccyFJAeR.s 			page 30
+
+
+ 1424      01010101 
+ 1425              	.LASF55:
+ 1426 0000 4144435F 		.ascii	"ADC_SAR_Seq_1_StartConvert\000"
+ 1426      5341525F 
+ 1426      5365715F 
+ 1426      315F5374 
+ 1426      61727443 
+ 1427              	.LASF47:
+ 1428 001b 54696D65 		.ascii	"Timer_ReadStatusRegister\000"
+ 1428      725F5265 
+ 1428      61645374 
+ 1428      61747573 
+ 1428      52656769 
+ 1429              	.LASF46:
+ 1430 0034 4144435F 		.ascii	"ADC_SAR_Seq_1_CountsTo_mVolts\000"
+ 1430      5341525F 
+ 1430      5365715F 
+ 1430      315F436F 
+ 1430      756E7473 
+ 1431              	.LASF49:
+ 1432 0052 4144435F 		.ascii	"ADC_ISR_Enable\000"
+ 1432      4953525F 
+ 1432      456E6162 
+ 1432      6C6500
+ 1433              	.LASF2:
+ 1434 0061 73686F72 		.ascii	"short int\000"
+ 1434      7420696E 
+ 1434      7400
+ 1435              	.LASF17:
+ 1436 006b 73697A65 		.ascii	"sizetype\000"
+ 1436      74797065 
+ 1436      00
+ 1437              	.LASF64:
+ 1438 0074 6D61696E 		.ascii	"main\000"
+ 1438      00
+ 1439              	.LASF24:
+ 1440 0079 7472616E 		.ascii	"transmit_buffer\000"
+ 1440      736D6974 
+ 1440      5F627566 
+ 1440      66657200 
+ 1441              	.LASF62:
+ 1442 0089 433A5C55 		.ascii	"C:\\Users\\iamna\\Documents\\PSoC Creator\\DAQ-Pi-P"
+ 1442      73657273 
+ 1442      5C69616D 
+ 1442      6E615C44 
+ 1442      6F63756D 
+ 1443 00b7 69636F5C 		.ascii	"ico\\DAQ-Pi-Pico.cydsn\000"
+ 1443      4441512D 
+ 1443      50692D50 
+ 1443      69636F2E 
+ 1443      63796473 
+ 1444              	.LASF34:
+ 1445 00cd 61646343 		.ascii	"adcCount\000"
+ 1445      6F756E74 
+ 1445      00
+ 1446              	.LASF57:
+ 1447 00d6 54696D65 		.ascii	"Timer_ISR_StartEx\000"
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccyFJAeR.s 			page 31
+
+
+ 1447      725F4953 
+ 1447      525F5374 
+ 1447      61727445 
+ 1447      7800
+ 1448              	.LASF56:
+ 1449 00e8 4144435F 		.ascii	"ADC_ISR_StartEx\000"
+ 1449      4953525F 
+ 1449      53746172 
+ 1449      74457800 
+ 1450              	.LASF11:
+ 1451 00f8 75696E74 		.ascii	"uint8\000"
+ 1451      3800
+ 1452              	.LASF50:
+ 1453 00fe 55415254 		.ascii	"UART_1_Start\000"
+ 1453      5F315F53 
+ 1453      74617274 
+ 1453      00
+ 1454              	.LASF13:
+ 1455 010b 666C6F61 		.ascii	"float\000"
+ 1455      7400
+ 1456              	.LASF6:
+ 1457 0111 6C6F6E67 		.ascii	"long long int\000"
+ 1457      206C6F6E 
+ 1457      6720696E 
+ 1457      7400
+ 1458              	.LASF65:
+ 1459 011f 6D656D73 		.ascii	"memset\000"
+ 1459      657400
+ 1460              	.LASF52:
+ 1461 0126 54696D65 		.ascii	"Timer_Start\000"
+ 1461      725F5374 
+ 1461      61727400 
+ 1462              	.LASF4:
+ 1463 0132 6C6F6E67 		.ascii	"long int\000"
+ 1463      20696E74 
+ 1463      00
+ 1464              	.LASF39:
+ 1465 013b 61646343 		.ascii	"adcCount2\000"
+ 1465      6F756E74 
+ 1465      3200
+ 1466              	.LASF23:
+ 1467 0145 54696D65 		.ascii	"TimerInterruptHandler\000"
+ 1467      72496E74 
+ 1467      65727275 
+ 1467      70744861 
+ 1467      6E646C65 
+ 1468              	.LASF1:
+ 1469 015b 756E7369 		.ascii	"unsigned char\000"
+ 1469      676E6564 
+ 1469      20636861 
+ 1469      7200
+ 1470              	.LASF16:
+ 1471 0169 6C6F6E67 		.ascii	"long double\000"
+ 1471      20646F75 
+ 1471      626C6500 
+ 1472              	.LASF53:
+ 1473 0175 455A4932 		.ascii	"EZI2C_Start\000"
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccyFJAeR.s 			page 32
+
+
+ 1473      435F5374 
+ 1473      61727400 
+ 1474              	.LASF35:
+ 1475 0181 546F7461 		.ascii	"TotalADC1\000"
+ 1475      6C414443 
+ 1475      3100
+ 1476              	.LASF36:
+ 1477 018b 546F7461 		.ascii	"TotalADC2\000"
+ 1477      6C414443 
+ 1477      3200
+ 1478              	.LASF37:
+ 1479 0195 546F7461 		.ascii	"TotalADC3\000"
+ 1479      6C414443 
+ 1479      3300
+ 1480              	.LASF38:
+ 1481 019f 546F7461 		.ascii	"TotalADC4\000"
+ 1481      6C414443 
+ 1481      3400
+ 1482              	.LASF59:
+ 1483 01a9 73707269 		.ascii	"sprintf\000"
+ 1483      6E746600 
+ 1484              	.LASF0:
+ 1485 01b1 7369676E 		.ascii	"signed char\000"
+ 1485      65642063 
+ 1485      68617200 
+ 1486              	.LASF7:
+ 1487 01bd 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 1487      206C6F6E 
+ 1487      6720756E 
+ 1487      7369676E 
+ 1487      65642069 
+ 1488              	.LASF8:
+ 1489 01d4 756E7369 		.ascii	"unsigned int\000"
+ 1489      676E6564 
+ 1489      20696E74 
+ 1489      00
+ 1490              	.LASF45:
+ 1491 01e1 4144435F 		.ascii	"ADC_SAR_Seq_1_GetResult16\000"
+ 1491      5341525F 
+ 1491      5365715F 
+ 1491      315F4765 
+ 1491      74526573 
+ 1492              	.LASF25:
+ 1493 01fb 69326362 		.ascii	"i2cbuf\000"
+ 1493      756600
+ 1494              	.LASF54:
+ 1495 0202 455A4932 		.ascii	"EZI2C_SetBuffer1\000"
+ 1495      435F5365 
+ 1495      74427566 
+ 1495      66657231 
+ 1495      00
+ 1496              	.LASF3:
+ 1497 0213 73686F72 		.ascii	"short unsigned int\000"
+ 1497      7420756E 
+ 1497      7369676E 
+ 1497      65642069 
+ 1497      6E7400
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccyFJAeR.s 			page 33
+
+
+ 1498              	.LASF15:
+ 1499 0226 63686172 		.ascii	"char\000"
+ 1499      00
+ 1500              	.LASF10:
+ 1501 022b 696E7433 		.ascii	"int32_t\000"
+ 1501      325F7400 
+ 1502              	.LASF44:
+ 1503 0233 657A6932 		.ascii	"ezi2cBuffer\000"
+ 1503      63427566 
+ 1503      66657200 
+ 1504              	.LASF29:
+ 1505 023f 5F426F6F 		.ascii	"_Bool\000"
+ 1505      6C00
+ 1506              	.LASF12:
+ 1507 0245 75696E74 		.ascii	"uint32\000"
+ 1507      333200
+ 1508              	.LASF61:
+ 1509 024c 6D61696E 		.ascii	"main.c\000"
+ 1509      2E6300
+ 1510              	.LASF5:
+ 1511 0253 6C6F6E67 		.ascii	"long unsigned int\000"
+ 1511      20756E73 
+ 1511      69676E65 
+ 1511      6420696E 
+ 1511      7400
+ 1512              	.LASF14:
+ 1513 0265 646F7562 		.ascii	"double\000"
+ 1513      6C6500
+ 1514              	.LASF58:
+ 1515 026c 55415254 		.ascii	"UART_1_PutString\000"
+ 1515      5F315F50 
+ 1515      75745374 
+ 1515      72696E67 
+ 1515      00
+ 1516              	.LASF22:
+ 1517 027d 41444349 		.ascii	"ADCInterruptHandler\000"
+ 1517      6E746572 
+ 1517      72757074 
+ 1517      48616E64 
+ 1517      6C657200 
+ 1518              	.LASF26:
+ 1519 0291 636F756E 		.ascii	"count\000"
+ 1519      7400
+ 1520              	.LASF9:
+ 1521 0297 5F5F696E 		.ascii	"__int32_t\000"
+ 1521      7433325F 
+ 1521      7400
+ 1522              	.LASF28:
+ 1523 02a1 69734461 		.ascii	"isDataReady\000"
+ 1523      74615265 
+ 1523      61647900 
+ 1524              	.LASF30:
+ 1525 02ad 61646331 		.ascii	"adc1\000"
+ 1525      00
+ 1526              	.LASF31:
+ 1527 02b2 61646332 		.ascii	"adc2\000"
+ 1527      00
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccyFJAeR.s 			page 34
+
+
+ 1528              	.LASF32:
+ 1529 02b7 61646333 		.ascii	"adc3\000"
+ 1529      00
+ 1530              	.LASF33:
+ 1531 02bc 61646334 		.ascii	"adc4\000"
+ 1531      00
+ 1532              	.LASF40:
+ 1533 02c1 74656D70 		.ascii	"temp1\000"
+ 1533      3100
+ 1534              	.LASF41:
+ 1535 02c7 74656D70 		.ascii	"temp2\000"
+ 1535      3200
+ 1536              	.LASF42:
+ 1537 02cd 74656D70 		.ascii	"temp3\000"
+ 1537      3300
+ 1538              	.LASF43:
+ 1539 02d3 74656D70 		.ascii	"temp4\000"
+ 1539      3400
+ 1540              	.LASF63:
+ 1541 02d9 63616C63 		.ascii	"calculateTemp\000"
+ 1541      756C6174 
+ 1541      6554656D 
+ 1541      7000
+ 1542              	.LASF18:
+ 1543 02e7 64617461 		.ascii	"data0\000"
+ 1543      3000
+ 1544              	.LASF19:
+ 1545 02ed 64617461 		.ascii	"data1\000"
+ 1545      3100
+ 1546              	.LASF20:
+ 1547 02f3 64617461 		.ascii	"data2\000"
+ 1547      3200
+ 1548              	.LASF21:
+ 1549 02f9 64617461 		.ascii	"data3\000"
+ 1549      3300
+ 1550              	.LASF27:
+ 1551 02ff 49544D5F 		.ascii	"ITM_RxBuffer\000"
+ 1551      52784275 
+ 1551      66666572 
+ 1551      00
+ 1552              	.LASF60:
+ 1553 030c 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 1553      43313120 
+ 1553      352E342E 
+ 1553      31203230 
+ 1553      31363036 
+ 1554 033f 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m3 -mthumb -g -O"
+ 1554      20726576 
+ 1554      6973696F 
+ 1554      6E203233 
+ 1554      37373135 
+ 1555 0372 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 1555      66756E63 
+ 1555      74696F6E 
+ 1555      2D736563 
+ 1555      74696F6E 
+ 1556              	.LASF51:
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccyFJAeR.s 			page 35
+
+
+ 1557 039a 4144435F 		.ascii	"ADC_SAR_Seq_1_Start\000"
+ 1557      5341525F 
+ 1557      5365715F 
+ 1557      315F5374 
+ 1557      61727400 
+ 1558              	.LASF48:
+ 1559 03ae 4144435F 		.ascii	"ADC_ISR_Disable\000"
+ 1559      4953525F 
+ 1559      44697361 
+ 1559      626C6500 
+ 1560              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

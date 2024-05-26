@@ -1,0 +1,3138 @@
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccWzgev8.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"cymetadata.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.global	cy_metadata
+  20              		.global	cy_meta_flashprotect
+  21              		.global	cy_meta_wonvl
+  22              		.global	cy_meta_custnvl
+  23              		.global	cy_meta_configecc
+  24              		.section	.cyconfigecc,"a",%progbits
+  25              		.align	2
+  26              		.type	cy_meta_configecc, %object
+  27              		.size	cy_meta_configecc, 2500
+  28              	cy_meta_configecc:
+  29 0000 02       		.byte	2
+  30 0001 52       		.byte	82
+  31 0002 00       		.byte	0
+  32 0003 40       		.byte	64
+  33 0004 01       		.byte	1
+  34 0005 5B       		.byte	91
+  35 0006 00       		.byte	0
+  36 0007 40       		.byte	64
+  37 0008 02       		.byte	2
+  38 0009 64       		.byte	100
+  39 000a 00       		.byte	0
+  40 000b 40       		.byte	64
+  41 000c 03       		.byte	3
+  42 000d 65       		.byte	101
+  43 000e 00       		.byte	0
+  44 000f 40       		.byte	64
+  45 0010 20       		.byte	32
+  46 0011 00       		.byte	0
+  47 0012 01       		.byte	1
+  48 0013 40       		.byte	64
+  49 0014 2F       		.byte	47
+  50 0015 01       		.byte	1
+  51 0016 01       		.byte	1
+  52 0017 40       		.byte	64
+  53 0018 45       		.byte	69
+  54 0019 02       		.byte	2
+  55 001a 01       		.byte	1
+  56 001b 40       		.byte	64
+  57 001c 44       		.byte	68
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccWzgev8.s 			page 2
+
+
+  58 001d 03       		.byte	3
+  59 001e 01       		.byte	1
+  60 001f 40       		.byte	64
+  61 0020 2F       		.byte	47
+  62 0021 04       		.byte	4
+  63 0022 01       		.byte	1
+  64 0023 40       		.byte	64
+  65 0024 48       		.byte	72
+  66 0025 05       		.byte	5
+  67 0026 01       		.byte	1
+  68 0027 40       		.byte	64
+  69 0028 11       		.byte	17
+  70 0029 06       		.byte	6
+  71 002a 01       		.byte	1
+  72 002b 40       		.byte	64
+  73 002c 49       		.byte	73
+  74 002d 07       		.byte	7
+  75 002e 01       		.byte	1
+  76 002f 40       		.byte	64
+  77 0030 2B       		.byte	43
+  78 0031 08       		.byte	8
+  79 0032 01       		.byte	1
+  80 0033 40       		.byte	64
+  81 0034 33       		.byte	51
+  82 0035 09       		.byte	9
+  83 0036 01       		.byte	1
+  84 0037 40       		.byte	64
+  85 0038 03       		.byte	3
+  86 0039 0B       		.byte	11
+  87 003a 01       		.byte	1
+  88 003b 40       		.byte	64
+  89 003c 01       		.byte	1
+  90 003d 0D       		.byte	13
+  91 003e 01       		.byte	1
+  92 003f 40       		.byte	64
+  93 0040 01       		.byte	1
+  94 0041 0F       		.byte	15
+  95 0042 01       		.byte	1
+  96 0043 40       		.byte	64
+  97 0044 36       		.byte	54
+  98 0045 14       		.byte	20
+  99 0046 01       		.byte	1
+ 100 0047 40       		.byte	64
+ 101 0048 45       		.byte	69
+ 102 0049 15       		.byte	21
+ 103 004a 01       		.byte	1
+ 104 004b 40       		.byte	64
+ 105 004c 2A       		.byte	42
+ 106 004d 16       		.byte	22
+ 107 004e 01       		.byte	1
+ 108 004f 40       		.byte	64
+ 109 0050 4B       		.byte	75
+ 110 0051 17       		.byte	23
+ 111 0052 01       		.byte	1
+ 112 0053 40       		.byte	64
+ 113 0054 38       		.byte	56
+ 114 0055 18       		.byte	24
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccWzgev8.s 			page 3
+
+
+ 115 0056 01       		.byte	1
+ 116 0057 40       		.byte	64
+ 117 0058 4C       		.byte	76
+ 118 0059 19       		.byte	25
+ 119 005a 01       		.byte	1
+ 120 005b 40       		.byte	64
+ 121 005c 31       		.byte	49
+ 122 005d 1A       		.byte	26
+ 123 005e 01       		.byte	1
+ 124 005f 40       		.byte	64
+ 125 0060 48       		.byte	72
+ 126 0061 1B       		.byte	27
+ 127 0062 01       		.byte	1
+ 128 0063 40       		.byte	64
+ 129 0064 0C       		.byte	12
+ 130 0065 40       		.byte	64
+ 131 0066 01       		.byte	1
+ 132 0067 40       		.byte	64
+ 133 0068 0B       		.byte	11
+ 134 0069 41       		.byte	65
+ 135 006a 01       		.byte	1
+ 136 006b 40       		.byte	64
+ 137 006c 0B       		.byte	11
+ 138 006d 42       		.byte	66
+ 139 006e 01       		.byte	1
+ 140 006f 40       		.byte	64
+ 141 0070 07       		.byte	7
+ 142 0071 43       		.byte	67
+ 143 0072 01       		.byte	1
+ 144 0073 40       		.byte	64
+ 145 0074 05       		.byte	5
+ 146 0075 46       		.byte	70
+ 147 0076 01       		.byte	1
+ 148 0077 40       		.byte	64
+ 149 0078 05       		.byte	5
+ 150 0079 47       		.byte	71
+ 151 007a 01       		.byte	1
+ 152 007b 40       		.byte	64
+ 153 007c 0D       		.byte	13
+ 154 007d 48       		.byte	72
+ 155 007e 01       		.byte	1
+ 156 007f 40       		.byte	64
+ 157 0080 12       		.byte	18
+ 158 0081 49       		.byte	73
+ 159 0082 01       		.byte	1
+ 160 0083 40       		.byte	64
+ 161 0084 0B       		.byte	11
+ 162 0085 4C       		.byte	76
+ 163 0086 01       		.byte	1
+ 164 0087 40       		.byte	64
+ 165 0088 11       		.byte	17
+ 166 0089 4D       		.byte	77
+ 167 008a 01       		.byte	1
+ 168 008b 40       		.byte	64
+ 169 008c 0D       		.byte	13
+ 170 008d 50       		.byte	80
+ 171 008e 01       		.byte	1
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccWzgev8.s 			page 4
+
+
+ 172 008f 40       		.byte	64
+ 173 0090 03       		.byte	3
+ 174 0091 51       		.byte	81
+ 175 0092 01       		.byte	1
+ 176 0093 40       		.byte	64
+ 177 0094 00       		.byte	0
+ 178 0095 0C       		.byte	12
+ 179 0096 01       		.byte	1
+ 180 0097 0A       		.byte	10
+ 181 0098 27       		.byte	39
+ 182 0099 84       		.byte	-124
+ 183 009a 80       		.byte	-128
+ 184 009b 0F       		.byte	15
+ 185 009c 87       		.byte	-121
+ 186 009d 03       		.byte	3
+ 187 009e 85       		.byte	-123
+ 188 009f 0D       		.byte	13
+ 189 00a0 87       		.byte	-121
+ 190 00a1 38       		.byte	56
+ 191 00a2 8B       		.byte	-117
+ 192 00a3 72       		.byte	114
+ 193 00a4 03       		.byte	3
+ 194 00a5 01       		.byte	1
+ 195 00a6 05       		.byte	5
+ 196 00a7 01       		.byte	1
+ 197 00a8 17       		.byte	23
+ 198 00a9 01       		.byte	1
+ 199 00aa 19       		.byte	25
+ 200 00ab 01       		.byte	1
+ 201 00ac 1F       		.byte	31
+ 202 00ad 01       		.byte	1
+ 203 00ae 37       		.byte	55
+ 204 00af 01       		.byte	1
+ 205 00b0 3F       		.byte	63
+ 206 00b1 40       		.byte	64
+ 207 00b2 40       		.byte	64
+ 208 00b3 34       		.byte	52
+ 209 00b4 41       		.byte	65
+ 210 00b5 02       		.byte	2
+ 211 00b6 45       		.byte	69
+ 212 00b7 E0       		.byte	-32
+ 213 00b8 46       		.byte	70
+ 214 00b9 0B       		.byte	11
+ 215 00ba 47       		.byte	71
+ 216 00bb 0C       		.byte	12
+ 217 00bc 48       		.byte	72
+ 218 00bd 16       		.byte	22
+ 219 00be 49       		.byte	73
+ 220 00bf FF       		.byte	-1
+ 221 00c0 4A       		.byte	74
+ 222 00c1 FF       		.byte	-1
+ 223 00c2 4B       		.byte	75
+ 224 00c3 FF       		.byte	-1
+ 225 00c4 4E       		.byte	78
+ 226 00c5 F0       		.byte	-16
+ 227 00c6 4F       		.byte	79
+ 228 00c7 44       		.byte	68
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccWzgev8.s 			page 5
+
+
+ 229 00c8 50       		.byte	80
+ 230 00c9 0C       		.byte	12
+ 231 00ca 54       		.byte	84
+ 232 00cb 01       		.byte	1
+ 233 00cc 58       		.byte	88
+ 234 00cd 04       		.byte	4
+ 235 00ce 59       		.byte	89
+ 236 00cf 04       		.byte	4
+ 237 00d0 5A       		.byte	90
+ 238 00d1 04       		.byte	4
+ 239 00d2 5B       		.byte	91
+ 240 00d3 04       		.byte	4
+ 241 00d4 5D       		.byte	93
+ 242 00d5 11       		.byte	17
+ 243 00d6 5F       		.byte	95
+ 244 00d7 01       		.byte	1
+ 245 00d8 66       		.byte	102
+ 246 00d9 C0       		.byte	-64
+ 247 00da 6A       		.byte	106
+ 248 00db 40       		.byte	64
+ 249 00dc 6B       		.byte	107
+ 250 00dd 02       		.byte	2
+ 251 00de D8       		.byte	-40
+ 252 00df 04       		.byte	4
+ 253 00e0 D9       		.byte	-39
+ 254 00e1 04       		.byte	4
+ 255 00e2 DF       		.byte	-33
+ 256 00e3 01       		.byte	1
+ 257 00e4 00       		.byte	0
+ 258 00e5 48       		.byte	72
+ 259 00e6 01       		.byte	1
+ 260 00e7 08       		.byte	8
+ 261 00e8 03       		.byte	3
+ 262 00e9 10       		.byte	16
+ 263 00ea 04       		.byte	4
+ 264 00eb 40       		.byte	64
+ 265 00ec 07       		.byte	7
+ 266 00ed 10       		.byte	16
+ 267 00ee 08       		.byte	8
+ 268 00ef 01       		.byte	1
+ 269 00f0 0A       		.byte	10
+ 270 00f1 04       		.byte	4
+ 271 00f2 0B       		.byte	11
+ 272 00f3 10       		.byte	16
+ 273 00f4 0C       		.byte	12
+ 274 00f5 01       		.byte	1
+ 275 00f6 0E       		.byte	14
+ 276 00f7 04       		.byte	4
+ 277 00f8 0F       		.byte	15
+ 278 00f9 90       		.byte	-112
+ 279 00fa 11       		.byte	17
+ 280 00fb 10       		.byte	16
+ 281 00fc 12       		.byte	18
+ 282 00fd 40       		.byte	64
+ 283 00fe 15       		.byte	21
+ 284 00ff 30       		.byte	48
+ 285 0100 16       		.byte	22
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccWzgev8.s 			page 6
+
+
+ 286 0101 80       		.byte	-128
+ 287 0102 22       		.byte	34
+ 288 0103 40       		.byte	64
+ 289 0104 29       		.byte	41
+ 290 0105 08       		.byte	8
+ 291 0106 2A       		.byte	42
+ 292 0107 C0       		.byte	-64
+ 293 0108 2B       		.byte	43
+ 294 0109 46       		.byte	70
+ 295 010a 2D       		.byte	45
+ 296 010b 18       		.byte	24
+ 297 010c 2F       		.byte	47
+ 298 010d 02       		.byte	2
+ 299 010e 30       		.byte	48
+ 300 010f 48       		.byte	72
+ 301 0110 31       		.byte	49
+ 302 0111 20       		.byte	32
+ 303 0112 33       		.byte	51
+ 304 0113 01       		.byte	1
+ 305 0114 34       		.byte	52
+ 306 0115 01       		.byte	1
+ 307 0116 38       		.byte	56
+ 308 0117 48       		.byte	72
+ 309 0118 39       		.byte	57
+ 310 0119 0A       		.byte	10
+ 311 011a 3B       		.byte	59
+ 312 011b 10       		.byte	16
+ 313 011c 3C       		.byte	60
+ 314 011d 40       		.byte	64
+ 315 011e 3E       		.byte	62
+ 316 011f 04       		.byte	4
+ 317 0120 3F       		.byte	63
+ 318 0121 18       		.byte	24
+ 319 0122 41       		.byte	65
+ 320 0123 25       		.byte	37
+ 321 0124 49       		.byte	73
+ 322 0125 02       		.byte	2
+ 323 0126 4A       		.byte	74
+ 324 0127 80       		.byte	-128
+ 325 0128 50       		.byte	80
+ 326 0129 48       		.byte	72
+ 327 012a 59       		.byte	89
+ 328 012b 06       		.byte	6
+ 329 012c 5A       		.byte	90
+ 330 012d 80       		.byte	-128
+ 331 012e 5B       		.byte	91
+ 332 012f 20       		.byte	32
+ 333 0130 C0       		.byte	-64
+ 334 0131 A5       		.byte	-91
+ 335 0132 C2       		.byte	-62
+ 336 0133 7E       		.byte	126
+ 337 0134 C4       		.byte	-60
+ 338 0135 5A       		.byte	90
+ 339 0136 CA       		.byte	-54
+ 340 0137 7F       		.byte	127
+ 341 0138 CC       		.byte	-52
+ 342 0139 8F       		.byte	-113
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccWzgev8.s 			page 7
+
+
+ 343 013a CE       		.byte	-50
+ 344 013b 7F       		.byte	127
+ 345 013c D0       		.byte	-48
+ 346 013d 07       		.byte	7
+ 347 013e D6       		.byte	-42
+ 348 013f 0F       		.byte	15
+ 349 0140 E4       		.byte	-28
+ 350 0141 01       		.byte	1
+ 351 0142 05       		.byte	5
+ 352 0143 03       		.byte	3
+ 353 0144 09       		.byte	9
+ 354 0145 03       		.byte	3
+ 355 0146 0A       		.byte	10
+ 356 0147 03       		.byte	3
+ 357 0148 0C       		.byte	12
+ 358 0149 03       		.byte	3
+ 359 014a 0D       		.byte	13
+ 360 014b 03       		.byte	3
+ 361 014c 10       		.byte	16
+ 362 014d 03       		.byte	3
+ 363 014e 11       		.byte	17
+ 364 014f 01       		.byte	1
+ 365 0150 13       		.byte	19
+ 366 0151 02       		.byte	2
+ 367 0152 14       		.byte	20
+ 368 0153 03       		.byte	3
+ 369 0154 18       		.byte	24
+ 370 0155 03       		.byte	3
+ 371 0156 20       		.byte	32
+ 372 0157 02       		.byte	2
+ 373 0158 21       		.byte	33
+ 374 0159 03       		.byte	3
+ 375 015a 22       		.byte	34
+ 376 015b 01       		.byte	1
+ 377 015c 27       		.byte	39
+ 378 015d 03       		.byte	3
+ 379 015e 2C       		.byte	44
+ 380 015f 01       		.byte	1
+ 381 0160 2D       		.byte	45
+ 382 0161 01       		.byte	1
+ 383 0162 2E       		.byte	46
+ 384 0163 02       		.byte	2
+ 385 0164 2F       		.byte	47
+ 386 0165 02       		.byte	2
+ 387 0166 30       		.byte	48
+ 388 0167 01       		.byte	1
+ 389 0168 31       		.byte	49
+ 390 0169 01       		.byte	1
+ 391 016a 36       		.byte	54
+ 392 016b 02       		.byte	2
+ 393 016c 37       		.byte	55
+ 394 016d 02       		.byte	2
+ 395 016e 58       		.byte	88
+ 396 016f 04       		.byte	4
+ 397 0170 59       		.byte	89
+ 398 0171 04       		.byte	4
+ 399 0172 5F       		.byte	95
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccWzgev8.s 			page 8
+
+
+ 400 0173 01       		.byte	1
+ 401 0174 83       		.byte	-125
+ 402 0175 01       		.byte	1
+ 403 0176 85       		.byte	-123
+ 404 0177 03       		.byte	3
+ 405 0178 8A       		.byte	-118
+ 406 0179 08       		.byte	8
+ 407 017a 8B       		.byte	-117
+ 408 017b 04       		.byte	4
+ 409 017c 94       		.byte	-108
+ 410 017d 0A       		.byte	10
+ 411 017e 95       		.byte	-107
+ 412 017f 02       		.byte	2
+ 413 0180 96       		.byte	-106
+ 414 0181 04       		.byte	4
+ 415 0182 98       		.byte	-104
+ 416 0183 03       		.byte	3
+ 417 0184 99       		.byte	-103
+ 418 0185 03       		.byte	3
+ 419 0186 9A       		.byte	-102
+ 420 0187 04       		.byte	4
+ 421 0188 9E       		.byte	-98
+ 422 0189 05       		.byte	5
+ 423 018a A0       		.byte	-96
+ 424 018b 10       		.byte	16
+ 425 018c A4       		.byte	-92
+ 426 018d 03       		.byte	3
+ 427 018e A6       		.byte	-90
+ 428 018f 0C       		.byte	12
+ 429 0190 A8       		.byte	-88
+ 430 0191 03       		.byte	3
+ 431 0192 AA       		.byte	-86
+ 432 0193 04       		.byte	4
+ 433 0194 B2       		.byte	-78
+ 434 0195 10       		.byte	16
+ 435 0196 B3       		.byte	-77
+ 436 0197 04       		.byte	4
+ 437 0198 B4       		.byte	-76
+ 438 0199 0F       		.byte	15
+ 439 019a B5       		.byte	-75
+ 440 019b 03       		.byte	3
+ 441 019c B9       		.byte	-71
+ 442 019d 20       		.byte	32
+ 443 019e BA       		.byte	-70
+ 444 019f 20       		.byte	32
+ 445 01a0 BE       		.byte	-66
+ 446 01a1 04       		.byte	4
+ 447 01a2 BF       		.byte	-65
+ 448 01a3 10       		.byte	16
+ 449 01a4 C0       		.byte	-64
+ 450 01a5 02       		.byte	2
+ 451 01a6 C5       		.byte	-59
+ 452 01a7 04       		.byte	4
+ 453 01a8 C9       		.byte	-55
+ 454 01a9 FF       		.byte	-1
+ 455 01aa CA       		.byte	-54
+ 456 01ab 07       		.byte	7
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccWzgev8.s 			page 9
+
+
+ 457 01ac CB       		.byte	-53
+ 458 01ad FF       		.byte	-1
+ 459 01ae CC       		.byte	-52
+ 460 01af 40       		.byte	64
+ 461 01b0 CD       		.byte	-51
+ 462 01b1 20       		.byte	32
+ 463 01b2 CE       		.byte	-50
+ 464 01b3 F0       		.byte	-16
+ 465 01b4 CF       		.byte	-49
+ 466 01b5 05       		.byte	5
+ 467 01b6 D0       		.byte	-48
+ 468 01b7 08       		.byte	8
+ 469 01b8 D8       		.byte	-40
+ 470 01b9 04       		.byte	4
+ 471 01ba D9       		.byte	-39
+ 472 01bb 04       		.byte	4
+ 473 01bc DA       		.byte	-38
+ 474 01bd 04       		.byte	4
+ 475 01be DC       		.byte	-36
+ 476 01bf 01       		.byte	1
+ 477 01c0 DD       		.byte	-35
+ 478 01c1 01       		.byte	1
+ 479 01c2 DF       		.byte	-33
+ 480 01c3 01       		.byte	1
+ 481 01c4 E0       		.byte	-32
+ 482 01c5 40       		.byte	64
+ 483 01c6 E1       		.byte	-31
+ 484 01c7 A8       		.byte	-88
+ 485 01c8 E2       		.byte	-30
+ 486 01c9 40       		.byte	64
+ 487 01ca E3       		.byte	-29
+ 488 01cb 20       		.byte	32
+ 489 01cc 03       		.byte	3
+ 490 01cd 08       		.byte	8
+ 491 01ce 04       		.byte	4
+ 492 01cf 40       		.byte	64
+ 493 01d0 05       		.byte	5
+ 494 01d1 10       		.byte	16
+ 495 01d2 06       		.byte	6
+ 496 01d3 08       		.byte	8
+ 497 01d4 08       		.byte	8
+ 498 01d5 04       		.byte	4
+ 499 01d6 09       		.byte	9
+ 500 01d7 20       		.byte	32
+ 501 01d8 0B       		.byte	11
+ 502 01d9 01       		.byte	1
+ 503 01da 0E       		.byte	14
+ 504 01db 04       		.byte	4
+ 505 01dc 0F       		.byte	15
+ 506 01dd 90       		.byte	-112
+ 507 01de 10       		.byte	16
+ 508 01df 08       		.byte	8
+ 509 01e0 12       		.byte	18
+ 510 01e1 80       		.byte	-128
+ 511 01e2 13       		.byte	19
+ 512 01e3 04       		.byte	4
+ 513 01e4 14       		.byte	20
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccWzgev8.s 			page 10
+
+
+ 514 01e5 01       		.byte	1
+ 515 01e6 16       		.byte	22
+ 516 01e7 80       		.byte	-128
+ 517 01e8 18       		.byte	24
+ 518 01e9 08       		.byte	8
+ 519 01ea 19       		.byte	25
+ 520 01eb 04       		.byte	4
+ 521 01ec 1C       		.byte	28
+ 522 01ed 80       		.byte	-128
+ 523 01ee 1F       		.byte	31
+ 524 01ef 40       		.byte	64
+ 525 01f0 20       		.byte	32
+ 526 01f1 04       		.byte	4
+ 527 01f2 21       		.byte	33
+ 528 01f3 08       		.byte	8
+ 529 01f4 23       		.byte	35
+ 530 01f5 10       		.byte	16
+ 531 01f6 25       		.byte	37
+ 532 01f7 40       		.byte	64
+ 533 01f8 27       		.byte	39
+ 534 01f9 40       		.byte	64
+ 535 01fa 28       		.byte	40
+ 536 01fb 20       		.byte	32
+ 537 01fc 2A       		.byte	42
+ 538 01fd 80       		.byte	-128
+ 539 01fe 2B       		.byte	43
+ 540 01ff C6       		.byte	-58
+ 541 0200 2E       		.byte	46
+ 542 0201 08       		.byte	8
+ 543 0202 2F       		.byte	47
+ 544 0203 82       		.byte	-126
+ 545 0204 30       		.byte	48
+ 546 0205 05       		.byte	5
+ 547 0206 31       		.byte	49
+ 548 0207 20       		.byte	32
+ 549 0208 32       		.byte	50
+ 550 0209 44       		.byte	68
+ 551 020a 33       		.byte	51
+ 552 020b 01       		.byte	1
+ 553 020c 37       		.byte	55
+ 554 020d 01       		.byte	1
+ 555 020e 38       		.byte	56
+ 556 020f 48       		.byte	72
+ 557 0210 39       		.byte	57
+ 558 0211 02       		.byte	2
+ 559 0212 3B       		.byte	59
+ 560 0213 25       		.byte	37
+ 561 0214 3C       		.byte	60
+ 562 0215 40       		.byte	64
+ 563 0216 3E       		.byte	62
+ 564 0217 04       		.byte	4
+ 565 0218 3F       		.byte	63
+ 566 0219 18       		.byte	24
+ 567 021a 40       		.byte	64
+ 568 021b 24       		.byte	36
+ 569 021c 41       		.byte	65
+ 570 021d 08       		.byte	8
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccWzgev8.s 			page 11
+
+
+ 571 021e 49       		.byte	73
+ 572 021f 08       		.byte	8
+ 573 0220 4B       		.byte	75
+ 574 0221 01       		.byte	1
+ 575 0222 82       		.byte	-126
+ 576 0223 48       		.byte	72
+ 577 0224 90       		.byte	-112
+ 578 0225 80       		.byte	-128
+ 579 0226 94       		.byte	-108
+ 580 0227 48       		.byte	72
+ 581 0228 95       		.byte	-107
+ 582 0229 02       		.byte	2
+ 583 022a 96       		.byte	-106
+ 584 022b 04       		.byte	4
+ 585 022c 97       		.byte	-105
+ 586 022d 10       		.byte	16
+ 587 022e 9C       		.byte	-100
+ 588 022f 40       		.byte	64
+ 589 0230 9D       		.byte	-99
+ 590 0231 04       		.byte	4
+ 591 0232 9F       		.byte	-97
+ 592 0233 01       		.byte	1
+ 593 0234 A0       		.byte	-96
+ 594 0235 08       		.byte	8
+ 595 0236 A2       		.byte	-94
+ 596 0237 80       		.byte	-128
+ 597 0238 A4       		.byte	-92
+ 598 0239 04       		.byte	4
+ 599 023a A5       		.byte	-91
+ 600 023b 20       		.byte	32
+ 601 023c A7       		.byte	-89
+ 602 023d 42       		.byte	66
+ 603 023e A8       		.byte	-88
+ 604 023f 08       		.byte	8
+ 605 0240 AB       		.byte	-85
+ 606 0241 20       		.byte	32
+ 607 0242 AD       		.byte	-83
+ 608 0243 10       		.byte	16
+ 609 0244 AF       		.byte	-81
+ 610 0245 01       		.byte	1
+ 611 0246 C0       		.byte	-64
+ 612 0247 C2       		.byte	-62
+ 613 0248 C2       		.byte	-62
+ 614 0249 77       		.byte	119
+ 615 024a C4       		.byte	-60
+ 616 024b 9E       		.byte	-98
+ 617 024c CA       		.byte	-54
+ 618 024d DF       		.byte	-33
+ 619 024e CC       		.byte	-52
+ 620 024f 8F       		.byte	-113
+ 621 0250 CE       		.byte	-50
+ 622 0251 7F       		.byte	127
+ 623 0252 D0       		.byte	-48
+ 624 0253 04       		.byte	4
+ 625 0254 05       		.byte	5
+ 626 0255 10       		.byte	16
+ 627 0256 06       		.byte	6
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccWzgev8.s 			page 12
+
+
+ 628 0257 08       		.byte	8
+ 629 0258 07       		.byte	7
+ 630 0259 AC       		.byte	-84
+ 631 025a 09       		.byte	9
+ 632 025b DC       		.byte	-36
+ 633 025c 0A       		.byte	10
+ 634 025d 0C       		.byte	12
+ 635 025e 0B       		.byte	11
+ 636 025f 22       		.byte	34
+ 637 0260 0C       		.byte	12
+ 638 0261 10       		.byte	16
+ 639 0262 0D       		.byte	13
+ 640 0263 14       		.byte	20
+ 641 0264 12       		.byte	18
+ 642 0265 80       		.byte	-128
+ 643 0266 14       		.byte	20
+ 644 0267 10       		.byte	16
+ 645 0268 15       		.byte	21
+ 646 0269 09       		.byte	9
+ 647 026a 17       		.byte	23
+ 648 026b D0       		.byte	-48
+ 649 026c 18       		.byte	24
+ 650 026d 21       		.byte	33
+ 651 026e 19       		.byte	25
+ 652 026f 0C       		.byte	12
+ 653 0270 1A       		.byte	26
+ 654 0271 0E       		.byte	14
+ 655 0272 1B       		.byte	27
+ 656 0273 71       		.byte	113
+ 657 0274 1E       		.byte	30
+ 658 0275 80       		.byte	-128
+ 659 0276 1F       		.byte	31
+ 660 0277 03       		.byte	3
+ 661 0278 20       		.byte	32
+ 662 0279 40       		.byte	64
+ 663 027a 22       		.byte	34
+ 664 027b 03       		.byte	3
+ 665 027c 24       		.byte	36
+ 666 027d 21       		.byte	33
+ 667 027e 25       		.byte	37
+ 668 027f 10       		.byte	16
+ 669 0280 26       		.byte	38
+ 670 0281 06       		.byte	6
+ 671 0282 27       		.byte	39
+ 672 0283 40       		.byte	64
+ 673 0284 28       		.byte	40
+ 674 0285 0C       		.byte	12
+ 675 0286 2A       		.byte	42
+ 676 0287 23       		.byte	35
+ 677 0288 2F       		.byte	47
+ 678 0289 20       		.byte	32
+ 679 028a 30       		.byte	48
+ 680 028b 80       		.byte	-128
+ 681 028c 32       		.byte	50
+ 682 028d 60       		.byte	96
+ 683 028e 34       		.byte	52
+ 684 028f 0F       		.byte	15
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccWzgev8.s 			page 13
+
+
+ 685 0290 35       		.byte	53
+ 686 0291 E0       		.byte	-32
+ 687 0292 36       		.byte	54
+ 688 0293 10       		.byte	16
+ 689 0294 37       		.byte	55
+ 690 0295 1F       		.byte	31
+ 691 0296 38       		.byte	56
+ 692 0297 88       		.byte	-120
+ 693 0298 3A       		.byte	58
+ 694 0299 20       		.byte	32
+ 695 029a 3B       		.byte	59
+ 696 029b 20       		.byte	32
+ 697 029c 3E       		.byte	62
+ 698 029d 41       		.byte	65
+ 699 029e 58       		.byte	88
+ 700 029f 04       		.byte	4
+ 701 02a0 59       		.byte	89
+ 702 02a1 04       		.byte	4
+ 703 02a2 5C       		.byte	92
+ 704 02a3 11       		.byte	17
+ 705 02a4 5F       		.byte	95
+ 706 02a5 01       		.byte	1
+ 707 02a6 D6       		.byte	-42
+ 708 02a7 08       		.byte	8
+ 709 02a8 D8       		.byte	-40
+ 710 02a9 04       		.byte	4
+ 711 02aa D9       		.byte	-39
+ 712 02ab 04       		.byte	4
+ 713 02ac DB       		.byte	-37
+ 714 02ad 04       		.byte	4
+ 715 02ae DD       		.byte	-35
+ 716 02af 90       		.byte	-112
+ 717 02b0 DF       		.byte	-33
+ 718 02b1 01       		.byte	1
+ 719 02b2 01       		.byte	1
+ 720 02b3 08       		.byte	8
+ 721 02b4 02       		.byte	2
+ 722 02b5 02       		.byte	2
+ 723 02b6 03       		.byte	3
+ 724 02b7 08       		.byte	8
+ 725 02b8 04       		.byte	4
+ 726 02b9 40       		.byte	64
+ 727 02ba 05       		.byte	5
+ 728 02bb 10       		.byte	16
+ 729 02bc 07       		.byte	7
+ 730 02bd 20       		.byte	32
+ 731 02be 08       		.byte	8
+ 732 02bf 8A       		.byte	-118
+ 733 02c0 09       		.byte	9
+ 734 02c1 20       		.byte	32
+ 735 02c2 0E       		.byte	14
+ 736 02c3 04       		.byte	4
+ 737 02c4 0F       		.byte	15
+ 738 02c5 10       		.byte	16
+ 739 02c6 11       		.byte	17
+ 740 02c7 10       		.byte	16
+ 741 02c8 12       		.byte	18
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccWzgev8.s 			page 14
+
+
+ 742 02c9 40       		.byte	64
+ 743 02ca 13       		.byte	19
+ 744 02cb 05       		.byte	5
+ 745 02cc 16       		.byte	22
+ 746 02cd 82       		.byte	-126
+ 747 02ce 19       		.byte	25
+ 748 02cf 40       		.byte	64
+ 749 02d0 1A       		.byte	26
+ 750 02d1 08       		.byte	8
+ 751 02d2 1B       		.byte	27
+ 752 02d3 09       		.byte	9
+ 753 02d4 21       		.byte	33
+ 754 02d5 A0       		.byte	-96
+ 755 02d6 29       		.byte	41
+ 756 02d7 08       		.byte	8
+ 757 02d8 2A       		.byte	42
+ 758 02d9 42       		.byte	66
+ 759 02da 2B       		.byte	43
+ 760 02db 40       		.byte	64
+ 761 02dc 2F       		.byte	47
+ 762 02dd 02       		.byte	2
+ 763 02de 31       		.byte	49
+ 764 02df A0       		.byte	-96
+ 765 02e0 33       		.byte	51
+ 766 02e1 08       		.byte	8
+ 767 02e2 35       		.byte	53
+ 768 02e3 10       		.byte	16
+ 769 02e4 37       		.byte	55
+ 770 02e5 01       		.byte	1
+ 771 02e6 38       		.byte	56
+ 772 02e7 80       		.byte	-128
+ 773 02e8 39       		.byte	57
+ 774 02e9 10       		.byte	16
+ 775 02ea 3B       		.byte	59
+ 776 02eb 04       		.byte	4
+ 777 02ec 3C       		.byte	60
+ 778 02ed 40       		.byte	64
+ 779 02ee 3E       		.byte	62
+ 780 02ef 06       		.byte	6
+ 781 02f0 3F       		.byte	63
+ 782 02f1 10       		.byte	16
+ 783 02f2 48       		.byte	72
+ 784 02f3 04       		.byte	4
+ 785 02f4 49       		.byte	73
+ 786 02f5 10       		.byte	16
+ 787 02f6 4D       		.byte	77
+ 788 02f7 10       		.byte	16
+ 789 02f8 4E       		.byte	78
+ 790 02f9 04       		.byte	4
+ 791 02fa 5D       		.byte	93
+ 792 02fb 20       		.byte	32
+ 793 02fc 5E       		.byte	94
+ 794 02fd 80       		.byte	-128
+ 795 02fe 64       		.byte	100
+ 796 02ff 01       		.byte	1
+ 797 0300 67       		.byte	103
+ 798 0301 0A       		.byte	10
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccWzgev8.s 			page 15
+
+
+ 799 0302 80       		.byte	-128
+ 800 0303 08       		.byte	8
+ 801 0304 85       		.byte	-123
+ 802 0305 80       		.byte	-128
+ 803 0306 90       		.byte	-112
+ 804 0307 80       		.byte	-128
+ 805 0308 93       		.byte	-109
+ 806 0309 15       		.byte	21
+ 807 030a 94       		.byte	-108
+ 808 030b 40       		.byte	64
+ 809 030c 96       		.byte	-106
+ 810 030d 0C       		.byte	12
+ 811 030e 97       		.byte	-105
+ 812 030f 20       		.byte	32
+ 813 0310 99       		.byte	-103
+ 814 0311 08       		.byte	8
+ 815 0312 9A       		.byte	-102
+ 816 0313 80       		.byte	-128
+ 817 0314 9D       		.byte	-99
+ 818 0315 10       		.byte	16
+ 819 0316 9F       		.byte	-97
+ 820 0317 01       		.byte	1
+ 821 0318 A1       		.byte	-95
+ 822 0319 08       		.byte	8
+ 823 031a A4       		.byte	-92
+ 824 031b 04       		.byte	4
+ 825 031c A5       		.byte	-91
+ 826 031d 20       		.byte	32
+ 827 031e A7       		.byte	-89
+ 828 031f 4A       		.byte	74
+ 829 0320 AB       		.byte	-85
+ 830 0321 40       		.byte	64
+ 831 0322 AC       		.byte	-84
+ 832 0323 40       		.byte	64
+ 833 0324 AD       		.byte	-83
+ 834 0325 40       		.byte	64
+ 835 0326 AE       		.byte	-82
+ 836 0327 04       		.byte	4
+ 837 0328 B0       		.byte	-80
+ 838 0329 40       		.byte	64
+ 839 032a B3       		.byte	-77
+ 840 032b 40       		.byte	64
+ 841 032c C0       		.byte	-64
+ 842 032d E7       		.byte	-25
+ 843 032e C2       		.byte	-62
+ 844 032f 6F       		.byte	111
+ 845 0330 C4       		.byte	-60
+ 846 0331 9E       		.byte	-98
+ 847 0332 CA       		.byte	-54
+ 848 0333 1A       		.byte	26
+ 849 0334 CC       		.byte	-52
+ 850 0335 AE       		.byte	-82
+ 851 0336 CE       		.byte	-50
+ 852 0337 FE       		.byte	-2
+ 853 0338 D6       		.byte	-42
+ 854 0339 30       		.byte	48
+ 855 033a D8       		.byte	-40
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccWzgev8.s 			page 16
+
+
+ 856 033b 30       		.byte	48
+ 857 033c E4       		.byte	-28
+ 858 033d 02       		.byte	2
+ 859 033e E6       		.byte	-26
+ 860 033f 04       		.byte	4
+ 861 0340 EE       		.byte	-18
+ 862 0341 A0       		.byte	-96
+ 863 0342 58       		.byte	88
+ 864 0343 04       		.byte	4
+ 865 0344 59       		.byte	89
+ 866 0345 04       		.byte	4
+ 867 0346 5F       		.byte	95
+ 868 0347 01       		.byte	1
+ 869 0348 86       		.byte	-122
+ 870 0349 01       		.byte	1
+ 871 034a 8B       		.byte	-117
+ 872 034b 01       		.byte	1
+ 873 034c 8E       		.byte	-114
+ 874 034d 02       		.byte	2
+ 875 034e 8F       		.byte	-113
+ 876 034f 02       		.byte	2
+ 877 0350 B3       		.byte	-77
+ 878 0351 01       		.byte	1
+ 879 0352 B4       		.byte	-76
+ 880 0353 02       		.byte	2
+ 881 0354 B6       		.byte	-74
+ 882 0355 01       		.byte	1
+ 883 0356 B7       		.byte	-73
+ 884 0357 02       		.byte	2
+ 885 0358 D6       		.byte	-42
+ 886 0359 02       		.byte	2
+ 887 035a D7       		.byte	-41
+ 888 035b 32       		.byte	50
+ 889 035c D8       		.byte	-40
+ 890 035d 04       		.byte	4
+ 891 035e D9       		.byte	-39
+ 892 035f 04       		.byte	4
+ 893 0360 DB       		.byte	-37
+ 894 0361 0E       		.byte	14
+ 895 0362 DF       		.byte	-33
+ 896 0363 01       		.byte	1
+ 897 0364 00       		.byte	0
+ 898 0365 80       		.byte	-128
+ 899 0366 02       		.byte	2
+ 900 0367 10       		.byte	16
+ 901 0368 04       		.byte	4
+ 902 0369 40       		.byte	64
+ 903 036a 06       		.byte	6
+ 904 036b 88       		.byte	-120
+ 905 036c 09       		.byte	9
+ 906 036d 08       		.byte	8
+ 907 036e 0A       		.byte	10
+ 908 036f 46       		.byte	70
+ 909 0370 0D       		.byte	13
+ 910 0371 08       		.byte	8
+ 911 0372 0E       		.byte	14
+ 912 0373 04       		.byte	4
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccWzgev8.s 			page 17
+
+
+ 913 0374 0F       		.byte	15
+ 914 0375 80       		.byte	-128
+ 915 0376 11       		.byte	17
+ 916 0377 08       		.byte	8
+ 917 0378 12       		.byte	18
+ 918 0379 88       		.byte	-120
+ 919 037a 17       		.byte	23
+ 920 037b 20       		.byte	32
+ 921 037c 1A       		.byte	26
+ 922 037d 06       		.byte	6
+ 923 037e 1B       		.byte	27
+ 924 037f E0       		.byte	-32
+ 925 0380 21       		.byte	33
+ 926 0381 04       		.byte	4
+ 927 0382 22       		.byte	34
+ 928 0383 88       		.byte	-120
+ 929 0384 23       		.byte	35
+ 930 0385 20       		.byte	32
+ 931 0386 2A       		.byte	42
+ 932 0387 88       		.byte	-120
+ 933 0388 2B       		.byte	43
+ 934 0389 4A       		.byte	74
+ 935 038a 2F       		.byte	47
+ 936 038b A8       		.byte	-88
+ 937 038c 32       		.byte	50
+ 938 038d 80       		.byte	-128
+ 939 038e 33       		.byte	51
+ 940 038f 20       		.byte	32
+ 941 0390 36       		.byte	54
+ 942 0391 88       		.byte	-120
+ 943 0392 38       		.byte	56
+ 944 0393 80       		.byte	-128
+ 945 0394 39       		.byte	57
+ 946 0395 08       		.byte	8
+ 947 0396 3A       		.byte	58
+ 948 0397 20       		.byte	32
+ 949 0398 3C       		.byte	60
+ 950 0399 08       		.byte	8
+ 951 039a 3D       		.byte	61
+ 952 039b 08       		.byte	8
+ 953 039c 3E       		.byte	62
+ 954 039d 88       		.byte	-120
+ 955 039e 46       		.byte	70
+ 956 039f 10       		.byte	16
+ 957 03a0 47       		.byte	71
+ 958 03a1 08       		.byte	8
+ 959 03a2 5B       		.byte	91
+ 960 03a3 04       		.byte	4
+ 961 03a4 61       		.byte	97
+ 962 03a5 40       		.byte	64
+ 963 03a6 68       		.byte	104
+ 964 03a7 4A       		.byte	74
+ 965 03a8 69       		.byte	105
+ 966 03a9 04       		.byte	4
+ 967 03aa 70       		.byte	112
+ 968 03ab 40       		.byte	64
+ 969 03ac 73       		.byte	115
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccWzgev8.s 			page 18
+
+
+ 970 03ad 0A       		.byte	10
+ 971 03ae 78       		.byte	120
+ 972 03af 04       		.byte	4
+ 973 03b0 7D       		.byte	125
+ 974 03b1 04       		.byte	4
+ 975 03b2 7F       		.byte	127
+ 976 03b3 10       		.byte	16
+ 977 03b4 80       		.byte	-128
+ 978 03b5 82       		.byte	-126
+ 979 03b6 82       		.byte	-126
+ 980 03b7 20       		.byte	32
+ 981 03b8 85       		.byte	-123
+ 982 03b9 20       		.byte	32
+ 983 03ba 86       		.byte	-122
+ 984 03bb 40       		.byte	64
+ 985 03bc 87       		.byte	-121
+ 986 03bd 21       		.byte	33
+ 987 03be 8C       		.byte	-116
+ 988 03bf 40       		.byte	64
+ 989 03c0 8E       		.byte	-114
+ 990 03c1 82       		.byte	-126
+ 991 03c2 8F       		.byte	-113
+ 992 03c3 04       		.byte	4
+ 993 03c4 93       		.byte	-109
+ 994 03c5 0A       		.byte	10
+ 995 03c6 94       		.byte	-108
+ 996 03c7 40       		.byte	64
+ 997 03c8 96       		.byte	-106
+ 998 03c9 04       		.byte	4
+ 999 03ca 97       		.byte	-105
+ 1000 03cb 20       		.byte	32
+ 1001 03cc 98       		.byte	-104
+ 1002 03cd 01       		.byte	1
+ 1003 03ce 99       		.byte	-103
+ 1004 03cf 40       		.byte	64
+ 1005 03d0 9C       		.byte	-100
+ 1006 03d1 82       		.byte	-126
+ 1007 03d2 9D       		.byte	-99
+ 1008 03d3 20       		.byte	32
+ 1009 03d4 9F       		.byte	-97
+ 1010 03d5 21       		.byte	33
+ 1011 03d6 A1       		.byte	-95
+ 1012 03d7 08       		.byte	8
+ 1013 03d8 A3       		.byte	-93
+ 1014 03d9 01       		.byte	1
+ 1015 03da A4       		.byte	-92
+ 1016 03db 04       		.byte	4
+ 1017 03dc A6       		.byte	-90
+ 1018 03dd 42       		.byte	66
+ 1019 03de A7       		.byte	-89
+ 1020 03df 42       		.byte	66
+ 1021 03e0 C0       		.byte	-64
+ 1022 03e1 D5       		.byte	-43
+ 1023 03e2 C2       		.byte	-62
+ 1024 03e3 7F       		.byte	127
+ 1025 03e4 C4       		.byte	-60
+ 1026 03e5 4E       		.byte	78
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccWzgev8.s 			page 19
+
+
+ 1027 03e6 CA       		.byte	-54
+ 1028 03e7 EF       		.byte	-17
+ 1029 03e8 CC       		.byte	-52
+ 1030 03e9 5C       		.byte	92
+ 1031 03ea CE       		.byte	-50
+ 1032 03eb 5E       		.byte	94
+ 1033 03ec D6       		.byte	-42
+ 1034 03ed 02       		.byte	2
+ 1035 03ee D8       		.byte	-40
+ 1036 03ef 08       		.byte	8
+ 1037 03f0 DE       		.byte	-34
+ 1038 03f1 02       		.byte	2
+ 1039 03f2 E6       		.byte	-26
+ 1040 03f3 01       		.byte	1
+ 1041 03f4 EE       		.byte	-18
+ 1042 03f5 04       		.byte	4
+ 1043 03f6 02       		.byte	2
+ 1044 03f7 01       		.byte	1
+ 1045 03f8 04       		.byte	4
+ 1046 03f9 06       		.byte	6
+ 1047 03fa 05       		.byte	5
+ 1048 03fb 0F       		.byte	15
+ 1049 03fc 08       		.byte	8
+ 1050 03fd 02       		.byte	2
+ 1051 03fe 0C       		.byte	12
+ 1052 03ff 04       		.byte	4
+ 1053 0400 0F       		.byte	15
+ 1054 0401 01       		.byte	1
+ 1055 0402 11       		.byte	17
+ 1056 0403 07       		.byte	7
+ 1057 0404 13       		.byte	19
+ 1058 0405 08       		.byte	8
+ 1059 0406 14       		.byte	20
+ 1060 0407 06       		.byte	6
+ 1061 0408 15       		.byte	21
+ 1062 0409 09       		.byte	9
+ 1063 040a 16       		.byte	22
+ 1064 040b 01       		.byte	1
+ 1065 040c 17       		.byte	23
+ 1066 040d 06       		.byte	6
+ 1067 040e 18       		.byte	24
+ 1068 040f 07       		.byte	7
+ 1069 0410 19       		.byte	25
+ 1070 0411 06       		.byte	6
+ 1071 0412 1B       		.byte	27
+ 1072 0413 09       		.byte	9
+ 1073 0414 1C       		.byte	28
+ 1074 0415 06       		.byte	6
+ 1075 0416 1E       		.byte	30
+ 1076 0417 01       		.byte	1
+ 1077 0418 20       		.byte	32
+ 1078 0419 08       		.byte	8
+ 1079 041a 24       		.byte	36
+ 1080 041b 01       		.byte	1
+ 1081 041c 25       		.byte	37
+ 1082 041d 02       		.byte	2
+ 1083 041e 26       		.byte	38
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccWzgev8.s 			page 20
+
+
+ 1084 041f 06       		.byte	6
+ 1085 0420 29       		.byte	41
+ 1086 0421 06       		.byte	6
+ 1087 0422 2D       		.byte	45
+ 1088 0423 04       		.byte	4
+ 1089 0424 31       		.byte	49
+ 1090 0425 07       		.byte	7
+ 1091 0426 32       		.byte	50
+ 1092 0427 07       		.byte	7
+ 1093 0428 36       		.byte	54
+ 1094 0429 08       		.byte	8
+ 1095 042a 37       		.byte	55
+ 1096 042b 08       		.byte	8
+ 1097 042c 39       		.byte	57
+ 1098 042d 80       		.byte	-128
+ 1099 042e 3A       		.byte	58
+ 1100 042f 28       		.byte	40
+ 1101 0430 3E       		.byte	62
+ 1102 0431 40       		.byte	64
+ 1103 0432 52       		.byte	82
+ 1104 0433 03       		.byte	3
+ 1105 0434 53       		.byte	83
+ 1106 0435 02       		.byte	2
+ 1107 0436 58       		.byte	88
+ 1108 0437 04       		.byte	4
+ 1109 0438 59       		.byte	89
+ 1110 0439 04       		.byte	4
+ 1111 043a 5B       		.byte	91
+ 1112 043b 04       		.byte	4
+ 1113 043c 5C       		.byte	92
+ 1114 043d 11       		.byte	17
+ 1115 043e 5F       		.byte	95
+ 1116 043f 01       		.byte	1
+ 1117 0440 D6       		.byte	-42
+ 1118 0441 08       		.byte	8
+ 1119 0442 D8       		.byte	-40
+ 1120 0443 04       		.byte	4
+ 1121 0444 D9       		.byte	-39
+ 1122 0445 04       		.byte	4
+ 1123 0446 DB       		.byte	-37
+ 1124 0447 04       		.byte	4
+ 1125 0448 DD       		.byte	-35
+ 1126 0449 90       		.byte	-112
+ 1127 044a DF       		.byte	-33
+ 1128 044b 01       		.byte	1
+ 1129 044c 00       		.byte	0
+ 1130 044d 08       		.byte	8
+ 1131 044e 01       		.byte	1
+ 1132 044f 40       		.byte	64
+ 1133 0450 05       		.byte	5
+ 1134 0451 A4       		.byte	-92
+ 1135 0452 06       		.byte	6
+ 1136 0453 80       		.byte	-128
+ 1137 0454 08       		.byte	8
+ 1138 0455 21       		.byte	33
+ 1139 0456 0E       		.byte	14
+ 1140 0457 26       		.byte	38
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccWzgev8.s 			page 21
+
+
+ 1141 0458 12       		.byte	18
+ 1142 0459 25       		.byte	37
+ 1143 045a 15       		.byte	21
+ 1144 045b 02       		.byte	2
+ 1145 045c 17       		.byte	23
+ 1146 045d 04       		.byte	4
+ 1147 045e 1D       		.byte	29
+ 1148 045f 08       		.byte	8
+ 1149 0460 1E       		.byte	30
+ 1150 0461 24       		.byte	36
+ 1151 0462 1F       		.byte	31
+ 1152 0463 40       		.byte	64
+ 1153 0464 25       		.byte	37
+ 1154 0465 40       		.byte	64
+ 1155 0466 26       		.byte	38
+ 1156 0467 02       		.byte	2
+ 1157 0468 27       		.byte	39
+ 1158 0469 40       		.byte	64
+ 1159 046a 28       		.byte	40
+ 1160 046b 20       		.byte	32
+ 1161 046c 2B       		.byte	43
+ 1162 046d 40       		.byte	64
+ 1163 046e 2C       		.byte	44
+ 1164 046f 20       		.byte	32
+ 1165 0470 2D       		.byte	45
+ 1166 0471 80       		.byte	-128
+ 1167 0472 2F       		.byte	47
+ 1168 0473 08       		.byte	8
+ 1169 0474 30       		.byte	48
+ 1170 0475 01       		.byte	1
+ 1171 0476 31       		.byte	49
+ 1172 0477 04       		.byte	4
+ 1173 0478 32       		.byte	50
+ 1174 0479 20       		.byte	32
+ 1175 047a 33       		.byte	51
+ 1176 047b 08       		.byte	8
+ 1177 047c 36       		.byte	54
+ 1178 047d 11       		.byte	17
+ 1179 047e 37       		.byte	55
+ 1180 047f 06       		.byte	6
+ 1181 0480 39       		.byte	57
+ 1182 0481 40       		.byte	64
+ 1183 0482 3A       		.byte	58
+ 1184 0483 04       		.byte	4
+ 1185 0484 3B       		.byte	59
+ 1186 0485 20       		.byte	32
+ 1187 0486 3E       		.byte	62
+ 1188 0487 84       		.byte	-124
+ 1189 0488 5A       		.byte	90
+ 1190 0489 80       		.byte	-128
+ 1191 048a 63       		.byte	99
+ 1192 048b 02       		.byte	2
+ 1193 048c 6C       		.byte	108
+ 1194 048d 02       		.byte	2
+ 1195 048e 6D       		.byte	109
+ 1196 048f 20       		.byte	32
+ 1197 0490 6F       		.byte	111
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccWzgev8.s 			page 22
+
+
+ 1198 0491 02       		.byte	2
+ 1199 0492 83       		.byte	-125
+ 1200 0493 40       		.byte	64
+ 1201 0494 8B       		.byte	-117
+ 1202 0495 40       		.byte	64
+ 1203 0496 8D       		.byte	-115
+ 1204 0497 50       		.byte	80
+ 1205 0498 91       		.byte	-111
+ 1206 0499 02       		.byte	2
+ 1207 049a 92       		.byte	-110
+ 1208 049b 80       		.byte	-128
+ 1209 049c C0       		.byte	-64
+ 1210 049d F5       		.byte	-11
+ 1211 049e C2       		.byte	-62
+ 1212 049f EA       		.byte	-22
+ 1213 04a0 C4       		.byte	-60
+ 1214 04a1 37       		.byte	55
+ 1215 04a2 CA       		.byte	-54
+ 1216 04a3 73       		.byte	115
+ 1217 04a4 CC       		.byte	-52
+ 1218 04a5 E5       		.byte	-27
+ 1219 04a6 CE       		.byte	-50
+ 1220 04a7 5E       		.byte	94
+ 1221 04a8 D6       		.byte	-42
+ 1222 04a9 08       		.byte	8
+ 1223 04aa D8       		.byte	-40
+ 1224 04ab 08       		.byte	8
+ 1225 04ac E0       		.byte	-32
+ 1226 04ad 40       		.byte	64
+ 1227 04ae E6       		.byte	-26
+ 1228 04af 10       		.byte	16
+ 1229 04b0 EE       		.byte	-18
+ 1230 04b1 04       		.byte	4
+ 1231 04b2 85       		.byte	-123
+ 1232 04b3 01       		.byte	1
+ 1233 04b4 92       		.byte	-110
+ 1234 04b5 80       		.byte	-128
+ 1235 04b6 E6       		.byte	-26
+ 1236 04b7 04       		.byte	4
+ 1237 04b8 92       		.byte	-110
+ 1238 04b9 80       		.byte	-128
+ 1239 04ba 82       		.byte	-126
+ 1240 04bb 40       		.byte	64
+ 1241 04bc 2A       		.byte	42
+ 1242 04bd 01       		.byte	1
+ 1243 04be 30       		.byte	48
+ 1244 04bf 01       		.byte	1
+ 1245 04c0 40       		.byte	64
+ 1246 04c1 53       		.byte	83
+ 1247 04c2 49       		.byte	73
+ 1248 04c3 FF       		.byte	-1
+ 1249 04c4 4A       		.byte	74
+ 1250 04c5 FF       		.byte	-1
+ 1251 04c6 4B       		.byte	75
+ 1252 04c7 FF       		.byte	-1
+ 1253 04c8 4F       		.byte	79
+ 1254 04c9 01       		.byte	1
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccWzgev8.s 			page 23
+
+
+ 1255 04ca 50       		.byte	80
+ 1256 04cb 18       		.byte	24
+ 1257 04cc 58       		.byte	88
+ 1258 04cd 04       		.byte	4
+ 1259 04ce 59       		.byte	89
+ 1260 04cf 04       		.byte	4
+ 1261 04d0 5A       		.byte	90
+ 1262 04d1 0B       		.byte	11
+ 1263 04d2 5D       		.byte	93
+ 1264 04d3 09       		.byte	9
+ 1265 04d4 5F       		.byte	95
+ 1266 04d5 01       		.byte	1
+ 1267 04d6 60       		.byte	96
+ 1268 04d7 40       		.byte	64
+ 1269 04d8 62       		.byte	98
+ 1270 04d9 40       		.byte	64
+ 1271 04da 64       		.byte	100
+ 1272 04db 40       		.byte	64
+ 1273 04dc 65       		.byte	101
+ 1274 04dd 40       		.byte	64
+ 1275 04de 66       		.byte	102
+ 1276 04df 80       		.byte	-128
+ 1277 04e0 68       		.byte	104
+ 1278 04e1 80       		.byte	-128
+ 1279 04e2 6A       		.byte	106
+ 1280 04e3 80       		.byte	-128
+ 1281 04e4 6C       		.byte	108
+ 1282 04e5 80       		.byte	-128
+ 1283 04e6 6E       		.byte	110
+ 1284 04e7 80       		.byte	-128
+ 1285 04e8 82       		.byte	-126
+ 1286 04e9 01       		.byte	1
+ 1287 04ea A6       		.byte	-90
+ 1288 04eb 01       		.byte	1
+ 1289 04ec B0       		.byte	-80
+ 1290 04ed 01       		.byte	1
+ 1291 04ee BE       		.byte	-66
+ 1292 04ef 01       		.byte	1
+ 1293 04f0 C0       		.byte	-64
+ 1294 04f1 13       		.byte	19
+ 1295 04f2 C5       		.byte	-59
+ 1296 04f3 EC       		.byte	-20
+ 1297 04f4 C6       		.byte	-58
+ 1298 04f5 20       		.byte	32
+ 1299 04f6 C8       		.byte	-56
+ 1300 04f7 0B       		.byte	11
+ 1301 04f8 C9       		.byte	-55
+ 1302 04f9 FF       		.byte	-1
+ 1303 04fa CA       		.byte	-54
+ 1304 04fb FF       		.byte	-1
+ 1305 04fc CB       		.byte	-53
+ 1306 04fd FF       		.byte	-1
+ 1307 04fe CD       		.byte	-51
+ 1308 04ff 83       		.byte	-125
+ 1309 0500 CE       		.byte	-50
+ 1310 0501 03       		.byte	3
+ 1311 0502 CF       		.byte	-49
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccWzgev8.s 			page 24
+
+
+ 1312 0503 01       		.byte	1
+ 1313 0504 D0       		.byte	-48
+ 1314 0505 18       		.byte	24
+ 1315 0506 D4       		.byte	-44
+ 1316 0507 01       		.byte	1
+ 1317 0508 D6       		.byte	-42
+ 1318 0509 04       		.byte	4
+ 1319 050a D8       		.byte	-40
+ 1320 050b 04       		.byte	4
+ 1321 050c D9       		.byte	-39
+ 1322 050d 04       		.byte	4
+ 1323 050e DA       		.byte	-38
+ 1324 050f 08       		.byte	8
+ 1325 0510 DB       		.byte	-37
+ 1326 0511 08       		.byte	8
+ 1327 0512 DD       		.byte	-35
+ 1328 0513 99       		.byte	-103
+ 1329 0514 DF       		.byte	-33
+ 1330 0515 01       		.byte	1
+ 1331 0516 E0       		.byte	-32
+ 1332 0517 40       		.byte	64
+ 1333 0518 E2       		.byte	-30
+ 1334 0519 40       		.byte	64
+ 1335 051a E4       		.byte	-28
+ 1336 051b 40       		.byte	64
+ 1337 051c E5       		.byte	-27
+ 1338 051d 40       		.byte	64
+ 1339 051e E6       		.byte	-26
+ 1340 051f 80       		.byte	-128
+ 1341 0520 E8       		.byte	-24
+ 1342 0521 80       		.byte	-128
+ 1343 0522 EA       		.byte	-22
+ 1344 0523 80       		.byte	-128
+ 1345 0524 EC       		.byte	-20
+ 1346 0525 80       		.byte	-128
+ 1347 0526 EE       		.byte	-18
+ 1348 0527 80       		.byte	-128
+ 1349 0528 00       		.byte	0
+ 1350 0529 08       		.byte	8
+ 1351 052a 02       		.byte	2
+ 1352 052b 08       		.byte	8
+ 1353 052c 03       		.byte	3
+ 1354 052d 80       		.byte	-128
+ 1355 052e 05       		.byte	5
+ 1356 052f 20       		.byte	32
+ 1357 0530 07       		.byte	7
+ 1358 0531 40       		.byte	64
+ 1359 0532 08       		.byte	8
+ 1360 0533 88       		.byte	-120
+ 1361 0534 09       		.byte	9
+ 1362 0535 08       		.byte	8
+ 1363 0536 0A       		.byte	10
+ 1364 0537 40       		.byte	64
+ 1365 0538 0C       		.byte	12
+ 1366 0539 80       		.byte	-128
+ 1367 053a 0D       		.byte	13
+ 1368 053b 08       		.byte	8
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccWzgev8.s 			page 25
+
+
+ 1369 053c 0E       		.byte	14
+ 1370 053d 60       		.byte	96
+ 1371 053e 0F       		.byte	15
+ 1372 053f 04       		.byte	4
+ 1373 0540 10       		.byte	16
+ 1374 0541 08       		.byte	8
+ 1375 0542 13       		.byte	19
+ 1376 0543 04       		.byte	4
+ 1377 0544 14       		.byte	20
+ 1378 0545 80       		.byte	-128
+ 1379 0546 16       		.byte	22
+ 1380 0547 28       		.byte	40
+ 1381 0548 1A       		.byte	26
+ 1382 0549 40       		.byte	64
+ 1383 054a 1B       		.byte	27
+ 1384 054b 02       		.byte	2
+ 1385 054c 1E       		.byte	30
+ 1386 054d 80       		.byte	-128
+ 1387 054e 28       		.byte	40
+ 1388 054f 88       		.byte	-120
+ 1389 0550 2C       		.byte	44
+ 1390 0551 80       		.byte	-128
+ 1391 0552 2E       		.byte	46
+ 1392 0553 08       		.byte	8
+ 1393 0554 2F       		.byte	47
+ 1394 0555 92       		.byte	-110
+ 1395 0556 32       		.byte	50
+ 1396 0557 08       		.byte	8
+ 1397 0558 33       		.byte	51
+ 1398 0559 82       		.byte	-126
+ 1399 055a 34       		.byte	52
+ 1400 055b 80       		.byte	-128
+ 1401 055c 36       		.byte	54
+ 1402 055d 18       		.byte	24
+ 1403 055e 3B       		.byte	59
+ 1404 055f 24       		.byte	36
+ 1405 0560 3F       		.byte	63
+ 1406 0561 04       		.byte	4
+ 1407 0562 42       		.byte	66
+ 1408 0563 20       		.byte	32
+ 1409 0564 46       		.byte	70
+ 1410 0565 20       		.byte	32
+ 1411 0566 47       		.byte	71
+ 1412 0567 40       		.byte	64
+ 1413 0568 48       		.byte	72
+ 1414 0569 01       		.byte	1
+ 1415 056a 4D       		.byte	77
+ 1416 056b 05       		.byte	5
+ 1417 056c 56       		.byte	86
+ 1418 056d 20       		.byte	32
+ 1419 056e 5D       		.byte	93
+ 1420 056f 05       		.byte	5
+ 1421 0570 5E       		.byte	94
+ 1422 0571 80       		.byte	-128
+ 1423 0572 66       		.byte	102
+ 1424 0573 01       		.byte	1
+ 1425 0574 78       		.byte	120
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccWzgev8.s 			page 26
+
+
+ 1426 0575 01       		.byte	1
+ 1427 0576 7F       		.byte	127
+ 1428 0577 01       		.byte	1
+ 1429 0578 82       		.byte	-126
+ 1430 0579 01       		.byte	1
+ 1431 057a 93       		.byte	-109
+ 1432 057b 26       		.byte	38
+ 1433 057c 96       		.byte	-106
+ 1434 057d 40       		.byte	64
+ 1435 057e 98       		.byte	-104
+ 1436 057f 81       		.byte	-127
+ 1437 0580 99       		.byte	-103
+ 1438 0581 20       		.byte	32
+ 1439 0582 9B       		.byte	-101
+ 1440 0583 40       		.byte	64
+ 1441 0584 A0       		.byte	-96
+ 1442 0585 0D       		.byte	13
+ 1443 0586 A1       		.byte	-95
+ 1444 0587 08       		.byte	8
+ 1445 0588 A2       		.byte	-94
+ 1446 0589 08       		.byte	8
+ 1447 058a A3       		.byte	-93
+ 1448 058b 80       		.byte	-128
+ 1449 058c A7       		.byte	-89
+ 1450 058d 02       		.byte	2
+ 1451 058e AF       		.byte	-81
+ 1452 058f 01       		.byte	1
+ 1453 0590 B1       		.byte	-79
+ 1454 0591 10       		.byte	16
+ 1455 0592 B2       		.byte	-78
+ 1456 0593 01       		.byte	1
+ 1457 0594 B5       		.byte	-75
+ 1458 0595 08       		.byte	8
+ 1459 0596 C0       		.byte	-64
+ 1460 0597 5E       		.byte	94
+ 1461 0598 C2       		.byte	-62
+ 1462 0599 FD       		.byte	-3
+ 1463 059a C4       		.byte	-60
+ 1464 059b 76       		.byte	118
+ 1465 059c CA       		.byte	-54
+ 1466 059d D5       		.byte	-43
+ 1467 059e CC       		.byte	-52
+ 1468 059f 7B       		.byte	123
+ 1469 05a0 CE       		.byte	-50
+ 1470 05a1 46       		.byte	70
+ 1471 05a2 D0       		.byte	-48
+ 1472 05a3 52       		.byte	82
+ 1473 05a4 D2       		.byte	-46
+ 1474 05a5 08       		.byte	8
+ 1475 05a6 D6       		.byte	-42
+ 1476 05a7 D0       		.byte	-48
+ 1477 05a8 D8       		.byte	-40
+ 1478 05a9 80       		.byte	-128
+ 1479 05aa DE       		.byte	-34
+ 1480 05ab 11       		.byte	17
+ 1481 05ac E0       		.byte	-32
+ 1482 05ad 18       		.byte	24
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccWzgev8.s 			page 27
+
+
+ 1483 05ae E8       		.byte	-24
+ 1484 05af 10       		.byte	16
+ 1485 05b0 EA       		.byte	-22
+ 1486 05b1 03       		.byte	3
+ 1487 05b2 52       		.byte	82
+ 1488 05b3 80       		.byte	-128
+ 1489 05b4 58       		.byte	88
+ 1490 05b5 04       		.byte	4
+ 1491 05b6 59       		.byte	89
+ 1492 05b7 04       		.byte	4
+ 1493 05b8 5B       		.byte	91
+ 1494 05b9 09       		.byte	9
+ 1495 05ba 5D       		.byte	93
+ 1496 05bb 90       		.byte	-112
+ 1497 05bc 5F       		.byte	95
+ 1498 05bd 01       		.byte	1
+ 1499 05be 82       		.byte	-126
+ 1500 05bf 02       		.byte	2
+ 1501 05c0 83       		.byte	-125
+ 1502 05c1 10       		.byte	16
+ 1503 05c2 84       		.byte	-124
+ 1504 05c3 01       		.byte	1
+ 1505 05c4 87       		.byte	-121
+ 1506 05c5 08       		.byte	8
+ 1507 05c6 88       		.byte	-120
+ 1508 05c7 40       		.byte	64
+ 1509 05c8 8A       		.byte	-118
+ 1510 05c9 80       		.byte	-128
+ 1511 05ca 8B       		.byte	-117
+ 1512 05cb 01       		.byte	1
+ 1513 05cc 8C       		.byte	-116
+ 1514 05cd 04       		.byte	4
+ 1515 05ce 90       		.byte	-112
+ 1516 05cf 10       		.byte	16
+ 1517 05d0 91       		.byte	-111
+ 1518 05d1 01       		.byte	1
+ 1519 05d2 92       		.byte	-110
+ 1520 05d3 20       		.byte	32
+ 1521 05d4 95       		.byte	-107
+ 1522 05d5 08       		.byte	8
+ 1523 05d6 96       		.byte	-106
+ 1524 05d7 08       		.byte	8
+ 1525 05d8 9A       		.byte	-102
+ 1526 05d9 04       		.byte	4
+ 1527 05da 9D       		.byte	-99
+ 1528 05db 02       		.byte	2
+ 1529 05dc 9E       		.byte	-98
+ 1530 05dd 01       		.byte	1
+ 1531 05de A0       		.byte	-96
+ 1532 05df 02       		.byte	2
+ 1533 05e0 A3       		.byte	-93
+ 1534 05e1 04       		.byte	4
+ 1535 05e2 A4       		.byte	-92
+ 1536 05e3 08       		.byte	8
+ 1537 05e4 A5       		.byte	-91
+ 1538 05e5 04       		.byte	4
+ 1539 05e6 A8       		.byte	-88
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccWzgev8.s 			page 28
+
+
+ 1540 05e7 20       		.byte	32
+ 1541 05e8 AA       		.byte	-86
+ 1542 05e9 10       		.byte	16
+ 1543 05ea AC       		.byte	-84
+ 1544 05eb 80       		.byte	-128
+ 1545 05ec AE       		.byte	-82
+ 1546 05ed 40       		.byte	64
+ 1547 05ee AF       		.byte	-81
+ 1548 05ef 02       		.byte	2
+ 1549 05f0 B5       		.byte	-75
+ 1550 05f1 1F       		.byte	31
+ 1551 05f2 B6       		.byte	-74
+ 1552 05f3 FF       		.byte	-1
+ 1553 05f4 B9       		.byte	-71
+ 1554 05f5 20       		.byte	32
+ 1555 05f6 BE       		.byte	-66
+ 1556 05f7 40       		.byte	64
+ 1557 05f8 BF       		.byte	-65
+ 1558 05f9 10       		.byte	16
+ 1559 05fa D4       		.byte	-44
+ 1560 05fb 18       		.byte	24
+ 1561 05fc D8       		.byte	-40
+ 1562 05fd 04       		.byte	4
+ 1563 05fe D9       		.byte	-39
+ 1564 05ff 04       		.byte	4
+ 1565 0600 DB       		.byte	-37
+ 1566 0601 04       		.byte	4
+ 1567 0602 DD       		.byte	-35
+ 1568 0603 10       		.byte	16
+ 1569 0604 DF       		.byte	-33
+ 1570 0605 01       		.byte	1
+ 1571 0606 00       		.byte	0
+ 1572 0607 80       		.byte	-128
+ 1573 0608 01       		.byte	1
+ 1574 0609 32       		.byte	50
+ 1575 060a 02       		.byte	2
+ 1576 060b 99       		.byte	-103
+ 1577 060c 03       		.byte	3
+ 1578 060d 80       		.byte	-128
+ 1579 060e 05       		.byte	5
+ 1580 060f 22       		.byte	34
+ 1581 0610 08       		.byte	8
+ 1582 0611 A0       		.byte	-96
+ 1583 0612 09       		.byte	9
+ 1584 0613 08       		.byte	8
+ 1585 0614 0A       		.byte	10
+ 1586 0615 46       		.byte	70
+ 1587 0616 0B       		.byte	11
+ 1588 0617 44       		.byte	68
+ 1589 0618 0D       		.byte	13
+ 1590 0619 08       		.byte	8
+ 1591 061a 0E       		.byte	14
+ 1592 061b 44       		.byte	68
+ 1593 061c 10       		.byte	16
+ 1594 061d 0A       		.byte	10
+ 1595 061e 11       		.byte	17
+ 1596 061f 04       		.byte	4
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccWzgev8.s 			page 29
+
+
+ 1597 0620 12       		.byte	18
+ 1598 0621 40       		.byte	64
+ 1599 0622 13       		.byte	19
+ 1600 0623 02       		.byte	2
+ 1601 0624 14       		.byte	20
+ 1602 0625 80       		.byte	-128
+ 1603 0626 17       		.byte	23
+ 1604 0627 08       		.byte	8
+ 1605 0628 18       		.byte	24
+ 1606 0629 02       		.byte	2
+ 1607 062a 20       		.byte	32
+ 1608 062b 08       		.byte	8
+ 1609 062c 22       		.byte	34
+ 1610 062d 10       		.byte	16
+ 1611 062e 23       		.byte	35
+ 1612 062f 08       		.byte	8
+ 1613 0630 28       		.byte	40
+ 1614 0631 20       		.byte	32
+ 1615 0632 29       		.byte	41
+ 1616 0633 20       		.byte	32
+ 1617 0634 2A       		.byte	42
+ 1618 0635 41       		.byte	65
+ 1619 0636 2F       		.byte	47
+ 1620 0637 9A       		.byte	-102
+ 1621 0638 31       		.byte	49
+ 1622 0639 08       		.byte	8
+ 1623 063a 32       		.byte	50
+ 1624 063b 91       		.byte	-111
+ 1625 063c 33       		.byte	51
+ 1626 063d 08       		.byte	8
+ 1627 063e 34       		.byte	52
+ 1628 063f 80       		.byte	-128
+ 1629 0640 36       		.byte	54
+ 1630 0641 08       		.byte	8
+ 1631 0642 38       		.byte	56
+ 1632 0643 02       		.byte	2
+ 1633 0644 39       		.byte	57
+ 1634 0645 04       		.byte	4
+ 1635 0646 3A       		.byte	58
+ 1636 0647 10       		.byte	16
+ 1637 0648 3B       		.byte	59
+ 1638 0649 40       		.byte	64
+ 1639 064a 3E       		.byte	62
+ 1640 064b 04       		.byte	4
+ 1641 064c 5B       		.byte	91
+ 1642 064d 01       		.byte	1
+ 1643 064e 60       		.byte	96
+ 1644 064f 08       		.byte	8
+ 1645 0650 63       		.byte	99
+ 1646 0651 02       		.byte	2
+ 1647 0652 74       		.byte	116
+ 1648 0653 01       		.byte	1
+ 1649 0654 77       		.byte	119
+ 1650 0655 40       		.byte	64
+ 1651 0656 7F       		.byte	127
+ 1652 0657 04       		.byte	4
+ 1653 0658 80       		.byte	-128
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccWzgev8.s 			page 30
+
+
+ 1654 0659 02       		.byte	2
+ 1655 065a 84       		.byte	-124
+ 1656 065b 08       		.byte	8
+ 1657 065c 88       		.byte	-120
+ 1658 065d 04       		.byte	4
+ 1659 065e 8A       		.byte	-118
+ 1660 065f 04       		.byte	4
+ 1661 0660 8B       		.byte	-117
+ 1662 0661 10       		.byte	16
+ 1663 0662 91       		.byte	-111
+ 1664 0663 04       		.byte	4
+ 1665 0664 92       		.byte	-110
+ 1666 0665 06       		.byte	6
+ 1667 0666 93       		.byte	-109
+ 1668 0667 0A       		.byte	10
+ 1669 0668 96       		.byte	-106
+ 1670 0669 40       		.byte	64
+ 1671 066a 98       		.byte	-104
+ 1672 066b 01       		.byte	1
+ 1673 066c 9A       		.byte	-102
+ 1674 066d 10       		.byte	16
+ 1675 066e 9B       		.byte	-101
+ 1676 066f 02       		.byte	2
+ 1677 0670 9C       		.byte	-100
+ 1678 0671 02       		.byte	2
+ 1679 0672 A0       		.byte	-96
+ 1680 0673 4A       		.byte	74
+ 1681 0674 A1       		.byte	-95
+ 1682 0675 08       		.byte	8
+ 1683 0676 A2       		.byte	-94
+ 1684 0677 88       		.byte	-120
+ 1685 0678 A3       		.byte	-93
+ 1686 0679 01       		.byte	1
+ 1687 067a A4       		.byte	-92
+ 1688 067b 04       		.byte	4
+ 1689 067c A7       		.byte	-89
+ 1690 067d 0A       		.byte	10
+ 1691 067e AB       		.byte	-85
+ 1692 067f 02       		.byte	2
+ 1693 0680 AC       		.byte	-84
+ 1694 0681 04       		.byte	4
+ 1695 0682 C0       		.byte	-64
+ 1696 0683 5F       		.byte	95
+ 1697 0684 C2       		.byte	-62
+ 1698 0685 7F       		.byte	127
+ 1699 0686 C4       		.byte	-60
+ 1700 0687 3F       		.byte	63
+ 1701 0688 CA       		.byte	-54
+ 1702 0689 FF       		.byte	-1
+ 1703 068a CC       		.byte	-52
+ 1704 068b 5F       		.byte	95
+ 1705 068c CE       		.byte	-50
+ 1706 068d 4F       		.byte	79
+ 1707 068e D6       		.byte	-42
+ 1708 068f 01       		.byte	1
+ 1709 0690 D8       		.byte	-40
+ 1710 0691 0C       		.byte	12
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccWzgev8.s 			page 31
+
+
+ 1711 0692 DE       		.byte	-34
+ 1712 0693 20       		.byte	32
+ 1713 0694 E2       		.byte	-30
+ 1714 0695 01       		.byte	1
+ 1715 0696 E6       		.byte	-26
+ 1716 0697 4D       		.byte	77
+ 1717 0698 E8       		.byte	-24
+ 1718 0699 04       		.byte	4
+ 1719 069a EA       		.byte	-22
+ 1720 069b 08       		.byte	8
+ 1721 069c 02       		.byte	2
+ 1722 069d 08       		.byte	8
+ 1723 069e 03       		.byte	3
+ 1724 069f 04       		.byte	4
+ 1725 06a0 06       		.byte	6
+ 1726 06a1 10       		.byte	16
+ 1727 06a2 0A       		.byte	10
+ 1728 06a3 10       		.byte	16
+ 1729 06a4 0F       		.byte	15
+ 1730 06a5 04       		.byte	4
+ 1731 06a6 16       		.byte	22
+ 1732 06a7 01       		.byte	1
+ 1733 06a8 18       		.byte	24
+ 1734 06a9 04       		.byte	4
+ 1735 06aa 1D       		.byte	29
+ 1736 06ab 01       		.byte	1
+ 1737 06ac 1E       		.byte	30
+ 1738 06ad 02       		.byte	2
+ 1739 06ae 20       		.byte	32
+ 1740 06af 04       		.byte	4
+ 1741 06b0 24       		.byte	36
+ 1742 06b1 04       		.byte	4
+ 1743 06b2 28       		.byte	40
+ 1744 06b3 01       		.byte	1
+ 1745 06b4 2B       		.byte	43
+ 1746 06b5 03       		.byte	3
+ 1747 06b6 2C       		.byte	44
+ 1748 06b7 04       		.byte	4
+ 1749 06b8 32       		.byte	50
+ 1750 06b9 03       		.byte	3
+ 1751 06ba 33       		.byte	51
+ 1752 06bb 01       		.byte	1
+ 1753 06bc 34       		.byte	52
+ 1754 06bd 04       		.byte	4
+ 1755 06be 35       		.byte	53
+ 1756 06bf 04       		.byte	4
+ 1757 06c0 36       		.byte	54
+ 1758 06c1 18       		.byte	24
+ 1759 06c2 37       		.byte	55
+ 1760 06c3 02       		.byte	2
+ 1761 06c4 3E       		.byte	62
+ 1762 06c5 50       		.byte	80
+ 1763 06c6 3F       		.byte	63
+ 1764 06c7 10       		.byte	16
+ 1765 06c8 40       		.byte	64
+ 1766 06c9 34       		.byte	52
+ 1767 06ca 41       		.byte	65
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccWzgev8.s 			page 32
+
+
+ 1768 06cb 02       		.byte	2
+ 1769 06cc 42       		.byte	66
+ 1770 06cd 05       		.byte	5
+ 1771 06ce 44       		.byte	68
+ 1772 06cf 01       		.byte	1
+ 1773 06d0 45       		.byte	69
+ 1774 06d1 E0       		.byte	-32
+ 1775 06d2 46       		.byte	70
+ 1776 06d3 C0       		.byte	-64
+ 1777 06d4 48       		.byte	72
+ 1778 06d5 0A       		.byte	10
+ 1779 06d6 49       		.byte	73
+ 1780 06d7 FF       		.byte	-1
+ 1781 06d8 4A       		.byte	74
+ 1782 06d9 FF       		.byte	-1
+ 1783 06da 4B       		.byte	75
+ 1784 06db FF       		.byte	-1
+ 1785 06dc 4C       		.byte	76
+ 1786 06dd 62       		.byte	98
+ 1787 06de 4D       		.byte	77
+ 1788 06df A0       		.byte	-96
+ 1789 06e0 4E       		.byte	78
+ 1790 06e1 F0       		.byte	-16
+ 1791 06e2 4F       		.byte	79
+ 1792 06e3 41       		.byte	65
+ 1793 06e4 50       		.byte	80
+ 1794 06e5 0C       		.byte	12
+ 1795 06e6 54       		.byte	84
+ 1796 06e7 01       		.byte	1
+ 1797 06e8 58       		.byte	88
+ 1798 06e9 04       		.byte	4
+ 1799 06ea 59       		.byte	89
+ 1800 06eb 0C       		.byte	12
+ 1801 06ec 5A       		.byte	90
+ 1802 06ed 04       		.byte	4
+ 1803 06ee 5B       		.byte	91
+ 1804 06ef 0C       		.byte	12
+ 1805 06f0 5C       		.byte	92
+ 1806 06f1 09       		.byte	9
+ 1807 06f2 5D       		.byte	93
+ 1808 06f3 01       		.byte	1
+ 1809 06f4 5F       		.byte	95
+ 1810 06f5 01       		.byte	1
+ 1811 06f6 66       		.byte	102
+ 1812 06f7 40       		.byte	64
+ 1813 06f8 67       		.byte	103
+ 1814 06f9 02       		.byte	2
+ 1815 06fa 69       		.byte	105
+ 1816 06fb 10       		.byte	16
+ 1817 06fc 6A       		.byte	106
+ 1818 06fd 30       		.byte	48
+ 1819 06fe 6B       		.byte	107
+ 1820 06ff 10       		.byte	16
+ 1821 0700 6D       		.byte	109
+ 1822 0701 10       		.byte	16
+ 1823 0702 6E       		.byte	110
+ 1824 0703 10       		.byte	16
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccWzgev8.s 			page 33
+
+
+ 1825 0704 6F       		.byte	111
+ 1826 0705 12       		.byte	18
+ 1827 0706 D8       		.byte	-40
+ 1828 0707 04       		.byte	4
+ 1829 0708 D9       		.byte	-39
+ 1830 0709 04       		.byte	4
+ 1831 070a DF       		.byte	-33
+ 1832 070b 01       		.byte	1
+ 1833 070c 00       		.byte	0
+ 1834 070d 08       		.byte	8
+ 1835 070e 01       		.byte	1
+ 1836 070f 40       		.byte	64
+ 1837 0710 02       		.byte	2
+ 1838 0711 04       		.byte	4
+ 1839 0712 04       		.byte	4
+ 1840 0713 01       		.byte	1
+ 1841 0714 05       		.byte	5
+ 1842 0715 18       		.byte	24
+ 1843 0716 08       		.byte	8
+ 1844 0717 21       		.byte	33
+ 1845 0718 0C       		.byte	12
+ 1846 0719 10       		.byte	16
+ 1847 071a 0D       		.byte	13
+ 1848 071b 20       		.byte	32
+ 1849 071c 0E       		.byte	14
+ 1850 071d 14       		.byte	20
+ 1851 071e 0F       		.byte	15
+ 1852 071f 02       		.byte	2
+ 1853 0720 11       		.byte	17
+ 1854 0721 04       		.byte	4
+ 1855 0722 12       		.byte	18
+ 1856 0723 01       		.byte	1
+ 1857 0724 15       		.byte	21
+ 1858 0725 80       		.byte	-128
+ 1859 0726 17       		.byte	23
+ 1860 0727 56       		.byte	86
+ 1861 0728 1C       		.byte	28
+ 1862 0729 04       		.byte	4
+ 1863 072a 1D       		.byte	29
+ 1864 072b 80       		.byte	-128
+ 1865 072c 1E       		.byte	30
+ 1866 072d 10       		.byte	16
+ 1867 072e 1F       		.byte	31
+ 1868 072f 08       		.byte	8
+ 1869 0730 26       		.byte	38
+ 1870 0731 90       		.byte	-112
+ 1871 0732 27       		.byte	39
+ 1872 0733 10       		.byte	16
+ 1873 0734 28       		.byte	40
+ 1874 0735 20       		.byte	32
+ 1875 0736 2F       		.byte	47
+ 1876 0737 08       		.byte	8
+ 1877 0738 30       		.byte	48
+ 1878 0739 01       		.byte	1
+ 1879 073a 32       		.byte	50
+ 1880 073b 20       		.byte	32
+ 1881 073c 36       		.byte	54
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccWzgev8.s 			page 34
+
+
+ 1882 073d 80       		.byte	-128
+ 1883 073e 39       		.byte	57
+ 1884 073f 40       		.byte	64
+ 1885 0740 3A       		.byte	58
+ 1886 0741 05       		.byte	5
+ 1887 0742 3B       		.byte	59
+ 1888 0743 20       		.byte	32
+ 1889 0744 3D       		.byte	61
+ 1890 0745 80       		.byte	-128
+ 1891 0746 3F       		.byte	63
+ 1892 0747 01       		.byte	1
+ 1893 0748 45       		.byte	69
+ 1894 0749 A2       		.byte	-94
+ 1895 074a 46       		.byte	70
+ 1896 074b 80       		.byte	-128
+ 1897 074c 47       		.byte	71
+ 1898 074d 04       		.byte	4
+ 1899 074e 4E       		.byte	78
+ 1900 074f 02       		.byte	2
+ 1901 0750 4F       		.byte	79
+ 1902 0751 01       		.byte	1
+ 1903 0752 57       		.byte	87
+ 1904 0753 10       		.byte	16
+ 1905 0754 5E       		.byte	94
+ 1906 0755 40       		.byte	64
+ 1907 0756 7F       		.byte	127
+ 1908 0757 02       		.byte	2
+ 1909 0758 83       		.byte	-125
+ 1910 0759 10       		.byte	16
+ 1911 075a 86       		.byte	-122
+ 1912 075b 10       		.byte	16
+ 1913 075c 88       		.byte	-120
+ 1914 075d 01       		.byte	1
+ 1915 075e 89       		.byte	-119
+ 1916 075f 04       		.byte	4
+ 1917 0760 8A       		.byte	-118
+ 1918 0761 20       		.byte	32
+ 1919 0762 8E       		.byte	-114
+ 1920 0763 40       		.byte	64
+ 1921 0764 8F       		.byte	-113
+ 1922 0765 10       		.byte	16
+ 1923 0766 91       		.byte	-111
+ 1924 0767 C0       		.byte	-64
+ 1925 0768 92       		.byte	-110
+ 1926 0769 04       		.byte	4
+ 1927 076a 97       		.byte	-105
+ 1928 076b 20       		.byte	32
+ 1929 076c 9A       		.byte	-102
+ 1930 076d 01       		.byte	1
+ 1931 076e 9C       		.byte	-100
+ 1932 076f 21       		.byte	33
+ 1933 0770 9D       		.byte	-99
+ 1934 0771 A4       		.byte	-92
+ 1935 0772 9E       		.byte	-98
+ 1936 0773 84       		.byte	-124
+ 1937 0774 9F       		.byte	-97
+ 1938 0775 06       		.byte	6
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccWzgev8.s 			page 35
+
+
+ 1939 0776 A1       		.byte	-95
+ 1940 0777 40       		.byte	64
+ 1941 0778 A2       		.byte	-94
+ 1942 0779 02       		.byte	2
+ 1943 077a A3       		.byte	-93
+ 1944 077b 03       		.byte	3
+ 1945 077c A4       		.byte	-92
+ 1946 077d 24       		.byte	36
+ 1947 077e A6       		.byte	-90
+ 1948 077f 20       		.byte	32
+ 1949 0780 AA       		.byte	-86
+ 1950 0781 01       		.byte	1
+ 1951 0782 AB       		.byte	-85
+ 1952 0783 40       		.byte	64
+ 1953 0784 AC       		.byte	-84
+ 1954 0785 02       		.byte	2
+ 1955 0786 B5       		.byte	-75
+ 1956 0787 48       		.byte	72
+ 1957 0788 C0       		.byte	-64
+ 1958 0789 77       		.byte	119
+ 1959 078a C2       		.byte	-62
+ 1960 078b EA       		.byte	-22
+ 1961 078c C4       		.byte	-60
+ 1962 078d F5       		.byte	-11
+ 1963 078e CA       		.byte	-54
+ 1964 078f 22       		.byte	34
+ 1965 0790 CC       		.byte	-52
+ 1966 0791 15       		.byte	21
+ 1967 0792 CE       		.byte	-50
+ 1968 0793 9F       		.byte	-97
+ 1969 0794 D0       		.byte	-48
+ 1970 0795 F0       		.byte	-16
+ 1971 0796 D2       		.byte	-46
+ 1972 0797 10       		.byte	16
+ 1973 0798 D6       		.byte	-42
+ 1974 0799 10       		.byte	16
+ 1975 079a DE       		.byte	-34
+ 1976 079b 10       		.byte	16
+ 1977 079c E0       		.byte	-32
+ 1978 079d 20       		.byte	32
+ 1979 079e E2       		.byte	-30
+ 1980 079f 01       		.byte	1
+ 1981 07a0 E4       		.byte	-28
+ 1982 07a1 20       		.byte	32
+ 1983 07a2 E6       		.byte	-26
+ 1984 07a3 44       		.byte	68
+ 1985 07a4 58       		.byte	88
+ 1986 07a5 04       		.byte	4
+ 1987 07a6 59       		.byte	89
+ 1988 07a7 04       		.byte	4
+ 1989 07a8 5F       		.byte	95
+ 1990 07a9 01       		.byte	1
+ 1991 07aa 80       		.byte	-128
+ 1992 07ab 38       		.byte	56
+ 1993 07ac 81       		.byte	-127
+ 1994 07ad C7       		.byte	-57
+ 1995 07ae 82       		.byte	-126
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccWzgev8.s 			page 36
+
+
+ 1996 07af C0       		.byte	-64
+ 1997 07b0 83       		.byte	-125
+ 1998 07b1 18       		.byte	24
+ 1999 07b2 84       		.byte	-124
+ 2000 07b3 49       		.byte	73
+ 2001 07b4 85       		.byte	-123
+ 2002 07b5 08       		.byte	8
+ 2003 07b6 86       		.byte	-122
+ 2004 07b7 22       		.byte	34
+ 2005 07b8 88       		.byte	-120
+ 2006 07b9 92       		.byte	-110
+ 2007 07ba 89       		.byte	-119
+ 2008 07bb 44       		.byte	68
+ 2009 07bc 8A       		.byte	-118
+ 2010 07bd 21       		.byte	33
+ 2011 07be 8B       		.byte	-117
+ 2012 07bf 20       		.byte	32
+ 2013 07c0 8C       		.byte	-116
+ 2014 07c1 04       		.byte	4
+ 2015 07c2 8F       		.byte	-113
+ 2016 07c3 C3       		.byte	-61
+ 2017 07c4 91       		.byte	-111
+ 2018 07c5 1C       		.byte	28
+ 2019 07c6 92       		.byte	-110
+ 2020 07c7 18       		.byte	24
+ 2021 07c8 93       		.byte	-109
+ 2022 07c9 C2       		.byte	-62
+ 2023 07ca 94       		.byte	-108
+ 2024 07cb 18       		.byte	24
+ 2025 07cc 97       		.byte	-105
+ 2026 07cd 04       		.byte	4
+ 2027 07ce 98       		.byte	-104
+ 2028 07cf E7       		.byte	-25
+ 2029 07d0 99       		.byte	-103
+ 2030 07d1 80       		.byte	-128
+ 2031 07d2 9D       		.byte	-99
+ 2032 07d3 DC       		.byte	-36
+ 2033 07d4 9E       		.byte	-98
+ 2034 07d5 18       		.byte	24
+ 2035 07d6 9F       		.byte	-97
+ 2036 07d7 01       		.byte	1
+ 2037 07d8 A1       		.byte	-95
+ 2038 07d9 C0       		.byte	-64
+ 2039 07da A2       		.byte	-94
+ 2040 07db 18       		.byte	24
+ 2041 07dc A4       		.byte	-92
+ 2042 07dd 18       		.byte	24
+ 2043 07de A5       		.byte	-91
+ 2044 07df DF       		.byte	-33
+ 2045 07e0 A8       		.byte	-88
+ 2046 07e1 E7       		.byte	-25
+ 2047 07e2 A9       		.byte	-87
+ 2048 07e3 18       		.byte	24
+ 2049 07e4 AD       		.byte	-83
+ 2050 07e5 10       		.byte	16
+ 2051 07e6 B0       		.byte	-80
+ 2052 07e7 04       		.byte	4
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccWzgev8.s 			page 37
+
+
+ 2053 07e8 B2       		.byte	-78
+ 2054 07e9 18       		.byte	24
+ 2055 07ea B3       		.byte	-77
+ 2056 07eb 20       		.byte	32
+ 2057 07ec B4       		.byte	-76
+ 2058 07ed 03       		.byte	3
+ 2059 07ee B5       		.byte	-75
+ 2060 07ef D8       		.byte	-40
+ 2061 07f0 B6       		.byte	-74
+ 2062 07f1 E0       		.byte	-32
+ 2063 07f2 B7       		.byte	-73
+ 2064 07f3 1F       		.byte	31
+ 2065 07f4 BB       		.byte	-69
+ 2066 07f5 A0       		.byte	-96
+ 2067 07f6 D6       		.byte	-42
+ 2068 07f7 02       		.byte	2
+ 2069 07f8 D7       		.byte	-41
+ 2070 07f9 12       		.byte	18
+ 2071 07fa D8       		.byte	-40
+ 2072 07fb 04       		.byte	4
+ 2073 07fc D9       		.byte	-39
+ 2074 07fd 04       		.byte	4
+ 2075 07fe DB       		.byte	-37
+ 2076 07ff 04       		.byte	4
+ 2077 0800 DC       		.byte	-36
+ 2078 0801 11       		.byte	17
+ 2079 0802 DD       		.byte	-35
+ 2080 0803 10       		.byte	16
+ 2081 0804 DF       		.byte	-33
+ 2082 0805 01       		.byte	1
+ 2083 0806 00       		.byte	0
+ 2084 0807 08       		.byte	8
+ 2085 0808 02       		.byte	2
+ 2086 0809 05       		.byte	5
+ 2087 080a 04       		.byte	4
+ 2088 080b 01       		.byte	1
+ 2089 080c 05       		.byte	5
+ 2090 080d 18       		.byte	24
+ 2091 080e 07       		.byte	7
+ 2092 080f 01       		.byte	1
+ 2093 0810 08       		.byte	8
+ 2094 0811 21       		.byte	33
+ 2095 0812 0D       		.byte	13
+ 2096 0813 42       		.byte	66
+ 2097 0814 0E       		.byte	14
+ 2098 0815 28       		.byte	40
+ 2099 0816 11       		.byte	17
+ 2100 0817 44       		.byte	68
+ 2101 0818 12       		.byte	18
+ 2102 0819 10       		.byte	16
+ 2103 081a 14       		.byte	20
+ 2104 081b 10       		.byte	16
+ 2105 081c 15       		.byte	21
+ 2106 081d 10       		.byte	16
+ 2107 081e 17       		.byte	23
+ 2108 081f 02       		.byte	2
+ 2109 0820 1C       		.byte	28
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccWzgev8.s 			page 38
+
+
+ 2110 0821 01       		.byte	1
+ 2111 0822 1D       		.byte	29
+ 2112 0823 1A       		.byte	26
+ 2113 0824 1E       		.byte	30
+ 2114 0825 40       		.byte	64
+ 2115 0826 1F       		.byte	31
+ 2116 0827 40       		.byte	64
+ 2117 0828 26       		.byte	38
+ 2118 0829 18       		.byte	24
+ 2119 082a 27       		.byte	39
+ 2120 082b 0E       		.byte	14
+ 2121 082c 28       		.byte	40
+ 2122 082d 20       		.byte	32
+ 2123 082e 2A       		.byte	42
+ 2124 082f 11       		.byte	17
+ 2125 0830 2C       		.byte	44
+ 2126 0831 10       		.byte	16
+ 2127 0832 2D       		.byte	45
+ 2128 0833 80       		.byte	-128
+ 2129 0834 2E       		.byte	46
+ 2130 0835 20       		.byte	32
+ 2131 0836 2F       		.byte	47
+ 2132 0837 40       		.byte	64
+ 2133 0838 30       		.byte	48
+ 2134 0839 01       		.byte	1
+ 2135 083a 35       		.byte	53
+ 2136 083b 10       		.byte	16
+ 2137 083c 36       		.byte	54
+ 2138 083d 08       		.byte	8
+ 2139 083e 37       		.byte	55
+ 2140 083f 42       		.byte	66
+ 2141 0840 39       		.byte	57
+ 2142 0841 40       		.byte	64
+ 2143 0842 3A       		.byte	58
+ 2144 0843 04       		.byte	4
+ 2145 0844 3B       		.byte	59
+ 2146 0845 20       		.byte	32
+ 2147 0846 3D       		.byte	61
+ 2148 0847 20       		.byte	32
+ 2149 0848 3E       		.byte	62
+ 2150 0849 49       		.byte	73
+ 2151 084a 5C       		.byte	92
+ 2152 084b 04       		.byte	4
+ 2153 084c 6D       		.byte	109
+ 2154 084d 10       		.byte	16
+ 2155 084e 6E       		.byte	110
+ 2156 084f 08       		.byte	8
+ 2157 0850 6F       		.byte	111
+ 2158 0851 01       		.byte	1
+ 2159 0852 74       		.byte	116
+ 2160 0853 20       		.byte	32
+ 2161 0854 75       		.byte	117
+ 2162 0855 A4       		.byte	-92
+ 2163 0856 76       		.byte	118
+ 2164 0857 28       		.byte	40
+ 2165 0858 89       		.byte	-119
+ 2166 0859 08       		.byte	8
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccWzgev8.s 			page 39
+
+
+ 2167 085a 8A       		.byte	-118
+ 2168 085b 01       		.byte	1
+ 2169 085c 8B       		.byte	-117
+ 2170 085d 08       		.byte	8
+ 2171 085e 8D       		.byte	-115
+ 2172 085f 10       		.byte	16
+ 2173 0860 90       		.byte	-112
+ 2174 0861 04       		.byte	4
+ 2175 0862 91       		.byte	-111
+ 2176 0863 C4       		.byte	-60
+ 2177 0864 93       		.byte	-109
+ 2178 0865 20       		.byte	32
+ 2179 0866 94       		.byte	-108
+ 2180 0867 01       		.byte	1
+ 2181 0868 98       		.byte	-104
+ 2182 0869 31       		.byte	49
+ 2183 086a 9A       		.byte	-102
+ 2184 086b 05       		.byte	5
+ 2185 086c 9B       		.byte	-101
+ 2186 086d 40       		.byte	64
+ 2187 086e 9D       		.byte	-99
+ 2188 086f BC       		.byte	-68
+ 2189 0870 9F       		.byte	-97
+ 2190 0871 06       		.byte	6
+ 2191 0872 A0       		.byte	-96
+ 2192 0873 04       		.byte	4
+ 2193 0874 A4       		.byte	-92
+ 2194 0875 20       		.byte	32
+ 2195 0876 A5       		.byte	-91
+ 2196 0877 0A       		.byte	10
+ 2197 0878 AD       		.byte	-83
+ 2198 0879 08       		.byte	8
+ 2199 087a B0       		.byte	-80
+ 2200 087b 24       		.byte	36
+ 2201 087c B3       		.byte	-77
+ 2202 087d 10       		.byte	16
+ 2203 087e B6       		.byte	-74
+ 2204 087f 04       		.byte	4
+ 2205 0880 C0       		.byte	-64
+ 2206 0881 F7       		.byte	-9
+ 2207 0882 C2       		.byte	-62
+ 2208 0883 FA       		.byte	-6
+ 2209 0884 C4       		.byte	-60
+ 2210 0885 75       		.byte	117
+ 2211 0886 CA       		.byte	-54
+ 2212 0887 F7       		.byte	-9
+ 2213 0888 CC       		.byte	-52
+ 2214 0889 F1       		.byte	-15
+ 2215 088a CE       		.byte	-50
+ 2216 088b FE       		.byte	-2
+ 2217 088c D6       		.byte	-42
+ 2218 088d 40       		.byte	64
+ 2219 088e E0       		.byte	-32
+ 2220 088f 18       		.byte	24
+ 2221 0890 E8       		.byte	-24
+ 2222 0891 B0       		.byte	-80
+ 2223 0892 EA       		.byte	-22
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccWzgev8.s 			page 40
+
+
+ 2224 0893 01       		.byte	1
+ 2225 0894 EC       		.byte	-20
+ 2226 0895 10       		.byte	16
+ 2227 0896 13       		.byte	19
+ 2228 0897 02       		.byte	2
+ 2229 0898 16       		.byte	22
+ 2230 0899 80       		.byte	-128
+ 2231 089a 30       		.byte	48
+ 2232 089b 80       		.byte	-128
+ 2233 089c 32       		.byte	50
+ 2234 089d 08       		.byte	8
+ 2235 089e 37       		.byte	55
+ 2236 089f 10       		.byte	16
+ 2237 08a0 3B       		.byte	59
+ 2238 08a1 02       		.byte	2
+ 2239 08a2 3E       		.byte	62
+ 2240 08a3 80       		.byte	-128
+ 2241 08a4 83       		.byte	-125
+ 2242 08a5 02       		.byte	2
+ 2243 08a6 C4       		.byte	-60
+ 2244 08a7 30       		.byte	48
+ 2245 08a8 CC       		.byte	-52
+ 2246 08a9 70       		.byte	112
+ 2247 08aa CE       		.byte	-50
+ 2248 08ab 60       		.byte	96
+ 2249 08ac E4       		.byte	-28
+ 2250 08ad 80       		.byte	-128
+ 2251 08ae 50       		.byte	80
+ 2252 08af 04       		.byte	4
+ 2253 08b0 53       		.byte	83
+ 2254 08b1 02       		.byte	2
+ 2255 08b2 56       		.byte	86
+ 2256 08b3 10       		.byte	16
+ 2257 08b4 5F       		.byte	95
+ 2258 08b5 20       		.byte	32
+ 2259 08b6 97       		.byte	-105
+ 2260 08b7 02       		.byte	2
+ 2261 08b8 9F       		.byte	-97
+ 2262 08b9 10       		.byte	16
+ 2263 08ba A6       		.byte	-90
+ 2264 08bb 08       		.byte	8
+ 2265 08bc A8       		.byte	-88
+ 2266 08bd 80       		.byte	-128
+ 2267 08be AA       		.byte	-86
+ 2268 08bf 08       		.byte	8
+ 2269 08c0 D4       		.byte	-44
+ 2270 08c1 E0       		.byte	-32
+ 2271 08c2 D6       		.byte	-42
+ 2272 08c3 20       		.byte	32
+ 2273 08c4 3E       		.byte	62
+ 2274 08c5 10       		.byte	16
+ 2275 08c6 97       		.byte	-105
+ 2276 08c7 02       		.byte	2
+ 2277 08c8 9F       		.byte	-97
+ 2278 08c9 10       		.byte	16
+ 2279 08ca A6       		.byte	-90
+ 2280 08cb 08       		.byte	8
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccWzgev8.s 			page 41
+
+
+ 2281 08cc A8       		.byte	-88
+ 2282 08cd 04       		.byte	4
+ 2283 08ce AF       		.byte	-81
+ 2284 08cf 20       		.byte	32
+ 2285 08d0 B2       		.byte	-78
+ 2286 08d1 10       		.byte	16
+ 2287 08d2 B3       		.byte	-77
+ 2288 08d3 02       		.byte	2
+ 2289 08d4 CE       		.byte	-50
+ 2290 08d5 20       		.byte	32
+ 2291 08d6 EA       		.byte	-22
+ 2292 08d7 40       		.byte	64
+ 2293 08d8 EE       		.byte	-18
+ 2294 08d9 80       		.byte	-128
+ 2295 08da 84       		.byte	-124
+ 2296 08db 10       		.byte	16
+ 2297 08dc 96       		.byte	-106
+ 2298 08dd 10       		.byte	16
+ 2299 08de 9F       		.byte	-97
+ 2300 08df 10       		.byte	16
+ 2301 08e0 A6       		.byte	-90
+ 2302 08e1 08       		.byte	8
+ 2303 08e2 AB       		.byte	-85
+ 2304 08e3 01       		.byte	1
+ 2305 08e4 E4       		.byte	-28
+ 2306 08e5 40       		.byte	64
+ 2307 08e6 EE       		.byte	-18
+ 2308 08e7 20       		.byte	32
+ 2309 08e8 1B       		.byte	27
+ 2310 08e9 04       		.byte	4
+ 2311 08ea 24       		.byte	36
+ 2312 08eb 40       		.byte	64
+ 2313 08ec 80       		.byte	-128
+ 2314 08ed 40       		.byte	64
+ 2315 08ee C6       		.byte	-58
+ 2316 08ef 08       		.byte	8
+ 2317 08f0 C8       		.byte	-56
+ 2318 08f1 01       		.byte	1
+ 2319 08f2 44       		.byte	68
+ 2320 08f3 02       		.byte	2
+ 2321 08f4 8B       		.byte	-117
+ 2322 08f5 10       		.byte	16
+ 2323 08f6 AB       		.byte	-85
+ 2324 08f7 04       		.byte	4
+ 2325 08f8 D0       		.byte	-48
+ 2326 08f9 04       		.byte	4
+ 2327 08fa E4       		.byte	-28
+ 2328 08fb 01       		.byte	1
+ 2329 08fc 24       		.byte	36
+ 2330 08fd 08       		.byte	8
+ 2331 08fe 28       		.byte	40
+ 2332 08ff 10       		.byte	16
+ 2333 0900 80       		.byte	-128
+ 2334 0901 08       		.byte	8
+ 2335 0902 81       		.byte	-127
+ 2336 0903 08       		.byte	8
+ 2337 0904 8E       		.byte	-114
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccWzgev8.s 			page 42
+
+
+ 2338 0905 08       		.byte	8
+ 2339 0906 96       		.byte	-106
+ 2340 0907 10       		.byte	16
+ 2341 0908 9C       		.byte	-100
+ 2342 0909 10       		.byte	16
+ 2343 090a 9F       		.byte	-97
+ 2344 090b 10       		.byte	16
+ 2345 090c A6       		.byte	-90
+ 2346 090d 08       		.byte	8
+ 2347 090e C8       		.byte	-56
+ 2348 090f 20       		.byte	32
+ 2349 0910 CA       		.byte	-54
+ 2350 0911 40       		.byte	64
+ 2351 0912 E2       		.byte	-30
+ 2352 0913 80       		.byte	-128
+ 2353 0914 E6       		.byte	-26
+ 2354 0915 20       		.byte	32
+ 2355 0916 13       		.byte	19
+ 2356 0917 02       		.byte	2
+ 2357 0918 16       		.byte	22
+ 2358 0919 40       		.byte	64
+ 2359 091a 70       		.byte	112
+ 2360 091b 08       		.byte	8
+ 2361 091c 75       		.byte	117
+ 2362 091d 08       		.byte	8
+ 2363 091e 83       		.byte	-125
+ 2364 091f 10       		.byte	16
+ 2365 0920 86       		.byte	-122
+ 2366 0921 40       		.byte	64
+ 2367 0922 8F       		.byte	-113
+ 2368 0923 02       		.byte	2
+ 2369 0924 99       		.byte	-103
+ 2370 0925 08       		.byte	8
+ 2371 0926 9F       		.byte	-97
+ 2372 0927 10       		.byte	16
+ 2373 0928 A0       		.byte	-96
+ 2374 0929 08       		.byte	8
+ 2375 092a AA       		.byte	-86
+ 2376 092b 10       		.byte	16
+ 2377 092c B4       		.byte	-76
+ 2378 092d 04       		.byte	4
+ 2379 092e C4       		.byte	-60
+ 2380 092f 30       		.byte	48
+ 2381 0930 DC       		.byte	-36
+ 2382 0931 80       		.byte	-128
+ 2383 0932 DE       		.byte	-34
+ 2384 0933 20       		.byte	32
+ 2385 0934 E0       		.byte	-32
+ 2386 0935 10       		.byte	16
+ 2387 0936 E2       		.byte	-30
+ 2388 0937 20       		.byte	32
+ 2389 0938 EA       		.byte	-22
+ 2390 0939 80       		.byte	-128
+ 2391 093a 12       		.byte	18
+ 2392 093b 80       		.byte	-128
+ 2393 093c 13       		.byte	19
+ 2394 093d 20       		.byte	32
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccWzgev8.s 			page 43
+
+
+ 2395 093e 17       		.byte	23
+ 2396 093f 04       		.byte	4
+ 2397 0940 7B       		.byte	123
+ 2398 0941 08       		.byte	8
+ 2399 0942 7F       		.byte	127
+ 2400 0943 40       		.byte	64
+ 2401 0944 82       		.byte	-126
+ 2402 0945 80       		.byte	-128
+ 2403 0946 83       		.byte	-125
+ 2404 0947 04       		.byte	4
+ 2405 0948 93       		.byte	-109
+ 2406 0949 10       		.byte	16
+ 2407 094a 9C       		.byte	-100
+ 2408 094b 02       		.byte	2
+ 2409 094c C4       		.byte	-60
+ 2410 094d 0E       		.byte	14
+ 2411 094e DE       		.byte	-34
+ 2412 094f 03       		.byte	3
+ 2413 0950 10       		.byte	16
+ 2414 0951 60       		.byte	96
+ 2415 0952 73       		.byte	115
+ 2416 0953 10       		.byte	16
+ 2417 0954 87       		.byte	-121
+ 2418 0955 40       		.byte	64
+ 2419 0956 88       		.byte	-120
+ 2420 0957 40       		.byte	64
+ 2421 0958 8C       		.byte	-116
+ 2422 0959 20       		.byte	32
+ 2423 095a 8F       		.byte	-113
+ 2424 095b 08       		.byte	8
+ 2425 095c 93       		.byte	-109
+ 2426 095d 10       		.byte	16
+ 2427 095e 97       		.byte	-105
+ 2428 095f 80       		.byte	-128
+ 2429 0960 A7       		.byte	-89
+ 2430 0961 08       		.byte	8
+ 2431 0962 AB       		.byte	-85
+ 2432 0963 20       		.byte	32
+ 2433 0964 B4       		.byte	-76
+ 2434 0965 02       		.byte	2
+ 2435 0966 C4       		.byte	-60
+ 2436 0967 08       		.byte	8
+ 2437 0968 DC       		.byte	-36
+ 2438 0969 01       		.byte	1
+ 2439 096a E0       		.byte	-32
+ 2440 096b 08       		.byte	8
+ 2441 096c E2       		.byte	-30
+ 2442 096d 01       		.byte	1
+ 2443 096e E6       		.byte	-26
+ 2444 096f 08       		.byte	8
+ 2445 0970 E8       		.byte	-24
+ 2446 0971 08       		.byte	8
+ 2447 0972 00       		.byte	0
+ 2448 0973 03       		.byte	3
+ 2449 0974 01       		.byte	1
+ 2450 0975 01       		.byte	1
+ 2451 0976 08       		.byte	8
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccWzgev8.s 			page 44
+
+
+ 2452 0977 03       		.byte	3
+ 2453 0978 0A       		.byte	10
+ 2454 0979 03       		.byte	3
+ 2455 097a 0B       		.byte	11
+ 2456 097b 01       		.byte	1
+ 2457 097c 0C       		.byte	12
+ 2458 097d 03       		.byte	3
+ 2459 097e 0D       		.byte	13
+ 2460 097f 01       		.byte	1
+ 2461 0980 10       		.byte	16
+ 2462 0981 03       		.byte	3
+ 2463 0982 11       		.byte	17
+ 2464 0983 01       		.byte	1
+ 2465 0984 1A       		.byte	26
+ 2466 0985 03       		.byte	3
+ 2467 0986 1B       		.byte	27
+ 2468 0987 01       		.byte	1
+ 2469 0988 1C       		.byte	28
+ 2470 0989 03       		.byte	3
+ 2471 098a 1D       		.byte	29
+ 2472 098b 01       		.byte	1
+ 2473 098c 00       		.byte	0
+ 2474 098d 3F       		.byte	63
+ 2475 098e 03       		.byte	3
+ 2476 098f C0       		.byte	-64
+ 2477 0990 10       		.byte	16
+ 2478 0991 0A       		.byte	10
+ 2479 0992 00       		.byte	0
+ 2480 0993 00       		.byte	0
+ 2481 0994 01       		.byte	1
+ 2482 0995 80       		.byte	-128
+ 2483 0996 00       		.byte	0
+ 2484 0997 00       		.byte	0
+ 2485 0998 43       		.byte	67
+ 2486 0999 00       		.byte	0
+ 2487 099a 00       		.byte	0
+ 2488 099b 00       		.byte	0
+ 2489 099c 00       		.byte	0
+ 2490 099d 00       		.byte	0
+ 2491 099e 00       		.byte	0
+ 2492 099f 00       		.byte	0
+ 2493 09a0 00       		.byte	0
+ 2494 09a1 0F       		.byte	15
+ 2495 09a2 0F       		.byte	15
+ 2496 09a3 00       		.byte	0
+ 2497 09a4 83       		.byte	-125
+ 2498 09a5 00       		.byte	0
+ 2499 09a6 40       		.byte	64
+ 2500 09a7 80       		.byte	-128
+ 2501 09a8 83       		.byte	-125
+ 2502 09a9 00       		.byte	0
+ 2503 09aa 83       		.byte	-125
+ 2504 09ab 00       		.byte	0
+ 2505 09ac 00       		.byte	0
+ 2506 09ad 03       		.byte	3
+ 2507 09ae 00       		.byte	0
+ 2508 09af 00       		.byte	0
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccWzgev8.s 			page 45
+
+
+ 2509 09b0 00       		.byte	0
+ 2510 09b1 02       		.byte	2
+ 2511 09b2 00       		.byte	0
+ 2512 09b3 00       		.byte	0
+ 2513 09b4 00       		.byte	0
+ 2514 09b5 00       		.byte	0
+ 2515 09b6 00       		.byte	0
+ 2516 09b7 00       		.byte	0
+ 2517 09b8 00       		.byte	0
+ 2518 09b9 0B       		.byte	11
+ 2519 09ba 0B       		.byte	11
+ 2520 09bb 00       		.byte	0
+ 2521 09bc 00       		.byte	0
+ 2522 09bd 00       		.byte	0
+ 2523 09be 00       		.byte	0
+ 2524 09bf 00       		.byte	0
+ 2525 09c0 00       		.byte	0
+ 2526 09c1 01       		.byte	1
+ 2527 09c2 00       		.byte	0
+ 2528 09c3 00       		.byte	0
+ 2529              		.section	.cywolatch,"a",%progbits
+ 2530              		.align	2
+ 2531              		.type	cy_meta_wonvl, %object
+ 2532              		.size	cy_meta_wonvl, 4
+ 2533              	cy_meta_wonvl:
+ 2534 0000 BC       		.byte	-68
+ 2535 0001 90       		.byte	-112
+ 2536 0002 AC       		.byte	-84
+ 2537 0003 AF       		.byte	-81
+ 2538              		.section	.cycustnvl,"a",%progbits
+ 2539              		.align	2
+ 2540              		.type	cy_meta_custnvl, %object
+ 2541              		.size	cy_meta_custnvl, 4
+ 2542              	cy_meta_custnvl:
+ 2543 0000 00       		.byte	0
+ 2544 0001 00       		.byte	0
+ 2545 0002 40       		.byte	64
+ 2546 0003 05       		.byte	5
+ 2547              		.section	.cymeta,"a",%progbits
+ 2548              		.align	2
+ 2549              		.type	cy_metadata, %object
+ 2550              		.size	cy_metadata, 12
+ 2551              	cy_metadata:
+ 2552 0000 00       		.byte	0
+ 2553 0001 01       		.byte	1
+ 2554 0002 2E       		.byte	46
+ 2555 0003 16       		.byte	22
+ 2556 0004 10       		.byte	16
+ 2557 0005 69       		.byte	105
+ 2558 0006 00       		.byte	0
+ 2559 0007 01       		.byte	1
+ 2560 0008 00       		.byte	0
+ 2561 0009 00       		.byte	0
+ 2562 000a 00       		.byte	0
+ 2563 000b 00       		.byte	0
+ 2564              		.section	.cyflashprotect,"a",%progbits
+ 2565              		.align	2
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccWzgev8.s 			page 46
+
+
+ 2566              		.type	cy_meta_flashprotect, %object
+ 2567              		.size	cy_meta_flashprotect, 256
+ 2568              	cy_meta_flashprotect:
+ 2569 0000 00000000 		.space	256
+ 2569      00000000 
+ 2569      00000000 
+ 2569      00000000 
+ 2569      00000000 
+ 2570              		.text
+ 2571              	.Letext0:
+ 2572              		.file 1 "c:\\program files (x86)\\cypress\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.
+ 2573              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.
+ 2574              		.file 3 "Generated_Source\\PSoC5\\cymetadata.c"
+ 2575              		.section	.debug_info,"",%progbits
+ 2576              	.Ldebug_info0:
+ 2577 0000 35010000 		.4byte	0x135
+ 2578 0004 0400     		.2byte	0x4
+ 2579 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 2580 000a 04       		.byte	0x4
+ 2581 000b 01       		.uleb128 0x1
+ 2582 000c 24000000 		.4byte	.LASF17
+ 2583 0010 0C       		.byte	0xc
+ 2584 0011 C2010000 		.4byte	.LASF18
+ 2585 0015 7E010000 		.4byte	.LASF19
+ 2586 0019 00000000 		.4byte	.Ldebug_line0
+ 2587 001d 02       		.uleb128 0x2
+ 2588 001e 01       		.byte	0x1
+ 2589 001f 06       		.byte	0x6
+ 2590 0020 72010000 		.4byte	.LASF0
+ 2591 0024 03       		.uleb128 0x3
+ 2592 0025 00000000 		.4byte	.LASF9
+ 2593 0029 01       		.byte	0x1
+ 2594 002a 1D       		.byte	0x1d
+ 2595 002b 2F000000 		.4byte	0x2f
+ 2596 002f 02       		.uleb128 0x2
+ 2597 0030 01       		.byte	0x1
+ 2598 0031 08       		.byte	0x8
+ 2599 0032 16000000 		.4byte	.LASF1
+ 2600 0036 02       		.uleb128 0x2
+ 2601 0037 02       		.byte	0x2
+ 2602 0038 05       		.byte	0x5
+ 2603 0039 5F010000 		.4byte	.LASF2
+ 2604 003d 02       		.uleb128 0x2
+ 2605 003e 02       		.byte	0x2
+ 2606 003f 07       		.byte	0x7
+ 2607 0040 C4000000 		.4byte	.LASF3
+ 2608 0044 02       		.uleb128 0x2
+ 2609 0045 04       		.byte	0x4
+ 2610 0046 05       		.byte	0x5
+ 2611 0047 69010000 		.4byte	.LASF4
+ 2612 004b 02       		.uleb128 0x2
+ 2613 004c 04       		.byte	0x4
+ 2614 004d 07       		.byte	0x7
+ 2615 004e B2000000 		.4byte	.LASF5
+ 2616 0052 02       		.uleb128 0x2
+ 2617 0053 08       		.byte	0x8
+ 2618 0054 05       		.byte	0x5
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccWzgev8.s 			page 47
+
+
+ 2619 0055 51010000 		.4byte	.LASF6
+ 2620 0059 02       		.uleb128 0x2
+ 2621 005a 08       		.byte	0x8
+ 2622 005b 07       		.byte	0x7
+ 2623 005c 06010000 		.4byte	.LASF7
+ 2624 0060 04       		.uleb128 0x4
+ 2625 0061 04       		.byte	0x4
+ 2626 0062 05       		.byte	0x5
+ 2627 0063 696E7400 		.ascii	"int\000"
+ 2628 0067 02       		.uleb128 0x2
+ 2629 0068 04       		.byte	0x4
+ 2630 0069 07       		.byte	0x7
+ 2631 006a F9000000 		.4byte	.LASF8
+ 2632 006e 03       		.uleb128 0x3
+ 2633 006f 1D010000 		.4byte	.LASF10
+ 2634 0073 02       		.byte	0x2
+ 2635 0074 18       		.byte	0x18
+ 2636 0075 24000000 		.4byte	0x24
+ 2637 0079 05       		.uleb128 0x5
+ 2638 007a 91000000 		.4byte	0x91
+ 2639 007e 8A000000 		.4byte	0x8a
+ 2640 0082 06       		.uleb128 0x6
+ 2641 0083 8A000000 		.4byte	0x8a
+ 2642 0087 C309     		.2byte	0x9c3
+ 2643 0089 00       		.byte	0
+ 2644 008a 02       		.uleb128 0x2
+ 2645 008b 04       		.byte	0x4
+ 2646 008c 07       		.byte	0x7
+ 2647 008d 48010000 		.4byte	.LASF11
+ 2648 0091 07       		.uleb128 0x7
+ 2649 0092 6E000000 		.4byte	0x6e
+ 2650 0096 08       		.uleb128 0x8
+ 2651 0097 E7000000 		.4byte	.LASF12
+ 2652 009b 03       		.byte	0x3
+ 2653 009c 1F       		.byte	0x1f
+ 2654 009d A7000000 		.4byte	0xa7
+ 2655 00a1 05       		.uleb128 0x5
+ 2656 00a2 03       		.byte	0x3
+ 2657 00a3 00000000 		.4byte	cy_meta_configecc
+ 2658 00a7 07       		.uleb128 0x7
+ 2659 00a8 79000000 		.4byte	0x79
+ 2660 00ac 05       		.uleb128 0x5
+ 2661 00ad 91000000 		.4byte	0x91
+ 2662 00b1 BC000000 		.4byte	0xbc
+ 2663 00b5 09       		.uleb128 0x9
+ 2664 00b6 8A000000 		.4byte	0x8a
+ 2665 00ba 03       		.byte	0x3
+ 2666 00bb 00       		.byte	0
+ 2667 00bc 0A       		.uleb128 0xa
+ 2668 00bd D7000000 		.4byte	.LASF13
+ 2669 00c1 03       		.byte	0x3
+ 2670 00c2 6501     		.2byte	0x165
+ 2671 00c4 CE000000 		.4byte	0xce
+ 2672 00c8 05       		.uleb128 0x5
+ 2673 00c9 03       		.byte	0x3
+ 2674 00ca 00000000 		.4byte	cy_meta_custnvl
+ 2675 00ce 07       		.uleb128 0x7
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccWzgev8.s 			page 48
+
+
+ 2676 00cf AC000000 		.4byte	0xac
+ 2677 00d3 0A       		.uleb128 0xa
+ 2678 00d4 3A010000 		.4byte	.LASF14
+ 2679 00d8 03       		.byte	0x3
+ 2680 00d9 7301     		.2byte	0x173
+ 2681 00db E5000000 		.4byte	0xe5
+ 2682 00df 05       		.uleb128 0x5
+ 2683 00e0 03       		.byte	0x3
+ 2684 00e1 00000000 		.4byte	cy_meta_wonvl
+ 2685 00e5 07       		.uleb128 0x7
+ 2686 00e6 AC000000 		.4byte	0xac
+ 2687 00ea 05       		.uleb128 0x5
+ 2688 00eb 91000000 		.4byte	0x91
+ 2689 00ef FA000000 		.4byte	0xfa
+ 2690 00f3 09       		.uleb128 0x9
+ 2691 00f4 8A000000 		.4byte	0x8a
+ 2692 00f8 FF       		.byte	0xff
+ 2693 00f9 00       		.byte	0
+ 2694 00fa 0A       		.uleb128 0xa
+ 2695 00fb 25010000 		.4byte	.LASF15
+ 2696 00ff 03       		.byte	0x3
+ 2697 0100 8101     		.2byte	0x181
+ 2698 0102 0C010000 		.4byte	0x10c
+ 2699 0106 05       		.uleb128 0x5
+ 2700 0107 03       		.byte	0x3
+ 2701 0108 00000000 		.4byte	cy_meta_flashprotect
+ 2702 010c 07       		.uleb128 0x7
+ 2703 010d EA000000 		.4byte	0xea
+ 2704 0111 05       		.uleb128 0x5
+ 2705 0112 91000000 		.4byte	0x91
+ 2706 0116 21010000 		.4byte	0x121
+ 2707 011a 09       		.uleb128 0x9
+ 2708 011b 8A000000 		.4byte	0x8a
+ 2709 011f 0B       		.byte	0xb
+ 2710 0120 00       		.byte	0
+ 2711 0121 0A       		.uleb128 0xa
+ 2712 0122 0A000000 		.4byte	.LASF16
+ 2713 0126 03       		.byte	0x3
+ 2714 0127 AE01     		.2byte	0x1ae
+ 2715 0129 33010000 		.4byte	0x133
+ 2716 012d 05       		.uleb128 0x5
+ 2717 012e 03       		.byte	0x3
+ 2718 012f 00000000 		.4byte	cy_metadata
+ 2719 0133 07       		.uleb128 0x7
+ 2720 0134 11010000 		.4byte	0x111
+ 2721 0138 00       		.byte	0
+ 2722              		.section	.debug_abbrev,"",%progbits
+ 2723              	.Ldebug_abbrev0:
+ 2724 0000 01       		.uleb128 0x1
+ 2725 0001 11       		.uleb128 0x11
+ 2726 0002 01       		.byte	0x1
+ 2727 0003 25       		.uleb128 0x25
+ 2728 0004 0E       		.uleb128 0xe
+ 2729 0005 13       		.uleb128 0x13
+ 2730 0006 0B       		.uleb128 0xb
+ 2731 0007 03       		.uleb128 0x3
+ 2732 0008 0E       		.uleb128 0xe
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccWzgev8.s 			page 49
+
+
+ 2733 0009 1B       		.uleb128 0x1b
+ 2734 000a 0E       		.uleb128 0xe
+ 2735 000b 10       		.uleb128 0x10
+ 2736 000c 17       		.uleb128 0x17
+ 2737 000d 00       		.byte	0
+ 2738 000e 00       		.byte	0
+ 2739 000f 02       		.uleb128 0x2
+ 2740 0010 24       		.uleb128 0x24
+ 2741 0011 00       		.byte	0
+ 2742 0012 0B       		.uleb128 0xb
+ 2743 0013 0B       		.uleb128 0xb
+ 2744 0014 3E       		.uleb128 0x3e
+ 2745 0015 0B       		.uleb128 0xb
+ 2746 0016 03       		.uleb128 0x3
+ 2747 0017 0E       		.uleb128 0xe
+ 2748 0018 00       		.byte	0
+ 2749 0019 00       		.byte	0
+ 2750 001a 03       		.uleb128 0x3
+ 2751 001b 16       		.uleb128 0x16
+ 2752 001c 00       		.byte	0
+ 2753 001d 03       		.uleb128 0x3
+ 2754 001e 0E       		.uleb128 0xe
+ 2755 001f 3A       		.uleb128 0x3a
+ 2756 0020 0B       		.uleb128 0xb
+ 2757 0021 3B       		.uleb128 0x3b
+ 2758 0022 0B       		.uleb128 0xb
+ 2759 0023 49       		.uleb128 0x49
+ 2760 0024 13       		.uleb128 0x13
+ 2761 0025 00       		.byte	0
+ 2762 0026 00       		.byte	0
+ 2763 0027 04       		.uleb128 0x4
+ 2764 0028 24       		.uleb128 0x24
+ 2765 0029 00       		.byte	0
+ 2766 002a 0B       		.uleb128 0xb
+ 2767 002b 0B       		.uleb128 0xb
+ 2768 002c 3E       		.uleb128 0x3e
+ 2769 002d 0B       		.uleb128 0xb
+ 2770 002e 03       		.uleb128 0x3
+ 2771 002f 08       		.uleb128 0x8
+ 2772 0030 00       		.byte	0
+ 2773 0031 00       		.byte	0
+ 2774 0032 05       		.uleb128 0x5
+ 2775 0033 01       		.uleb128 0x1
+ 2776 0034 01       		.byte	0x1
+ 2777 0035 49       		.uleb128 0x49
+ 2778 0036 13       		.uleb128 0x13
+ 2779 0037 01       		.uleb128 0x1
+ 2780 0038 13       		.uleb128 0x13
+ 2781 0039 00       		.byte	0
+ 2782 003a 00       		.byte	0
+ 2783 003b 06       		.uleb128 0x6
+ 2784 003c 21       		.uleb128 0x21
+ 2785 003d 00       		.byte	0
+ 2786 003e 49       		.uleb128 0x49
+ 2787 003f 13       		.uleb128 0x13
+ 2788 0040 2F       		.uleb128 0x2f
+ 2789 0041 05       		.uleb128 0x5
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccWzgev8.s 			page 50
+
+
+ 2790 0042 00       		.byte	0
+ 2791 0043 00       		.byte	0
+ 2792 0044 07       		.uleb128 0x7
+ 2793 0045 26       		.uleb128 0x26
+ 2794 0046 00       		.byte	0
+ 2795 0047 49       		.uleb128 0x49
+ 2796 0048 13       		.uleb128 0x13
+ 2797 0049 00       		.byte	0
+ 2798 004a 00       		.byte	0
+ 2799 004b 08       		.uleb128 0x8
+ 2800 004c 34       		.uleb128 0x34
+ 2801 004d 00       		.byte	0
+ 2802 004e 03       		.uleb128 0x3
+ 2803 004f 0E       		.uleb128 0xe
+ 2804 0050 3A       		.uleb128 0x3a
+ 2805 0051 0B       		.uleb128 0xb
+ 2806 0052 3B       		.uleb128 0x3b
+ 2807 0053 0B       		.uleb128 0xb
+ 2808 0054 49       		.uleb128 0x49
+ 2809 0055 13       		.uleb128 0x13
+ 2810 0056 3F       		.uleb128 0x3f
+ 2811 0057 19       		.uleb128 0x19
+ 2812 0058 02       		.uleb128 0x2
+ 2813 0059 18       		.uleb128 0x18
+ 2814 005a 00       		.byte	0
+ 2815 005b 00       		.byte	0
+ 2816 005c 09       		.uleb128 0x9
+ 2817 005d 21       		.uleb128 0x21
+ 2818 005e 00       		.byte	0
+ 2819 005f 49       		.uleb128 0x49
+ 2820 0060 13       		.uleb128 0x13
+ 2821 0061 2F       		.uleb128 0x2f
+ 2822 0062 0B       		.uleb128 0xb
+ 2823 0063 00       		.byte	0
+ 2824 0064 00       		.byte	0
+ 2825 0065 0A       		.uleb128 0xa
+ 2826 0066 34       		.uleb128 0x34
+ 2827 0067 00       		.byte	0
+ 2828 0068 03       		.uleb128 0x3
+ 2829 0069 0E       		.uleb128 0xe
+ 2830 006a 3A       		.uleb128 0x3a
+ 2831 006b 0B       		.uleb128 0xb
+ 2832 006c 3B       		.uleb128 0x3b
+ 2833 006d 05       		.uleb128 0x5
+ 2834 006e 49       		.uleb128 0x49
+ 2835 006f 13       		.uleb128 0x13
+ 2836 0070 3F       		.uleb128 0x3f
+ 2837 0071 19       		.uleb128 0x19
+ 2838 0072 02       		.uleb128 0x2
+ 2839 0073 18       		.uleb128 0x18
+ 2840 0074 00       		.byte	0
+ 2841 0075 00       		.byte	0
+ 2842 0076 00       		.byte	0
+ 2843              		.section	.debug_aranges,"",%progbits
+ 2844 0000 14000000 		.4byte	0x14
+ 2845 0004 0200     		.2byte	0x2
+ 2846 0006 00000000 		.4byte	.Ldebug_info0
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccWzgev8.s 			page 51
+
+
+ 2847 000a 04       		.byte	0x4
+ 2848 000b 00       		.byte	0
+ 2849 000c 0000     		.2byte	0
+ 2850 000e 0000     		.2byte	0
+ 2851 0010 00000000 		.4byte	0
+ 2852 0014 00000000 		.4byte	0
+ 2853              		.section	.debug_line,"",%progbits
+ 2854              	.Ldebug_line0:
+ 2855 0000 3D010000 		.section	.debug_str,"MS",%progbits,1
+ 2855      02003701 
+ 2855      00000201 
+ 2855      FB0E0D00 
+ 2855      01010101 
+ 2856              	.LASF9:
+ 2857 0000 5F5F7569 		.ascii	"__uint8_t\000"
+ 2857      6E74385F 
+ 2857      7400
+ 2858              	.LASF16:
+ 2859 000a 63795F6D 		.ascii	"cy_metadata\000"
+ 2859      65746164 
+ 2859      61746100 
+ 2860              	.LASF1:
+ 2861 0016 756E7369 		.ascii	"unsigned char\000"
+ 2861      676E6564 
+ 2861      20636861 
+ 2861      7200
+ 2862              	.LASF17:
+ 2863 0024 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 2863      43313120 
+ 2863      352E342E 
+ 2863      31203230 
+ 2863      31363036 
+ 2864 0057 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m3 -mthumb -g -O"
+ 2864      20726576 
+ 2864      6973696F 
+ 2864      6E203233 
+ 2864      37373135 
+ 2865 008a 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 2865      66756E63 
+ 2865      74696F6E 
+ 2865      2D736563 
+ 2865      74696F6E 
+ 2866              	.LASF5:
+ 2867 00b2 6C6F6E67 		.ascii	"long unsigned int\000"
+ 2867      20756E73 
+ 2867      69676E65 
+ 2867      6420696E 
+ 2867      7400
+ 2868              	.LASF3:
+ 2869 00c4 73686F72 		.ascii	"short unsigned int\000"
+ 2869      7420756E 
+ 2869      7369676E 
+ 2869      65642069 
+ 2869      6E7400
+ 2870              	.LASF13:
+ 2871 00d7 63795F6D 		.ascii	"cy_meta_custnvl\000"
+ 2871      6574615F 
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccWzgev8.s 			page 52
+
+
+ 2871      63757374 
+ 2871      6E766C00 
+ 2872              	.LASF12:
+ 2873 00e7 63795F6D 		.ascii	"cy_meta_configecc\000"
+ 2873      6574615F 
+ 2873      636F6E66 
+ 2873      69676563 
+ 2873      6300
+ 2874              	.LASF8:
+ 2875 00f9 756E7369 		.ascii	"unsigned int\000"
+ 2875      676E6564 
+ 2875      20696E74 
+ 2875      00
+ 2876              	.LASF7:
+ 2877 0106 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 2877      206C6F6E 
+ 2877      6720756E 
+ 2877      7369676E 
+ 2877      65642069 
+ 2878              	.LASF10:
+ 2879 011d 75696E74 		.ascii	"uint8_t\000"
+ 2879      385F7400 
+ 2880              	.LASF15:
+ 2881 0125 63795F6D 		.ascii	"cy_meta_flashprotect\000"
+ 2881      6574615F 
+ 2881      666C6173 
+ 2881      6870726F 
+ 2881      74656374 
+ 2882              	.LASF14:
+ 2883 013a 63795F6D 		.ascii	"cy_meta_wonvl\000"
+ 2883      6574615F 
+ 2883      776F6E76 
+ 2883      6C00
+ 2884              	.LASF11:
+ 2885 0148 73697A65 		.ascii	"sizetype\000"
+ 2885      74797065 
+ 2885      00
+ 2886              	.LASF6:
+ 2887 0151 6C6F6E67 		.ascii	"long long int\000"
+ 2887      206C6F6E 
+ 2887      6720696E 
+ 2887      7400
+ 2888              	.LASF2:
+ 2889 015f 73686F72 		.ascii	"short int\000"
+ 2889      7420696E 
+ 2889      7400
+ 2890              	.LASF4:
+ 2891 0169 6C6F6E67 		.ascii	"long int\000"
+ 2891      20696E74 
+ 2891      00
+ 2892              	.LASF0:
+ 2893 0172 7369676E 		.ascii	"signed char\000"
+ 2893      65642063 
+ 2893      68617200 
+ 2894              	.LASF19:
+ 2895 017e 433A5C55 		.ascii	"C:\\Users\\iamna\\Documents\\PSoC Creator\\DAQ-Pi-P"
+ 2895      73657273 
+ARM GAS  C:\Users\iamna\AppData\Local\Temp\ccWzgev8.s 			page 53
+
+
+ 2895      5C69616D 
+ 2895      6E615C44 
+ 2895      6F63756D 
+ 2896 01ac 69636F5C 		.ascii	"ico\\DAQ-Pi-Pico.cydsn\000"
+ 2896      4441512D 
+ 2896      50692D50 
+ 2896      69636F2E 
+ 2896      63796473 
+ 2897              	.LASF18:
+ 2898 01c2 47656E65 		.ascii	"Generated_Source\\PSoC5\\cymetadata.c\000"
+ 2898      72617465 
+ 2898      645F536F 
+ 2898      75726365 
+ 2898      5C50536F 
+ 2899              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

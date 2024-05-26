@@ -1,0 +1,7 @@
+C:\Users\iamna\Documents\PSoC Creator\DAQ-Pi-Pico\DAQ-Pi-Pico.cydsn\DAQ-Pi-Pico.cyprj|55856d2d-6292-4e93-b35d-e6beb2c8c3b7
+C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\psoc\content\default\CyAnnotationLibrary\CyAnnotationLibrary.cylib\CyAnnotationLibrary.cyprj|d138db43-4c03-4f14-85b6-1f1936b889de
+C:\Users\iamna\Documents\PSoC Creator\4.4\Downloads ( 4.4).cylib\Downloads ( 4.4).cyprj|a8478952-289b-4e0f-9129-56a330963982
+C:\Users\iamna\Documents\PSoC Creator\4.2\Downloads ( 4.2).cylib\Downloads ( 4.2).cyprj|c5ca66d4-b35f-42ca-85b5-dfe14e8ef9c9
+C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\psoc\content\cycomponentlibraryupdates\CyComponentLibraryUpdates.cylib\CyComponentLibraryUpdates.cyprj|ae749660-cd64-40f2-abdb-552b8b679d28
+C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\CyComponentLibrary.cyprj|7cf06126-3412-484f-99b8-65d2093dba61
+C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\psoc\content\cyprimitives\CyPrimitives.cylib\CyPrimitives.cyprj|812b23af-3556-4089-9d13-ebb4b514c1cb
